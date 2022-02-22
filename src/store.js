@@ -11,11 +11,12 @@ const clubPages = createSlice({
             if(clubPage.id === action.payload.id){
                 clubPage.clubName = action.payload.clubName;
             }
+            return clubPage;
         }),
         deleteClubPage: (state, action) => state.filter(clubPage => clubPage.id !== action.payload),
     }
 });
 
-export const {addClubPage, updateClubPage ,deleteClubPage} = toDos.actions;
+export const {addClubPage, updateClubPage ,deleteClubPage} = clubPages.actions;
 
 export default configureStore({reducer:clubPages.reducer});
