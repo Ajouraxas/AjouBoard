@@ -5,12 +5,13 @@ import React from 'react';
  * useFor: 동아리 공지사항, 전체글, 개추 받은 글, 글쓰기
  */
 
-const PostNavbar = ({ setViewType }) => {
+const PostNavbar = ({ setViewType, setSelectPageIndex }) => {
   const onClick = (e) => {
     const {
       target: { id },
     } = e;
     setViewType(id);
+    setSelectPageIndex(1);
   };
 
   return (
