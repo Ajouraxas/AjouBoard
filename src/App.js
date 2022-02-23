@@ -11,8 +11,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route exact path={'/'} element={<Home />}></Route>
-        <Route exact path={'/club/:clubId'} element={<ClubPage />}></Route>
+        <Route path={'/'} element={<Home />}></Route>
+        <Route path={'/club/:clubId'} element={<ClubPage />}></Route>
       </Routes>
     </Router>
   );
