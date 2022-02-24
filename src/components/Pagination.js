@@ -20,7 +20,7 @@ const Pagination = ({
     // countPageLimit 20 selectPageIndex 17, 13 14 15 16 17 18 19 20 21
     // selectPageIndex 7
     temp.push(paginationList(selectPageIndex));
-    //selectPageIndex = 2, countPageLimit = 2
+    //selectPageIndex = 2, countPageLimit = 4
     for (let i = 0; i < (countPageLimit > 8 ? 8 : countPageLimit - 1); i++) {
       if (i < 4) {
         temp =
@@ -28,7 +28,7 @@ const Pagination = ({
             ? [paginationList(selectPageIndex - left), ...temp]
             : [...temp, paginationList(selectPageIndex + right)];
         if (selectPageIndex - left > 0) {
-          left = left - 1;
+          left = left + 1;
         } else {
           right = right + 1;
         }
@@ -40,7 +40,7 @@ const Pagination = ({
         if (selectPageIndex + right <= countPageLimit) {
           right = right + 1;
         } else {
-          left = left - 1;
+          left = left + 1;
         }
       }
     }

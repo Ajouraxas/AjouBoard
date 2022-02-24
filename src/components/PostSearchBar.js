@@ -3,7 +3,6 @@ import React from 'react';
 const PostSearchBar = () => {
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target[0].value);
   };
   return (
     <div>

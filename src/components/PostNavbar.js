@@ -5,7 +5,12 @@ import React from 'react';
  * useFor: 동아리 공지사항, 전체글, 개추 받은 글, 글쓰기
  */
 
-const PostNavbar = ({ setViewType, setSelectPageIndex }) => {
+const PostNavbar = ({
+  setViewType,
+  setSelectPageIndex,
+  setIsWriting,
+  isWriting,
+}) => {
   const onClick = (e) => {
     const {
       target: { id },
@@ -13,7 +18,9 @@ const PostNavbar = ({ setViewType, setSelectPageIndex }) => {
     setViewType(id);
     setSelectPageIndex(1);
   };
-
+  const onWrite = () => {
+    setIsWriting(true);
+  };
   return (
     <>
       <ul style={{ listStyle: 'none' }}>
@@ -39,7 +46,7 @@ const PostNavbar = ({ setViewType, setSelectPageIndex }) => {
           개추 받은 글
         </li>
       </ul>
-      <button>글쓰기</button>
+      {isWriting ? null : <button onClick={onWrite}>글쓰기</button>}
     </>
   );
 };
