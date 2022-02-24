@@ -5,7 +5,7 @@ const Pagination = ({ setSelectPageIndex, index }) => {
     const {
       target: { id },
     } = e;
-    setSelectPageIndex(id);
+    setSelectPageIndex(Number(id));
   };
   return (
     <li onClick={onClick} id={index}>

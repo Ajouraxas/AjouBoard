@@ -45,7 +45,7 @@ const ClubPage = () => {
               where('postType', '==', viewType)
             );
       const allDocs = await getDocs(countLimitQ);
-      setCountLimit(allDocs.docs.length / (pageLimit + 1) + 1);
+      setCountLimit(parseInt(allDocs.docs.length / (pageLimit + 1) + 1));
       // 예) selectPageIndex = 2, 1 ~ 21번째까지 불러오기
       const rawPostQ =
         viewType !== 'all'
@@ -87,13 +87,74 @@ const ClubPage = () => {
       setPosts(postArray);
     };
     getPosts();
-  }, [viewType, selectPageIndex, countLimit]);
+  }, [viewType, selectPageIndex]);
+
   const pagination = () => {
-    const temp = [];
-    for (let i = 1; i <= countLimit; i++) {
-      temp.push(
-        <Pagination key={i} index={i} setSelectPageIndex={setSelectPageIndex} />
-      );
+    let temp = [];
+    let left = 1;
+    let right = 1;
+    // 1 2 3 4 5 6
+    // countLimit 10 selectPageIndex 9,  3 4 5 6 7 8 9 10 11
+    // countLimit 20 selectPageIndex 17, 13 14 15 16 17 18 19 20 21
+    // selectPageIndex 7
+    temp.push(
+      <Pagination
+        key={selectPageIndex}
+        index={selectPageIndex}
+        setSelectPageIndex={setSelectPageIndex}
+      />
+    );
+    //selectPageIndex = 2, countLimit = 2
+    for (let i = 0; i < (countLimit > 8 ? 8 : countLimit - 1); i++) {
+      if (i < 4) {
+        temp =
+          selectPageIndex - left > 0
+            ? [
+                <Pagination
+                  key={selectPageIndex - left}
+                  index={selectPageIndex - left}
+                  setSelectPageIndex={setSelectPageIndex}
+                />,
+                ...temp,
+              ]
+            : [
+                ...temp,
+                <Pagination
+                  key={selectPageIndex + right}
+                  index={selectPageIndex + right}
+                  setSelectPageIndex={setSelectPageIndex}
+                />,
+              ];
+        if (selectPageIndex - left > 0) {
+          left = left - 1;
+        } else {
+          right = right + 1;
+        }
+      } else if (i >= 4) {
+        temp =
+          selectPageIndex + right <= countLimit
+            ? [
+                ...temp,
+                <Pagination
+                  key={selectPageIndex + right}
+                  index={selectPageIndex + right}
+                  setSelectPageIndex={setSelectPageIndex}
+                />,
+              ]
+            : [
+                <Pagination
+                  key={selectPageIndex - left}
+                  index={selectPageIndex - left}
+                  setSelectPageIndex={setSelectPageIndex}
+                />,
+                ...temp,
+              ];
+        if (selectPageIndex + right <= countLimit) {
+          right = right + 1;
+        } else {
+          left = left - 1;
+        }
+      }
     }
     return temp;
   };
