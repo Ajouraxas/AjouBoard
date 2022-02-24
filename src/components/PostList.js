@@ -7,13 +7,11 @@ import React from 'react';
 
 const PostList = ({ creatorName, createAt, title }) => {
   return (
-    <div>
-      <li>
-        <span>{createAt}</span>
-        <span>{creatorName}</span>
-        <span>{title}</span>
-      </li>
-    </div>
+    <li>
+      <span style={{ marginRight: '20px' }}>{createAt}</span>
+      <span style={{ marginRight: '20px' }}>{creatorName}</span>
+      <span style={{ marginRight: '20px' }}>{title}</span>
+    </li>
   );
 };
 
