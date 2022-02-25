@@ -1,4 +1,5 @@
 import React from 'react';
+import style from '../style/PostNavbar.module.css';
 
 /**
  * component: PostNavber
@@ -6,6 +7,7 @@ import React from 'react';
  */
 
 const PostNavbar = ({
+  viewType,
   setViewType,
   setSelectPageIndex,
   setIsWriting,
@@ -23,30 +25,40 @@ const PostNavbar = ({
   };
   return (
     <>
-      <ul style={{ listStyle: 'none' }}>
+      <ul className={style.navUl}>
         <li
-          style={{ marginRight: '20px', float: 'left' }}
+          className={`${style.navLi} ${
+            viewType === 'announce' ? style.navSelect : null
+          }`}
           id={'announce'}
           onClick={onClick}
         >
           공지사항
         </li>
         <li
-          style={{ marginRight: '20px', float: 'left' }}
+          className={`${style.navLi} ${
+            viewType === 'all' ? style.navSelect : null
+          }`}
           id={'all'}
           onClick={onClick}
         >
           전체글
         </li>
         <li
-          style={{ marginRight: '20px', float: 'left' }}
+          className={`${style.navLiLast} ${
+            viewType === 'popular' ? style.navSelect : null
+          }`}
           id={'popular'}
           onClick={onClick}
         >
           개추 받은 글
         </li>
+        {isWriting ? null : (
+          <button className={style.navBtn} onClick={onWrite}>
+            글쓰기
+          </button>
+        )}
       </ul>
-      {isWriting ? null : <button onClick={onWrite}>글쓰기</button>}
     </>
   );
 };

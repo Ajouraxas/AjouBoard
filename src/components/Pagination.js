@@ -1,5 +1,5 @@
 import React from 'react';
-
+import style from '../style/Pagination.module.css';
 const Pagination = ({
   setSelectPageIndex,
   selectPageIndex,
@@ -49,23 +49,25 @@ const Pagination = ({
   const paginationList = (id) => {
     return (
       <li
+        className={
+          id === selectPageIndex ? style.SelectPaginationLi : style.PaginationLi
+        }
         key={id}
         id={id}
         onClick={onClick}
-        style={{ float: 'left', marginRight: '5px' }}
       >
         {id}
       </li>
     );
   };
   return (
-    <ul style={{ listStyle: 'none' }}>
+    <ul className={style.PaginationUl}>
       {' '}
-      <button key={'previous'} style={{ float: 'left', marginRight: '5px' }}>
+      <button className={style.PaginationBtn} key={'previous'}>
         이전
       </button>
       {pagination()}
-      <button key={'next'} style={{ float: 'left', marginLeft: '5px' }}>
+      <button className={style.PaginationBtn} key={'next'}>
         다음
       </button>
     </ul>

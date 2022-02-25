@@ -1,11 +1,13 @@
 import { addDoc, collection, query } from 'firebase/firestore';
 import React from 'react';
 import { dbService } from '../lib/fbase';
+import style from '../style/WriteBoard.module.css';
 
-const WriteBoard = ({ setIsWriting }) => {
+const WriteBoard = ({ setIsWriting, setSelectPageIndex }) => {
   const cancelWriting = () => {
     setIsWriting(false);
   };
+
   const onSubmit = (e) => {
     e.preventDefault();
     const { target } = e;
@@ -19,26 +21,41 @@ const WriteBoard = ({ setIsWriting }) => {
       index: parseInt(Math.random() * 100),
     });
     setIsWriting(false);
+    setSelectPageIndex(1);
   };
+
   return (
-    <form onSubmit={onSubmit}>
+    <form className={style.BoardForm} onSubmit={onSubmit}>
       <textarea
-        style={{ display: 'block', marginRight: '20px', clear: 'left' }}
+        className={style.BoardTitle}
         name="title"
         placeholder="제목"
         required
       ></textarea>
       <textarea
-        style={{ display: 'block', marginRight: '20px', clear: 'left' }}
+        className={style.BoardContent}
         name="content"
         placeholder="내용"
         required
       ></textarea>
-      <input type="file" name="selectFile" />
-      <button type="submit">글 작성</button>
-      <button type="button" onClick={cancelWriting}>
-        취소
-      </button>
+      <div className={style.BoardFileDiv}>
+        <label className={style.BoardFile} htmlFor="selectFile">
+          Attach
+        </label>
+        <input type="file" id="selectFile" />
+      </div>
+      <div className={style.BoardBtnDiv}>
+        <button className={style.BoardBtn} type="submit">
+          작성
+        </button>
+        <button
+          className={style.BoardBtn}
+          type="button"
+          onClick={cancelWriting}
+        >
+          취소
+        </button>
+      </div>
     </form>
   );
 };

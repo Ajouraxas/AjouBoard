@@ -1,5 +1,5 @@
 import React from 'react';
-
+import style from '../style/PostList.module.css';
 /**
  * component: PostList
  * useFor: 게시글 조회
@@ -7,10 +7,10 @@ import React from 'react';
 
 const PostList = ({ creatorName, createAt, title }) => {
   return (
-    <li>
-      <span style={{ marginRight: '20px' }}>{createAt}</span>
-      <span style={{ marginRight: '20px' }}>{creatorName}</span>
-      <span style={{ marginRight: '20px' }}>{title}</span>
+    <li className={style.PostList}>
+      <span className={style.PostDate}>{createAt}</span>
+      <span className={style.PostAuthor}>{creatorName}</span>
+      <span className={style.PostTitle}>{title}</span>
     </li>
   );
 };
