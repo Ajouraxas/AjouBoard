@@ -7,6 +7,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
   const onChange = (event) => {
     const {
       target: { value, name },
@@ -17,6 +18,7 @@ const LoginPage = () => {
       setPassword(value);
     }
   };
+
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -28,6 +30,11 @@ const LoginPage = () => {
       console.log(error);
     }
   };
+
+  const onClick = () => {
+    navigate("/register");
+  };
+
   return (
     <div>
       <div>
@@ -48,7 +55,7 @@ const LoginPage = () => {
         <button>Login with Google Account</button>
         <form>
           <span>이메일 찾기</span>
-          <span>회원 가입</span>
+          <span onClick={onClick}>회원 가입</span>
         </form>
       </div>
     </div>
