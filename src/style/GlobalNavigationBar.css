@@ -1,0 +1,46 @@
+@import "reset.css";
+
+/* Global Navagation Bar */
+
+.gnb {
+  background-color: #3b4890;
+  /* position: fixed; */
+  top: 0;
+  height: 70px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.gnbLogo {
+  width: 36px;
+  height: 36px;
+  margin: 15px 10px 15px 350px;
+}
+
+.gnbList {
+  display: flex;
+  position: relative;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.gnbLink {
+  margin-right: 30px;
+  color: white;
+  font-size: 12px;
+  text-decoration-line: none;
+  white-space: nowrap;
+}
+.gnbTitle {
+  font-size: 18px;
+  margin-right: 30px;
+}
+
+.gnbLogin {
+  margin-left: 830px;
+  justify-content: flex-end;
+}
+
+.gnbSignup {
+  justify-content: flex-end;
+}

@@ -1,5 +1,10 @@
 import React from "react";
-import './pageClubList.css';
+import '../style/ClubList.css';
+
+/**
+ * component: ClubIcon, ClubContainer
+ * useFor: ClubIcon은 아이콘 한개, ClubContainer는 아이콘 전체
+ */
 
 const clubName = ["검도부", "고슴도치", "꽁", "녹두벌", "늘사랑",
                   "돌벗", "드롭인", "마스터피스", "맨차", "미디올로지",
@@ -13,40 +18,31 @@ const clubName = ["검도부", "고슴도치", "꽁", "녹두벌", "늘사랑",
                   "BUT", "C.OB.E", "CAPO", "CCC", "Conjurer",
                   "DoIT", "GLEE", "PTPI", "ROA", "SFC",
                   "SWeat"];
-const clubNum = clubName.length;
-let v="hidden";
-function ClubIcon(props) {
-  return(
+
+const ClubIcon = (props) => {
+  return (
     <div className="clubIcon">
       <div className="clubIconName">
+        <div>
+          <span className="clubIconHover clubIconInfo">a</span>
+        </div>
         <span className="clubLink">{props.a}</span>
       </div>
-      <div style={{
-      margin: "auto",
-      textAlign: "center"
-      }}>
-        <span className="clubIconSubMenu rightCss">동아리 공지사항</span>
-        <span className="clubIconSubMenu rightCss">전체 게시물</span>
-        <span className="clubIconSubMenu">인기 게시물</span>
+      <div className="clubIconSubMenu clubIconHover">
+        <span className="rightCss">동아리 공지사항</span>
+        <span className="rightCss">전체 게시물</span>
+        <span>인기 게시물</span>
       </div>
     </div>
   );
-  }
-  function ClubContainer() {
-    return(
-      <div style={{
-        marginTop: "200px",
-        display: "grid",
-        margin: "auto",
-        gridTemplateColumns: "repeat(5, 300px)",
-        rowGap: "30px",
-        width: "1500px",
-        alignItems: "center",
-        justifyItems: "center"
-      }}>
-        {clubName.map((name, idx) => <ClubIcon key={idx} a={name}/>)}
-      </div>
-    );
-  }
+};
+
+const ClubContainer = () => {
+  return (
+    <div className="clubIconContainer">
+      {clubName.map((name, idx) => <ClubIcon key={idx} a={name}/>)}
+    </div>
+  );
+};
 
 export default ClubContainer;

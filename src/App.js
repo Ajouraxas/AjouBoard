@@ -1,6 +1,6 @@
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
-import ClubPage from './routes/ClubPage';
-import Home from './routes/Home';
+import ClubContainer from "./components/ClubList.js";
+import GlobalNavigationBar from "./components/GlobalNavigationBar.js";
+import HomeContent from "./components/HomeContent.js";
 
 /**
  * ClubPage 접속 : http://localhost:3000/#/club/123
@@ -9,12 +9,12 @@ import Home from './routes/Home';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path={'/'} element={<Home />}></Route>
-        <Route path={'/club/:clubId'} element={<ClubPage />}></Route>
-      </Routes>
-    </Router>
+    <div>
+      <GlobalNavigationBar />
+      <ClubContainer />
+      <HomeContent />
+    </div>
+
   );
 }
 
