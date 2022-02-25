@@ -1,10 +1,12 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { authService } from "../lib/fbase";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
   const onChange = (event) => {
     const {
       target: { value, name },
@@ -19,9 +21,10 @@ const LoginPage = () => {
     event.preventDefault();
     try {
       await signInWithEmailAndPassword(authService, email, password);
+      navigate("/");
+    } catch (error) {
       setEmail("");
       setPassword("");
-    } catch (error) {
       console.log(error);
     }
   };
