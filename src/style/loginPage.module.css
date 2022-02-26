@@ -1,0 +1,173 @@
+* {
+  box-sizing: border-box;
+}
+
+.wrapper {
+  position: relative;
+  width: 500px;
+  height: 400px;
+  background-color: #fafafa;
+  margin: 0 auto;
+  margin-top: 200px;
+  border-radius: 15px;
+  border: 1px solid #d3ddec;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 20px;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #d3ddec;
+}
+
+.title {
+  font-size: 24px;
+  margin-bottom: 14px;
+}
+
+.img {
+  width: 36px;
+  height: 36px;
+  background-color: aqua;
+  border-radius: 50%;
+  margin-bottom: 5px;
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+}
+
+.label {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.email {
+  position: absolute;
+  top: 14px;
+  left: 27px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+
+  color: #b5c9e9;
+}
+
+.password {
+  position: absolute;
+  top: 14px;
+  left: 27px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+
+  color: #b5c9e9;
+}
+
+.label + .label {
+  margin-top: 15px;
+}
+
+.input {
+  padding: 0;
+  width: 420px;
+  height: 40px;
+  border: 1px solid #d3ddec;
+  border-radius: 4px;
+  font-size: 14px;
+  padding-left: 70px;
+}
+
+.input::placeholder {
+  color: rgba(0, 0, 0, 0.1);
+}
+
+.button {
+  cursor: pointer;
+
+  border: none;
+  outline: none;
+  background: none;
+  position: absolute;
+  top: 239px;
+  left: 390px;
+  background: #3b4890;
+  border: 1px solid #d3ddec;
+  border-radius: 5px;
+  width: 70px;
+  height: 30px;
+  font-size: 14px;
+  color: white;
+}
+
+.google {
+  cursor: pointer;
+
+  border: none;
+  outline: none;
+  background: none;
+  position: absolute;
+  width: 250px;
+  height: 30px;
+  left: 125px;
+  top: 308px;
+  color: #3b4890;
+  background: #ffffff;
+  border: 1px solid #d3ddec;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+.findEmail {
+  cursor: pointer;
+
+  position: absolute;
+  width: 149px;
+  height: 16px;
+  left: 20px;
+  top: 368px;
+
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+
+  color: #3b4890;
+}
+
+.register {
+  cursor: pointer;
+
+  position: absolute;
+  width: 80px;
+  height: 16px;
+  left: 425px;
+  top: 368px;
+
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+
+  color: #3b4890;
+}
