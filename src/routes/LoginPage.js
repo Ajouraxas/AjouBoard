@@ -25,6 +25,18 @@ const LoginPage = () => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
+    if (email === "" || !email.includes("@")) {
+      setEmail("");
+      setPassword("");
+      setEmailError(true);
+      return;
+    }
+    if (password === "" || password.length < 8) {
+      setPassword("");
+      setEmailError(false);
+      setPasswordError(true);
+      return;
+    }
     try {
       await signInWithEmailAndPassword(authService, email, password);
       navigate("/");
