@@ -8,6 +8,8 @@ import styles from "../style/loginPage.module.css";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
   const navigate = useNavigate();
 
   const onChange = (event) => {
@@ -24,17 +26,18 @@ const LoginPage = () => {
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
-      const user = await signInWithEmailAndPassword(
-        authService,
-        email,
-        password,
-      );
-      // console.log(user.user);
+      await signInWithEmailAndPassword(authService, email, password);
       navigate("/");
-    } catch (error) {
-      setEmail("");
+    } catch ({ message }) {
       setPassword("");
-      console.log(error);
+      if (message === "Firebase: Error (auth/user-not-found).") {
+        setEmail("");
+        setEmailError(true);
+      }
+      if (message === "Firebase: Error (auth/wrong-password).") {
+        setEmailError(false);
+        setPasswordError(true);
+      }
     }
   };
 
@@ -51,24 +54,40 @@ const LoginPage = () => {
         </div>
         <form onSubmit={onSubmit} className={styles.form}>
           <label className={styles.label}>
-            <span className={styles.email}>이메일</span>
+            <span
+              className={`${styles.email} ${emailError ? styles.error : ""}`}
+            >
+              이메일
+            </span>
             <input
               name="email"
               type="email"
               onChange={onChange}
               value={email}
-              className={styles.input}
+              className={`${styles.input} ${
+                emailError ? styles.errorInput : ""
+              }`}
               placeholder="初めまして、私わみんぎゅです"
+              required
             />
           </label>
           <label className={styles.label}>
-            <span className={styles.password}>파스워도</span>
+            <span
+              className={`${styles.password} ${
+                passwordError ? styles.error : ""
+              }`}
+            >
+              파스워도
+            </span>
             <input
               name="password"
               type="password"
               onChange={onChange}
               value={password}
-              className={styles.input}
+              className={`${styles.input} ${
+                passwordError ? styles.errorInput : ""
+              }`}
+              required
             />
           </label>
           <button className={styles.button}>ログイン</button>

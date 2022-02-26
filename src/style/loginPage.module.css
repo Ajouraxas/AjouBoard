@@ -82,6 +82,10 @@
   color: #b5c9e9;
 }
 
+.error {
+  color: red;
+}
+
 .label + .label {
   margin-top: 15px;
 }
@@ -94,6 +98,11 @@
   border-radius: 4px;
   font-size: 14px;
   padding-left: 70px;
+}
+
+.errorInput {
+  border: 1px solid red;
+  transition: 0.5s;
 }
 
 .input::placeholder {
