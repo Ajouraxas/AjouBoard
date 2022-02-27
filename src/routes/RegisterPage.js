@@ -1,11 +1,12 @@
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { authService, dbService } from "../lib/fbase";
 import styles from "../style/registerPage.module.css";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState(""); // 이메일
+  const [isChecked, setIsChecked] = useState(false); // 이메일 중복 검사 여부
   const [password, setPassword] = useState(""); // 비밀번호
   const [confirmPassword, setConfirmPassword] = useState(""); // 비밀번호 확인
   const [nickName, setNickName] = useState(""); // 닉네임
@@ -46,6 +47,25 @@ const RegisterPage = () => {
         break;
       default:
         break;
+    }
+  };
+
+  const isOverlap = async (event) => {
+    event.preventDefault();
+    try {
+      const docRef = doc(dbService, "users", email);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        console.log("중복");
+        setIsChecked(false);
+        return true;
+      } else {
+        console.log("통과");
+        setIsChecked(true);
+        return false;
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -109,7 +129,13 @@ const RegisterPage = () => {
                   placeholder="이메일"
                   required
                 />
-                <button className={styles.overlapButton}>중복 확인</button>
+                <button
+                  type="button"
+                  onClick={isOverlap}
+                  className={styles.overlapButton}
+                >
+                  중복 확인
+                </button>
               </label>
               <label className={styles.requiredLabel}>
                 <span>비밀번호</span>
