@@ -9,13 +9,9 @@ import {
 } from 'firebase/firestore';
 import { dbService } from '../lib/fbase';
 import React, { useEffect, useState } from 'react';
-import PostList from '../components/PostList';
-import PostMenu from '../components/PostMenu';
 import PostNavbar from '../components/PostNavbar';
-import PostSearchBar from '../components/PostSearchBar';
-import Pagination from '../components/Pagination';
-import WriteBoard from '../components/WriteBoard';
-import postStyle from '../style/PostList.module.css';
+import Posts from '../components/Posts';
+
 /**
  * component: PostNavber
  * useFor: 동아리 공지사항, 전체글, 개추 받은 글, 글쓰기
@@ -35,7 +31,6 @@ const ClubPage = () => {
   const [viewType, setViewType] = useState('all');
   const [selectPageIndex, setSelectPageIndex] = useState(1);
   const [countPageLimit, setCountPageLimit] = useState(1);
-  const [isWriting, setIsWriting] = useState(false);
   const pageLimit = 20;
 
   useEffect(() => {
@@ -97,11 +92,10 @@ const ClubPage = () => {
       const allDocs = await getDocs(countPageLimitQ);
       setCountPageLimit(parseInt(Math.ceil(allDocs.docs.length / pageLimit)));
     };
-    if (!isWriting) {
-      getPosts();
-      getCountPageLimit();
-    }
-  }, [viewType, selectPageIndex, isWriting]);
+
+    getPosts();
+    getCountPageLimit();
+  }, [viewType, selectPageIndex]);
 
   return (
     // Navigation Bar (홈, 동아리 목록)
@@ -111,40 +105,15 @@ const ClubPage = () => {
           viewType={viewType}
           setViewType={setViewType}
           setSelectPageIndex={setSelectPageIndex}
-          setIsWriting={setIsWriting}
-          isWriting={isWriting}
         />
       </div>
-      {isWriting ? (
-        <WriteBoard
-          setSelectPageIndex={setSelectPageIndex}
-          setIsWriting={setIsWriting}
-        />
-      ) : (
-        <>
-          <div>
-            <PostMenu />
-            <ul className={postStyle.PostUl}>
-              {posts.map((post) => (
-                <PostList
-                  creatorName={post.creatorName}
-                  key={post.index}
-                  createAt={post.createAt}
-                  title={post.title}
-                />
-              ))}
-            </ul>
-          </div>
-          <div>
-            <PostSearchBar />
-            <Pagination
-              countPageLimit={countPageLimit}
-              setSelectPageIndex={setSelectPageIndex}
-              selectPageIndex={selectPageIndex}
-            />
-          </div>
-        </>
-      )}
+
+      <Posts
+        posts={posts}
+        selectPageIndex={selectPageIndex}
+        countPageLimit={countPageLimit}
+        setSelectPageIndex={setSelectPageIndex}
+      />
     </>
   );
 };

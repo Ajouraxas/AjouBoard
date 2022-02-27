@@ -1,0 +1,133 @@
+.MenuUl {
+  display: flex;
+  justify-content: left;
+  margin-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #3b4890;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: medium;
+  font-weight: bold;
+  color: #3b4890;
+}
+
+.MenuDate {
+  width: 100px;
+  padding-right: 10px;
+  text-align: center;
+}
+
+.MenuAuthor {
+  width: 100px;
+  padding-right: 10px;
+  padding-left: 10px;
+  text-align: center;
+}
+
+.MenuTitle {
+  flex: 1;
+  padding-left: 10px;
+  text-align: center;
+}
+
+.PostUl {
+  justify-content: left;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: small;
+}
+
+.PostDate {
+  width: 100px;
+  text-align: center;
+  padding-right: 10px;
+  border-right: 1px solid #eeeeee;
+}
+
+.PostAuthor {
+  width: 100px;
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-right: 1px solid #eeeeee;
+}
+
+.PostTitle {
+  flex: 1;
+  padding-left: 10px;
+}
+
+.PostList {
+  display: flex;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.SearchForm {
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: small;
+}
+
+.SearchInput {
+  margin-top: 50px;
+  padding: 5px;
+  padding-left: 10px;
+  width: 175px;
+  height: 20px;
+  text-align: left;
+  border: #3b4890 solid;
+  outline: none;
+}
+
+.SearchBtn {
+  margin-top: 50px;
+  cursor: pointer;
+  width: 50px;
+  font-weight: bolder;
+  text-align: center;
+  border: #3b4890 solid;
+  background-color: #3b4890;
+  color: #ffffff;
+}
+
+.PaginationUl {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: smaller;
+  font-weight: bold;
+}
+
+.PaginationLi {
+  padding-top: 5px;
+  width: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.SelectPaginationLi {
+  padding-top: 5px;
+  width: 20px;
+  text-align: center;
+  cursor: pointer;
+  color: rgb(255, 0, 0);
+}
+
+.PaginationBtn {
+  border: #3b4890 solid;
+  background-color: #3b4890;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: bolder;
+  border-radius: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+}

@@ -6,13 +6,7 @@ import style from '../style/PostNavbar.module.css';
  * useFor: 동아리 공지사항, 전체글, 개추 받은 글, 글쓰기
  */
 
-const PostNavbar = ({
-  viewType,
-  setViewType,
-  setSelectPageIndex,
-  setIsWriting,
-  isWriting,
-}) => {
+const PostNavbar = ({ viewType, setViewType, setSelectPageIndex }) => {
   const onClick = (e) => {
     const {
       target: { id },
@@ -20,15 +14,15 @@ const PostNavbar = ({
     setViewType(id);
     setSelectPageIndex(1);
   };
-  const onWrite = () => {
-    setIsWriting(true);
+  const onWrite = (e) => {
+    e.preventDefault();
   };
   return (
     <>
       <ul className={style.navUl}>
         <li
           className={`${style.navLi} ${
-            viewType === 'announce' ? style.navSelect : null
+            viewType === 'announce' ? style.navSelect : ''
           }`}
           id={'announce'}
           onClick={onClick}
@@ -37,7 +31,7 @@ const PostNavbar = ({
         </li>
         <li
           className={`${style.navLi} ${
-            viewType === 'all' ? style.navSelect : null
+            viewType === 'all' ? style.navSelect : ''
           }`}
           id={'all'}
           onClick={onClick}
@@ -46,18 +40,17 @@ const PostNavbar = ({
         </li>
         <li
           className={`${style.navLiLast} ${
-            viewType === 'popular' ? style.navSelect : null
+            viewType === 'popular' ? style.navSelect : ''
           }`}
           id={'popular'}
           onClick={onClick}
         >
           개추 받은 글
         </li>
-        {isWriting ? null : (
-          <button className={style.navBtn} onClick={onWrite}>
-            글쓰기
-          </button>
-        )}
+
+        <button className={style.navBtn} onClick={onWrite}>
+          글쓰기
+        </button>
       </ul>
     </>
   );
