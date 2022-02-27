@@ -95,15 +95,6 @@ a:active {
   font-size: 30px;
 }
 
-.clubNameSearch {
-  position: absolute;
-  transform: translate(400px);
-  background-color: #d8d8d8;
-  border: none;
-  border-bottom: solid;
-  border-bottom-width: 1.5px;
-  height: 30px;
-}
 .clubIconList {
   display: grid;
   margin-left: auto;
