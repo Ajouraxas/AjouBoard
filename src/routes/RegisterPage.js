@@ -1,10 +1,18 @@
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  updateProfile,
+} from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { authService, dbService } from "../lib/fbase";
 import styles from "../style/registerPage.module.css";
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState(""); // 이메일
   const [isChecked, setIsChecked] = useState(false); // 이메일 중복 검사 여부
   const [password, setPassword] = useState(""); // 비밀번호
@@ -64,6 +72,24 @@ const RegisterPage = () => {
         setIsChecked(true);
         return false;
       }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onAuthWithGoogle = async () => {
+    try {
+      const googleProvider = new GoogleAuthProvider();
+      const { user } = await signInWithPopup(authService, googleProvider);
+      const docSnap = await getDoc(doc(dbService, "users", user.email));
+      console.log(docSnap);
+      await setDoc(doc(dbService, "users", user.email), {
+        id: user.uid,
+        name: user.displayName,
+        email: user.email,
+        nickName: user.email.split("@")[0],
+      });
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
@@ -229,7 +255,9 @@ const RegisterPage = () => {
           </form>
           <div className={styles.withGoogleBox}>
             <span>또는 구글 이메일로 가입하기</span>
-            <button>Login with Google Account</button>
+            <button onClick={onAuthWithGoogle}>
+              Login with Google Account
+            </button>
           </div>
         </div>
       </div>
