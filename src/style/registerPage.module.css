@@ -1,0 +1,238 @@
+* {
+  box-sizing: border-box;
+}
+
+.wrapper {
+  width: 1000px;
+  height: 900px;
+  margin: 0 auto;
+  margin-top: 120px;
+  background: #fafafa;
+  border: 1px solid #d3ddec;
+  border-radius: 10px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 40px 0 40px;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #96b7e9;
+}
+
+.img {
+  width: 36px;
+  height: 36px;
+  background-color: aqua;
+  border-radius: 50%;
+  margin-bottom: 5px;
+}
+
+.title {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 28px;
+  color: #000000;
+}
+
+.mainContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.mainForm {
+  width: 100%;
+}
+
+.requiredContent {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #96b7e9;
+}
+
+.requiredContent_title {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 19px;
+  color: #3b4890;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  margin-bottom: 7px;
+}
+
+.titleBlock .requiredContent_title {
+  margin-bottom: 7px;
+}
+
+.requiredContent_des {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  color: #b5c9e9;
+}
+
+.requiredLabel {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+  position: relative;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  color: #3b4890;
+}
+
+.requiredLabel span {
+  position: absolute;
+  left: 10px;
+}
+
+.overlapButton {
+  position: absolute;
+  right: 70px;
+  width: 70px;
+  height: 30px;
+  background: #3b4890;
+  border: 1px solid #d3ddec;
+  border-radius: 5px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+
+  color: #ffffff;
+}
+
+.input {
+  width: 420px;
+  height: 40px;
+  background: #ffffff;
+  border: 1px solid #d3ddec;
+  border-radius: 5px;
+  padding: 0 10px;
+}
+
+.input::placeholder {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  color: #b5c9e9;
+}
+
+.genderBlock {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+  position: relative;
+}
+.gender_title {
+  position: absolute;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  color: #3b4890;
+  left: 10px;
+}
+
+.buttonBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.genderButton {
+  width: 130px;
+  height: 40px;
+  background: #ffffff;
+  border: 1px solid #d3ddec;
+  border-radius: 5px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  color: #b5c9e9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.genderButton + .genderButton {
+  margin-left: 15px;
+}
+
+.registerButton {
+  width: 70px;
+  height: 30px;
+  background: #3b4890;
+  border: 1px solid #d3ddec;
+  border-radius: 5px;
+  color: white;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  margin: 30px 0;
+}
+
+.withGoogleBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.withGoogleBox span {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 19px;
+  color: #3b4890;
+  margin-top: 15px;
+}
+
+.withGoogleBox button {
+  margin-top: 15px;
+  width: 250px;
+  height: 30px;
+  background: #ffffff;
+  border: 1px solid #d3ddec;
+  box-sizing: border-box;
+  border-radius: 5px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  color: #3b4890;
+}
