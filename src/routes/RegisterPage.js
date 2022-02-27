@@ -12,12 +12,6 @@ import styles from "../style/registerPage.module.css";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-
-  /* 
-    TODO
-    필수 사항 조건부 CSS
-  */
-
   const [email, setEmail] = useState(""); // 이메일
   const [password, setPassword] = useState(""); // 비밀번호
   const [confirmPassword, setConfirmPassword] = useState(""); // 비밀번호 확인
@@ -27,7 +21,6 @@ const RegisterPage = () => {
   const [studentNumber, setStudentNumber] = useState(""); // 학번
   const [gender, setGender] = useState(""); // 성별
   const [univEmail, setUnivEmail] = useState(""); // 학교 이메일
-
   const [isChecked, setIsChecked] = useState(false); // 이메일 중복 검사 여부
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);

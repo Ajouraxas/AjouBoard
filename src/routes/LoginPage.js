@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { authService, dbService } from "../lib/fbase";
 import "../style/reset.css";
 import styles from "../style/loginPage.module.css";
-import { addDoc, collection, doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
