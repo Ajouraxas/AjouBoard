@@ -3,6 +3,11 @@
    License: none (public domain)
 */
 
+@font-face {
+  font-family: 'Roboto';
+  src: local('../asset/font/Roboto-Black.ttf') format('truetype');
+}
+
 html,
 body,
 div,
@@ -107,6 +112,8 @@ section {
 }
 body {
   line-height: 1;
+
+  font-family: Roboto;
 }
 ol,
 ul {
@@ -120,7 +127,7 @@ blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-  content: "";
+  content: '';
   content: none;
 }
 table {
