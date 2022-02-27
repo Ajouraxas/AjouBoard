@@ -1,4 +1,3 @@
-import GlobalNavigationBar from '../components/GlobalNavigationBar.js';
 import style from '../style/HomeContent.module.css';
 import anc1 from '../asset/img/anc1.jpg';
 import anc2 from '../asset/img/anc2.jpg';
@@ -6,8 +5,7 @@ import anc2 from '../asset/img/anc2.jpg';
 const Home = () => {
   return (
     <>
-      <GlobalNavigationBar />
-      <div>
+      <div className={style.container}>
         <div className={style.content}>
           <div className={style.contentText}>HOME</div>
           <div className={style.contentText}>

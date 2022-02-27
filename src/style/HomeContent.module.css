@@ -1,5 +1,9 @@
 /* content */
 
+.container {
+  margin-top: 80px;
+}
+
 .content {
   display: flex;
   flex-direction: column;

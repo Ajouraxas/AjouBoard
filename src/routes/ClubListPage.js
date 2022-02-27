@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import GlobalNavigationBar from '../components/GlobalNavigationBar.js';
 import style from '../style/ClubList.module.css';
 
 /**
@@ -91,7 +90,6 @@ const ClubListPage = () => {
   };
   return (
     <>
-      <GlobalNavigationBar />
       <div className={style.clubIconContainer}>
         <div className={style.clubIconContainerTopMenu}>
           <span className={style.clubContainerName}>동아리 목록</span>

@@ -55,7 +55,7 @@ const Posts = ({
     return (
       <li
         className={
-          id === selectPageIndex ? style.SelectPaginationLi : style.PaginationLi
+          id === selectPageIndex ? style.selectPaginationLi : style.paginationLi
         }
         key={id}
         id={id}
