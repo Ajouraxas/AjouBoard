@@ -34,6 +34,7 @@ const RegisterPage = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [passwordConfirmError, setPasswordConfirmError] = useState(false);
   const [nickNameError, setNickNameError] = useState(false);
+  const [univEmailError, setUnivEmailError] = useState(false);
 
   const onChange = (event) => {
     const {
@@ -129,6 +130,30 @@ const RegisterPage = () => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
+    if (!isChecked) {
+      setEmailError(true);
+      return;
+    }
+    if (email === "" || !email.includes("@")) {
+      setEmailError(true);
+      return;
+    }
+    if (password === "" || password.length < 8) {
+      setPasswordError(true);
+      return;
+    }
+    if (name === "") {
+      setNameError(true);
+      return;
+    }
+    if (nickName === "") {
+      setNickNameError(true);
+      return;
+    }
+    if (univEmail && !univEmail.includes("@ajou.ac.kr")) {
+      setUnivEmailError(true);
+      return;
+    }
     try {
       const { user } = await createUserWithEmailAndPassword(
         authService,
@@ -148,6 +173,7 @@ const RegisterPage = () => {
         gender,
         univEmail,
       });
+      navigate("/login");
     } catch (error) {
       console.log(error);
     }
@@ -164,7 +190,11 @@ const RegisterPage = () => {
           <form onSubmit={onSubmit} className={styles.mainForm}>
             <div className={styles.requiredContent}>
               <span className={styles.requiredContent_title}>필수사항</span>
-              <label className={styles.requiredLabel}>
+              <label
+                className={`${styles.requiredLabel} ${
+                  nameError ? styles.inputError : ""
+                }`}
+              >
                 <span>이름</span>
                 <input
                   className={styles.input}
@@ -199,7 +229,11 @@ const RegisterPage = () => {
                   중복 확인
                 </button>
               </label>
-              <label className={styles.requiredLabel}>
+              <label
+                className={`${styles.requiredLabel} ${
+                  passwordError ? styles.inputError : ""
+                }`}
+              >
                 <span>비밀번호</span>
                 <input
                   className={styles.input}
@@ -227,7 +261,11 @@ const RegisterPage = () => {
                   required
                 />
               </label>
-              <label className={styles.requiredLabel}>
+              <label
+                className={`${styles.requiredLabel} ${
+                  nickNameError ? styles.inputError : ""
+                }`}
+              >
                 <span>닉네임</span>
                 <input
                   className={styles.input}
@@ -306,7 +344,11 @@ const RegisterPage = () => {
                   </button>
                 </div>
               </div>
-              <label className={styles.requiredLabel}>
+              <label
+                className={`${styles.requiredLabel} ${
+                  univEmailError ? styles.inputError : ""
+                }`}
+              >
                 <span>아주대학교 이메일</span>
                 <input
                   type="email"
