@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { authService, dbService } from "../lib/fbase";
 
@@ -59,7 +59,7 @@ const RegisterPage = () => {
       await updateProfile(user, {
         displayName: nickName,
       });
-      await addDoc(collection(dbService, "users"), {
+      await setDoc(doc(dbService, "users", email), {
         id: user.uid,
         name,
         email,

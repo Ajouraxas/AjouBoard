@@ -1,9 +1,14 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { authService } from "../lib/fbase";
+import { authService, dbService } from "../lib/fbase";
 import "../style/reset.css";
 import styles from "../style/loginPage.module.css";
+import { addDoc, collection, doc, getDoc, setDoc } from "firebase/firestore";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -11,7 +16,6 @@ const LoginPage = () => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const navigate = useNavigate();
-
   const onChange = (event) => {
     const {
       target: { value, name },
@@ -55,6 +59,24 @@ const LoginPage = () => {
 
   const onClick = () => {
     navigate("/register");
+  };
+
+  const onAuthWithGoogle = async () => {
+    try {
+      const googleProvider = new GoogleAuthProvider();
+      const { user } = await signInWithPopup(authService, googleProvider);
+      const docSnap = await getDoc(doc(dbService, "users", user.email));
+      console.log(docSnap);
+      await setDoc(doc(dbService, "users", user.email), {
+        id: user.uid,
+        name: user.displayName,
+        email: user.email,
+        nickName: user.email.split("@")[0],
+      });
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -104,7 +126,9 @@ const LoginPage = () => {
           </label>
           <button className={styles.button}>ログイン</button>
         </form>
-        <button className={styles.google}>Login with Google Account</button>
+        <button onClick={onAuthWithGoogle} className={styles.google}>
+          Login with Google Account
+        </button>
         <form>
           <span className={styles.findEmail}>이메일 기억안나누 ㅋㅋ</span>
           <span onClick={onClick} className={styles.register}>
