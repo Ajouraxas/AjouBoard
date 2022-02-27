@@ -15,7 +15,6 @@ const RegisterPage = () => {
 
   /* 
     TODO
-    중복 확인 조건부 CSS
     필수 사항 조건부 CSS
     학번 타입 검사
   */
@@ -91,18 +90,19 @@ const RegisterPage = () => {
 
   const isOverlap = async (event) => {
     event.preventDefault();
+    if (email === "" || !email.includes("@")) {
+      setEmailError(true);
+      return;
+    }
     try {
       const docRef = doc(dbService, "users", email);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         setEmailError(true);
         setIsChecked(false);
-        return true;
       } else {
         setEmailError(false);
-        console.log("통과");
         setIsChecked(true);
-        return false;
       }
     } catch (error) {
       console.log(error);
