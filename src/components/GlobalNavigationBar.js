@@ -1,4 +1,4 @@
-import "../style/GlobalNavigationBar.css";
+import style from "../style/GlobalNavigationBar.module.css";
 import logo_ajouboard from "../asset/img/logo_ajouboard.jpg";
 
 /**
@@ -8,25 +8,31 @@ import logo_ajouboard from "../asset/img/logo_ajouboard.jpg";
 
 const GlobalNavigationBar = () => {
   return (
-    <div className="gnb">
-      <ul className="gnbList">
-        <li>
-          <img className="gnbLogo" src={logo_ajouboard}/>
-        </li>
-        <li>
-          <span className="gnbLink gnbTitle">AJOUBOARD</span>
-        </li>
-        <li>
-          <span className="gnbLink">HOME</span>
-        </li>
-        <li>
-          <span className="gnbLink">CLUB LIST</span>
-        </li>
-        <li>
-          <span className="gnbLink gnbLogin">LOGIN</span>
-        </li>
-      </ul>
-    </div>
+    <>
+      <div className={style.gnbContainer}>
+        <div className={style.gnb}>
+          <ul className={style.gnbList}>
+            <li>
+              <img className={style.gnbLogo} src={logo_ajouboard}/>
+            </li>
+            <li>
+              <span className={`${style.gnbLink} ${style.gnbTitle}`}>AJOUBOARD</span>
+            </li>
+            <li>
+              <span className={style.gnbLink}>HOME</span>
+            </li>
+            <li>
+              <span className={style.gnbLink}>CLUB LIST</span>
+            </li>
+            <li>
+              <span className={`${style.gnbLink} ${style.gnbLogin}`}>LOGIN</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </>
+    
+    
   );
 };
 

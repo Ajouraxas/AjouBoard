@@ -2,19 +2,27 @@
 
 /* Global Navagation Bar */
 
-.gnb {
+.gnbContainer {
+  width: 100%;
   background-color: #3b4890;
+}
+
+.gnb {
   /* position: fixed; */
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
   top: 0;
   height: 70px;
-  width: 100%;
-  box-sizing: border-box;
+  width: 1200px;
 }
 
 .gnbLogo {
   width: 36px;
   height: 36px;
-  margin: 15px 10px 15px 350px;
+  margin-left: 0px;
+  margin-right: 10px;
 }
 
 .gnbList {
@@ -31,6 +39,7 @@
   text-decoration-line: none;
   white-space: nowrap;
 }
+
 .gnbTitle {
   font-size: 18px;
   margin-right: 30px;
@@ -38,6 +47,7 @@
 
 .gnbLogin {
   margin-left: 830px;
+  margin-right: 0px;
   justify-content: flex-end;
 }
 

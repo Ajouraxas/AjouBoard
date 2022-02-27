@@ -1,5 +1,5 @@
 import React from "react";
-import '../style/ClubList.css';
+import style from '../style/ClubList.module.css';
 
 /**
  * component: ClubIcon, ClubContainer
@@ -21,27 +21,41 @@ const clubName = ["검도부", "고슴도치", "꽁", "녹두벌", "늘사랑",
 
 const ClubIcon = (props) => {
   return (
-    <div className="clubIcon">
-      <div className="clubIconName">
-        <div>
-          <span className="clubIconHover clubIconInfo">a</span>
+    <>
+      <div className={style.clubIcon}>
+        <div className={style.clubIconName}>
+          <div className={`${style.clubIconSubMenuContainer} ${style.clubIconHover}`}>
+            <div className={style.clubIconSubMenu}>
+              <span className={style.rightCss}>동아리 공지사항</span>
+              <span className={style.rightCss}>전체글</span>
+              <span>인기글</span>
+            </div>
+          </div>
+          <span className={style.clubLink}>{props.a}</span>
         </div>
-        <span className="clubLink">{props.a}</span>
+        <div className={style.clubIconInfo}>
+          <span>a</span>
+        </div>
       </div>
-      <div className="clubIconSubMenu clubIconHover">
-        <span className="rightCss">동아리 공지사항</span>
-        <span className="rightCss">전체 게시물</span>
-        <span>인기 게시물</span>
-      </div>
-    </div>
+    </>
+    
   );
 };
 
 const ClubContainer = () => {
   return (
-    <div className="clubIconContainer">
-      {clubName.map((name, idx) => <ClubIcon key={idx} a={name}/>)}
-    </div>
+    <>
+      <div className={style.clubIconContainer}>
+        <div className={style.clubIconContainerTopMenu}>
+          <span className={style.clubContainerName}>동아리 목록</span>
+          <input placeholder="검색" className={style.clubNameSearch}></input>
+        </div>
+        <div className={style.clubIconList}>
+          {clubName.map((name, idx) => <ClubIcon key={idx} a={name}/>)}
+        </div>
+      </div>
+    </>
+    
   );
 };
 

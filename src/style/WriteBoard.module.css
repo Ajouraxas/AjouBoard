@@ -1,0 +1,62 @@
+.boardForm {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+.boardTitle {
+  border: #3b4890 solid;
+  display: block;
+  resize: none;
+  padding: 10px;
+  padding-top: 10px;
+  width: 50%;
+  height: 15px;
+  margin: 20px auto 10px;
+}
+
+.boardContent {
+  border: #3b4890 solid;
+  display: block;
+  resize: none;
+  padding: 10px;
+  width: 50%;
+  height: 500px;
+  margin: 0 auto;
+}
+
+input[type='file'] {
+  display: none;
+}
+
+.boardFile {
+  padding: 6px 25px;
+  border: #3b4890 solid;
+  background-color: #3b4890;
+  border-radius: 5px;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.boardFileDiv {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.boardBtnDiv {
+  display: flex;
+  justify-content: center;
+}
+
+.boardBtn {
+  border: #3b4890 solid;
+  background-color: #3b4890;
+  color: #ffffff;
+  cursor: pointer;
+  width: 50px;
+  font-weight: bolder;
+  border-radius: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
