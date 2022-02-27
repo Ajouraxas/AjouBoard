@@ -16,7 +16,6 @@ const RegisterPage = () => {
   /* 
     TODO
     필수 사항 조건부 CSS
-    학번 타입 검사
   */
 
   const [email, setEmail] = useState(""); // 이메일
@@ -70,6 +69,7 @@ const RegisterPage = () => {
         setDepartment(value);
         break;
       case "studentNumber":
+        if (isNaN(+value)) return;
         setStudentNumber(value);
         break;
       case "univEmail":
@@ -263,7 +263,7 @@ const RegisterPage = () => {
               <label className={styles.requiredLabel}>
                 <span>학번</span>
                 <input
-                  type="number"
+                  type="text"
                   name="studentNumber"
                   value={studentNumber}
                   onChange={onChange}
