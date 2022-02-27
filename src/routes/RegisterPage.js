@@ -13,6 +13,15 @@ import styles from "../style/registerPage.module.css";
 const RegisterPage = () => {
   const navigate = useNavigate();
 
+  /* 
+    TODO
+    중복 확인 조건부 CSS
+    필수 사항 조건부 CSS
+    비밀 번호 확인 검증 + CSS
+    성별 버튼 기능 추가
+    학번 타입 검사
+  */
+
   const [email, setEmail] = useState(""); // 이메일
   const [isChecked, setIsChecked] = useState(false); // 이메일 중복 검사 여부
   const [password, setPassword] = useState(""); // 비밀번호
@@ -56,6 +65,14 @@ const RegisterPage = () => {
       default:
         break;
     }
+  };
+
+  const onSelectGender = (event) => {
+    event.preventDefault();
+    const {
+      target: { value },
+    } = event;
+    setGender(value);
   };
 
   const isOverlap = async (event) => {
@@ -234,9 +251,36 @@ const RegisterPage = () => {
               <div className={styles.genderBlock}>
                 <span className={styles.gender_title}>성별</span>
                 <div className={styles.buttonBox}>
-                  <span className={styles.genderButton}>남성</span>
-                  <span className={styles.genderButton}>여성</span>
-                  <span className={styles.genderButton}>기타</span>
+                  <button
+                    type="button"
+                    value="male"
+                    className={`${styles.genderButton} ${
+                      gender === "male" ? styles.genderActivity : ""
+                    }`}
+                    onClick={onSelectGender}
+                  >
+                    남성
+                  </button>
+                  <button
+                    type="button"
+                    value="female"
+                    className={`${styles.genderButton} ${
+                      gender === "female" ? styles.genderActivity : ""
+                    }`}
+                    onClick={onSelectGender}
+                  >
+                    여성
+                  </button>
+                  <button
+                    type="button"
+                    value="guitar"
+                    className={`${styles.genderButton} ${
+                      gender === "guitar" ? styles.genderActivity : ""
+                    }`}
+                    onClick={onSelectGender}
+                  >
+                    기타
+                  </button>
                 </div>
               </div>
               <label className={styles.requiredLabel}>

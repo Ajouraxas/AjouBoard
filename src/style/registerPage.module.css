@@ -192,6 +192,12 @@
   position: relative;
 }
 
+.genderActivity {
+  background-color: #3b4890;
+  color: white;
+  transition: 0.4s;
+}
+
 .genderButton + .genderButton {
   margin-left: 15px;
 }
