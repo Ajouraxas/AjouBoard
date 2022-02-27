@@ -3,7 +3,7 @@ import ClubPage from "./routes/ClubPage";
 import Home from "./routes/Home";
 import LoginPage from "./routes/LoginPage";
 import RegisterPage from "./routes/RegisterPage";
-
+import './style/reset.css';
 /**
  * ClubPage 접속 : http://localhost:3000/#/club/123
  * Home 접속 : http://localhost:3000/#/
