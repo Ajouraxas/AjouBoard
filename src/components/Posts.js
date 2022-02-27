@@ -70,42 +70,42 @@ const Posts = ({
     <>
       <div>
         <div>
-          <ul className={style.MenuUl}>
-            <li className={style.MenuDate}>날짜</li>
-            <li className={style.MenuAuthor}>글쓴이</li>
-            <li className={style.MenuTitle}>제목</li>
+          <ul className={style.menuUl}>
+            <li className={style.menuDate}>날짜</li>
+            <li className={style.menuAuthor}>글쓴이</li>
+            <li className={style.menuTitle}>제목</li>
           </ul>
         </div>
-        <ul className={style.PostUl}>
+        <ul className={style.postUl}>
           {posts.map((post) => (
-            <li className={style.PostList} key={post.createAt}>
-              <span className={style.PostDate}>{post.createAt}</span>
-              <span className={style.PostAuthor}>{post.creatorName}</span>
-              <span className={style.PostTitle}>{post.title}</span>
+            <li className={style.postList} key={post.createAt}>
+              <span className={style.postDate}>{post.createAt}</span>
+              <span className={style.postAuthor}>{post.creatorName}</span>
+              <span className={style.postTitle}>{post.title}</span>
             </li>
           ))}
         </ul>
       </div>
       <div>
         <div>
-          <form className={style.SearchForm}>
+          <form className={style.searchForm}>
             <input
-              className={style.SearchInput}
+              className={style.searchInput}
               type="text"
               placeholder="검색어 입력"
             />
-            <button onClick={onClickSearch} className={style.SearchBtn}>
+            <button onClick={onClickSearch} className={style.searchBtn}>
               검색
             </button>
           </form>
         </div>
-        <ul className={style.PaginationUl}>
+        <ul className={style.paginationUl}>
           {' '}
-          <button className={style.PaginationBtn} key={'previous'}>
+          <button className={style.paginationBtn} key={'previous'}>
             이전
           </button>
           {pagination()}
-          <button className={style.PaginationBtn} key={'next'}>
+          <button className={style.paginationBtn} key={'next'}>
             다음
           </button>
         </ul>

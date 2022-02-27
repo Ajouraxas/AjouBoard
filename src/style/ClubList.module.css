@@ -1,0 +1,105 @@
+.clubIcon {
+  list-style: none;
+  width: 270px;
+  height: 200px;
+}
+
+.clubIconName {
+  margin: 0px;
+  display: table;
+  font-size: 24px;
+  height: 150px;
+  width: 100%;
+  margin: auto;
+  position: relative;
+  background-color: #afc4e7;
+}
+
+.clubIconSubMenuContainer {
+  position: absolute;
+  text-align: center;
+  width: 260px;
+  height: 100px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.clubIconSubMenu {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.clubIconInfo {
+  padding-top: 20px;
+  width: 100%;
+  padding-bottom: 15px;
+  border-bottom: solid;
+  border-bottom-width: 1.5px;
+}
+
+.clubIconHover {
+  visibility: hidden;
+  background-color: rgba(230, 230, 230, 90%);
+}
+
+.clubIcon:hover .clubIconHover {
+  visibility: visible;
+}
+
+.clubLink {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.rightCss {
+  margin-right: 8px;
+  padding-right: 8px;
+  border-right: solid;
+  border-width: 1px;
+}
+
+.clubIconContainer {
+  margin-top: 150px;
+}
+
+.clubIconContainerTopMenu {
+  margin-left: auto;
+  margin-right: auto;
+  border-bottom: solid;
+  border-width: 1.5px;
+  padding-bottom: 30px;
+  margin-bottom: 20px;
+  width: 1600px;
+  text-align: center;
+  height: 30px;
+}
+
+.clubContainerName {
+  font-size: 30px;
+}
+
+.clubNameSearch {
+  position: absolute;
+  transform: translate(400px);
+  background-color: #d8d8d8;
+  border: none;
+  border-bottom: solid;
+  border-bottom-width: 1.5px;
+  height: 30px;
+}
+.clubIconList {
+  display: grid;
+  margin-left: auto;
+  margin-right: auto;
+  grid-template-columns: repeat(5, 300px);
+  row-gap: 30px;
+  width: 1500px;
+  align-items: center;
+  justify-items: center;
+}

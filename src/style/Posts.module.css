@@ -1,52 +1,60 @@
-.MenuUl {
+.postsContainer {
+  margin-left: auto;
+  margin-right: auto;
+  width: 1150px;
+}
+
+.menuUl {
+  list-style: none;
   display: flex;
+  margin-left: auto;
+  margin-right: auto;
   justify-content: left;
   margin-top: 10px;
   padding-bottom: 10px;
-  border-bottom: 1px solid #3b4890;
-  width: 60%;
-  margin-left: auto;
-  margin-right: auto;
+  border-bottom: 1px solid black;
+  padding-left: 50px;
+  width: 1100px;
   font-size: medium;
   font-weight: bold;
-  color: #3b4890;
 }
 
-.MenuDate {
+.menuDate {
   width: 100px;
   padding-right: 10px;
   text-align: center;
 }
 
-.MenuAuthor {
+.menuAuthor {
   width: 100px;
   padding-right: 10px;
   padding-left: 10px;
   text-align: center;
 }
 
-.MenuTitle {
+.menuTitle {
   flex: 1;
   padding-left: 10px;
   text-align: center;
 }
 
-.PostUl {
+.postUl {
   justify-content: left;
-  width: 60%;
+  width: 1100px;
   margin-left: auto;
   margin-right: auto;
+  padding-left: 50px;
   font-size: small;
 }
 
-.PostDate {
+.postDate {
   width: 100px;
   text-align: center;
   padding-right: 10px;
   border-right: 1px solid #eeeeee;
 }
 
-.PostAuthor {
+.postAuthor {
   width: 100px;
   text-align: center;
   padding-left: 10px;
@@ -54,19 +62,19 @@
   border-right: 1px solid #eeeeee;
 }
 
-.PostTitle {
+.postTitle {
   flex: 1;
   padding-left: 10px;
 }
 
-.PostList {
+.postList {
   display: flex;
   padding-top: 8px;
   padding-bottom: 8px;
   border-bottom: 1px solid #eeeeee;
 }
 
-.SearchForm {
+.searchForm {
   display: flex;
   justify-content: center;
   margin-left: auto;
@@ -74,29 +82,30 @@
   font-size: small;
 }
 
-.SearchInput {
+.searchInput {
   margin-top: 50px;
   padding: 5px;
   padding-left: 10px;
   width: 175px;
   height: 20px;
   text-align: left;
-  border: #3b4890 solid;
+  border: black solid;
   outline: none;
 }
 
-.SearchBtn {
+.searchBtn {
   margin-top: 50px;
   cursor: pointer;
   width: 50px;
   font-weight: bolder;
   text-align: center;
-  border: #3b4890 solid;
-  background-color: #3b4890;
+  border: black solid;
+  background-color: black;
   color: #ffffff;
 }
 
-.PaginationUl {
+.paginationUl {
+  list-style: none;
   display: flex;
   justify-content: center;
   margin-top: 50px;
@@ -106,14 +115,14 @@
   font-weight: bold;
 }
 
-.PaginationLi {
+.paginationLi {
   padding-top: 5px;
   width: 20px;
   text-align: center;
   cursor: pointer;
 }
 
-.SelectPaginationLi {
+.selectPaginationLi {
   padding-top: 5px;
   width: 20px;
   text-align: center;
@@ -121,9 +130,9 @@
   color: rgb(255, 0, 0);
 }
 
-.PaginationBtn {
-  border: #3b4890 solid;
-  background-color: #3b4890;
+.paginationBtn {
+  border: black solid;
+  background-color: black;
   color: #ffffff;
   cursor: pointer;
   font-weight: bolder;

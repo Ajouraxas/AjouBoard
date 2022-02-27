@@ -19,6 +19,7 @@ const PostNavbar = ({ viewType, setViewType, setSelectPageIndex }) => {
   };
   return (
     <>
+      <div className={style.topBanner}></div>
       <ul className={style.navUl}>
         <li
           className={`${style.navLi} ${

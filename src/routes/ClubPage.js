@@ -11,6 +11,7 @@ import { dbService } from '../lib/fbase';
 import React, { useEffect, useState } from 'react';
 import PostNavbar from '../components/PostNavbar';
 import Posts from '../components/Posts';
+import GlobalNavigationbar from '../components/GlobalNavigationBar';
 
 /**
  * component: PostNavber
@@ -100,6 +101,9 @@ const ClubPage = () => {
   return (
     // Navigation Bar (홈, 동아리 목록)
     <>
+      <div>
+        <GlobalNavigationbar />
+      </div>
       <div>
         <PostNavbar
           viewType={viewType}
