@@ -1,0 +1,55 @@
+.topBanner {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 60px;
+  width: 1200px;
+  height: 160px;
+  background-color: gray;
+}
+
+.navUl {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  padding-bottom: 30px;
+  padding-left: 0px;
+  border-bottom: 2px solid;
+  width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: large;
+  font-weight: bolder;
+}
+
+.navLi {
+  text-align: center;
+  padding-left: 25px;
+  padding-right: 25px;
+  border-right: 2px solid;
+  cursor: pointer;
+}
+.navLiLast {
+  text-align: center;
+  padding-left: 25px;
+  padding-right: 25px;
+  cursor: pointer;
+}
+
+.navSelect {
+  color: red;
+}
+
+.navBtn {
+  position: absolute;
+  margin-left: 1000px;
+  border: none;
+  border-radius: 4px;
+  text-align: center;
+  background-color: black;
+  height: 30px;
+  width: 60px;
+  font-weight: bold;
+  color: #ffffff;
+  cursor: pointer;
+}
