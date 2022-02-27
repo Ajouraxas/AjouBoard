@@ -17,13 +17,10 @@ const RegisterPage = () => {
     TODO
     중복 확인 조건부 CSS
     필수 사항 조건부 CSS
-    비밀 번호 확인 검증 + CSS
-    성별 버튼 기능 추가
     학번 타입 검사
   */
 
   const [email, setEmail] = useState(""); // 이메일
-  const [isChecked, setIsChecked] = useState(false); // 이메일 중복 검사 여부
   const [password, setPassword] = useState(""); // 비밀번호
   const [confirmPassword, setConfirmPassword] = useState(""); // 비밀번호 확인
   const [nickName, setNickName] = useState(""); // 닉네임
@@ -32,6 +29,13 @@ const RegisterPage = () => {
   const [studentNumber, setStudentNumber] = useState(""); // 학번
   const [gender, setGender] = useState(""); // 성별
   const [univEmail, setUnivEmail] = useState(""); // 학교 이메일
+
+  const [isChecked, setIsChecked] = useState(false); // 이메일 중복 검사 여부
+  const [nameError, setNameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [passwordConfirmError, setPasswordConfirmError] = useState(false);
+  const [nickNameError, setNickNameError] = useState(false);
 
   const onChange = (event) => {
     const {
@@ -43,9 +47,19 @@ const RegisterPage = () => {
         break;
       case "password":
         setPassword(value);
+        if (value !== confirmPassword) {
+          setPasswordConfirmError(true);
+        }
+        if (value === confirmPassword) {
+          setPasswordConfirmError(false);
+        }
         break;
       case "confirmPassword":
+        setPasswordConfirmError(true);
         setConfirmPassword(value);
+        if (password === value) {
+          setPasswordConfirmError(false);
+        }
         break;
       case "nickName":
         setNickName(value);
@@ -81,10 +95,11 @@ const RegisterPage = () => {
       const docRef = doc(dbService, "users", email);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        console.log("중복");
+        setEmailError(true);
         setIsChecked(false);
         return true;
       } else {
+        setEmailError(false);
         console.log("통과");
         setIsChecked(true);
         return false;
@@ -161,11 +176,15 @@ const RegisterPage = () => {
                   required
                 />
               </label>
-              <label className={styles.requiredLabel}>
+              <label
+                className={`${styles.requiredLabel} ${
+                  isChecked ? styles.inputActivity : ""
+                } ${emailError ? styles.inputError : ""}`}
+              >
                 <span>이메일</span>
                 <input
                   className={styles.input}
-                  type="text"
+                  type="email"
                   name="email"
                   value={email}
                   onChange={onChange}
@@ -184,7 +203,7 @@ const RegisterPage = () => {
                 <span>비밀번호</span>
                 <input
                   className={styles.input}
-                  type="text"
+                  type="password"
                   name="password"
                   value={password}
                   onChange={onChange}
@@ -192,12 +211,16 @@ const RegisterPage = () => {
                   required
                 />
               </label>
-              <label className={styles.requiredLabel}>
+              <label
+                className={`${styles.requiredLabel} ${
+                  passwordConfirmError ? styles.inputError : ""
+                }`}
+              >
                 <span>비밀번호 확인</span>
                 <input
                   className={styles.input}
                   onChange={onChange}
-                  type="text"
+                  type="password"
                   name="confirmPassword"
                   value={confirmPassword}
                   placeholder="비밀기호1번 이재명"
@@ -240,7 +263,7 @@ const RegisterPage = () => {
               <label className={styles.requiredLabel}>
                 <span>학번</span>
                 <input
-                  type="text"
+                  type="number"
                   name="studentNumber"
                   value={studentNumber}
                   onChange={onChange}
@@ -286,7 +309,7 @@ const RegisterPage = () => {
               <label className={styles.requiredLabel}>
                 <span>아주대학교 이메일</span>
                 <input
-                  type="text"
+                  type="email"
                   name="univEmail"
                   value={univEmail}
                   onChange={onChange}

@@ -138,6 +138,23 @@
   border: 1px solid #d3ddec;
   border-radius: 5px;
   padding: 0 10px;
+  transition: 0.6s;
+}
+
+.inputError input {
+  border: 1px solid red;
+}
+
+.inputError span {
+  color: red;
+}
+
+.inputActivity input {
+  border: 1px solid rgb(169, 230, 79);
+}
+
+.inputActivity span {
+  color: rgb(169, 230, 79);
 }
 
 .input::placeholder {
