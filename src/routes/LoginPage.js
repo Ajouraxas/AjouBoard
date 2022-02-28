@@ -9,7 +9,7 @@ import { authService, dbService } from "../lib/fbase";
 import styles from "../style/loginPage.module.css";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 
-const LoginPage = () => {
+const LoginPage = (setUser) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
@@ -41,7 +41,7 @@ const LoginPage = () => {
       return;
     }
     try {
-      await signInWithEmailAndPassword(authService, email, password);
+      setUser(await signInWithEmailAndPassword(authService, email, password));
       navigate("/");
     } catch ({ message }) {
       setPassword("");
