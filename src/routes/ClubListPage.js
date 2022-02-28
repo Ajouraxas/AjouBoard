@@ -28,12 +28,14 @@ const ClubListPage = () => {
 
       const imageRef = await Promise.all(
         clubArray.map(async (obj) => {
-          try {
-            const result = await getDownloadURL(
-              ref(storage, obj.id + "/bg_img")
-            );
-            return result;
-          } catch (e) {}
+          if (obj.is_bg) {
+            try {
+              const result = await getDownloadURL(
+                ref(storage, obj.id + "/bg_img")
+              );
+              return result;
+            } catch (e) {}
+          }
         })
       );
       setClubsBgUrl(imageRef);
