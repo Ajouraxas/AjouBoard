@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import style from '../style/PostNavbar.module.css';
 
 /**
@@ -6,7 +7,8 @@ import style from '../style/PostNavbar.module.css';
  * useFor: 동아리 공지사항, 전체글, 개추 받은 글, 글쓰기
  */
 
-const PostNavbar = ({ viewType, setViewType, setSelectPageIndex }) => {
+const PostNavbar = ({ viewType, setViewType, setSelectPageIndex, clubId }) => {
+  const navigate = useNavigate();
   const onClick = (e) => {
     const {
       target: { id },
@@ -16,6 +18,7 @@ const PostNavbar = ({ viewType, setViewType, setSelectPageIndex }) => {
   };
   const onWrite = (e) => {
     e.preventDefault();
+    navigate(`/club/${clubId}/write`);
   };
   return (
     <>
