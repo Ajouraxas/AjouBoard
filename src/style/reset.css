@@ -1,11 +1,20 @@
-/* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
-*/
-
 @font-face {
-  font-family: 'Roboto';
-  src: local('../asset/font/Roboto-Black.ttf') format('truetype');
+  font-family: "Roboto";
+  src: local(※), url("../asset/font/Roboto-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Roboto";
+  src: local(※), url("../asset/font/Roboto-Light.ttf") format("truetype");
+  font-weight: lighter;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Roboto";
+  src: local(※), url("../asset/font/Roboto-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
 }
 
 html,
@@ -92,8 +101,8 @@ video {
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: 100%;
   font: inherit;
+  font-size: 100%;
   vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
@@ -126,7 +135,7 @@ blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-  content: '';
+  content: "";
   content: none;
 }
 table {

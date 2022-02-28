@@ -11,6 +11,7 @@ import { dbService } from '../lib/fbase';
 import React, { useEffect, useState } from 'react';
 import PostNavbar from '../components/PostNavbar';
 import Posts from '../components/Posts';
+import { useParams } from 'react-router-dom';
 
 /**
  * component: PostNavber
@@ -32,7 +33,7 @@ const ClubPage = () => {
   const [selectPageIndex, setSelectPageIndex] = useState(1);
   const [countPageLimit, setCountPageLimit] = useState(1);
   const pageLimit = 20;
-
+  const { clubId } = useParams();
   useEffect(() => {
     const getPosts = async () => {
       // 예) selectPageIndex = 2, 1 ~ 21번째까지 불러오기
@@ -105,6 +106,7 @@ const ClubPage = () => {
           viewType={viewType}
           setViewType={setViewType}
           setSelectPageIndex={setSelectPageIndex}
+          clubId={clubId}
         />
       </div>
 

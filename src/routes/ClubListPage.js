@@ -1,75 +1,67 @@
+import { collection, getDocs, orderBy, query } from 'firebase/firestore';
+import { getDownloadURL, getStorage, ref } from 'firebase/storage';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { dbService } from '../lib/fbase';
 import style from '../style/ClubList.module.css';
 
 /**
  * component: ClubIcon, ClubContainer
  * useFor: ClubIcon은 아이콘 한개, ClubContainer는 아이콘 전체
  */
-const clubName = [
-  '검도부',
-  '고슴도치',
-  '꽁',
-  '녹두벌',
-  '늘사랑',
-  '돌벗',
-  '드롭인',
-  '마스터피스',
-  '맨차',
-  '미디올로지',
-  '미유미유',
-  '산악부',
-  '샘터야학',
-  '소금꽃',
-  '소울',
-  '스파이더스',
-  '시사문제강독회',
-  '아가생',
-  '아르떼',
-  '아몽극회',
-  '아묵회',
-  '아미',
-  '아미콤',
-  '유레카',
-  '유스호스텔',
-  '이데알레',
-  '제니스',
-  '차오름',
-  '클리어',
-  '호롱불',
-  '호완',
-  '호우회',
-  '2.5g',
-  '5분쉼표',
-  'A.SA.',
-  'ABBA',
-  'ABC',
-  'AD-Brain',
-  'AFC',
-  'AJESS',
-  'AJUDO',
-  'A-pin',
-  'ATC',
-  'ATOM',
-  'BEAT',
-  'BUT',
-  'C.OB.E',
-  'CAPO',
-  'CCC',
-  'Conjurer',
-  'DoIT',
-  'GLEE',
-  'PTPI',
-  'ROA',
-  'SFC',
-  'SWeat',
-];
-
+const storage = getStorage();
 const ClubListPage = () => {
-  const clubIcon = (name, idx) => {
+  const [clubsObj, setClubsObj] = useState([]);
+  const [clubsBgUrl, setClubsBgUrl] = useState([]);
+  const [clubsId, setClubsId] = useState([]);
+
+  useEffect(() => {
+    const getClubsObj = async () => {
+      const clubQ = query(
+        collection(dbService, 'clubs'),
+        orderBy('index', 'asc')
+      );
+      const docs = await getDocs(clubQ);
+      const clubArray = docs.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setClubsObj(clubArray);
+      setClubsId(clubArray.map((club) => club.id));
+      const imageRef = await Promise.all(
+        clubArray.map(async (obj) => {
+          if (obj.is_bg) {
+            try {
+              const result = await getDownloadURL(
+                ref(storage, obj.id + '/bg_img')
+              );
+              return result;
+            } catch (e) {}
+          }
+        })
+      );
+      setClubsBgUrl(imageRef);
+    };
+    getClubsObj();
+  }, []);
+
+  const clubIcon = (clubObj, idx) => {
+    const id = clubObj['id'];
+    const name = clubObj['name'];
+    const location = clubObj['location'];
+    const tel = clubObj['tel'];
+    const isBg = clubObj['is_bg'];
+    let attachmentUrl = '';
+    if (isBg) {
+      attachmentUrl = clubsBgUrl[idx];
+    }
     return (
-      <Link to={`/club/123`} key={idx}>
+      <Link to={`/club/${id}`} key={idx}>
         <div className={style.clubIcon}>
           <div className={style.clubIconName}>
+            {isBg ? (
+              <img className={style.bg} src={attachmentUrl} alt="bg" />
+            ) : null}
             <div
               className={`${style.clubIconSubMenuContainer} ${style.clubIconHover}`}
             >
@@ -79,10 +71,15 @@ const ClubListPage = () => {
                 <span>인기글</span>
               </div>
             </div>
-            <span className={style.clubLink}>{name}</span>
+            <div className={style.clubLink}>
+              <span
+                className={style.clubLink__span}
+              >{`\u00A0${name}\u00A0`}</span>
+            </div>
           </div>
           <div className={style.clubIconInfo}>
-            <span>a</span>
+            <span>동아리방 위치: {location}</span>
+            <span>연락처: {tel}</span>
           </div>
         </div>
       </Link>
@@ -93,10 +90,9 @@ const ClubListPage = () => {
       <div className={style.clubIconContainer}>
         <div className={style.clubIconContainerTopMenu}>
           <span className={style.clubContainerName}>동아리 목록</span>
-          <input placeholder="검색" className={style.clubNameSearch}></input>
         </div>
         <div className={style.clubIconList}>
-          {clubName.map((name, idx) => clubIcon(name, idx))}
+          {clubsObj.map((clubObj, idx) => clubIcon(clubObj, idx))}
         </div>
       </div>
     </>
