@@ -66,7 +66,11 @@ const ClubListPage = () => {
                 <span>인기글</span>
               </div>
             </div>
-            <span className={style.clubLink}>{name}</span>
+            <div className={style.clubLink}>
+              <span
+                className={style.clubLink__span}
+              >{`\u00A0${name}\u00A0`}</span>
+            </div>
           </div>
           <div className={style.clubIconInfo}>
             <span>동아리방 위치: {location}</span>
