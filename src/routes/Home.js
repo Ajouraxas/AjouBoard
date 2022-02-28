@@ -1,6 +1,6 @@
-import style from '../style/HomeContent.module.css';
-import anc1 from '../asset/img/anc1.jpg';
-import anc2 from '../asset/img/anc2.jpg';
+import style from "../style/HomeContent.module.css";
+import anc1 from "../asset/img/anc1.jpg";
+import anc2 from "../asset/img/anc2.jpg";
 
 const Home = () => {
   return (
@@ -18,8 +18,16 @@ const Home = () => {
         <div className={style.announcement}>
           <ul className={style.announcementList}>
             <li className={style.announcementObject}>
-              <img className={style.announcementImg} src={anc1} />
-              <img className={style.announcementImg} src={anc2} />
+              <img
+                className={style.announcementImg}
+                src={anc1}
+                alt="annoucementImg"
+              />
+              <img
+                className={style.announcementImg}
+                src={anc2}
+                alt="annoucementImg"
+              />
             </li>
           </ul>
         </div>
