@@ -13,7 +13,6 @@ const storage = getStorage();
 const ClubListPage = () => {
   const [clubsObj, setClubsObj] = useState([]);
   const [clubsBgUrl, setClubsBgUrl] = useState([]);
-  const [clubsId, setClubsId] = useState([]);
 
   useEffect(() => {
     const getClubsObj = async () => {
@@ -27,7 +26,6 @@ const ClubListPage = () => {
         ...doc.data(),
       }));
       setClubsObj(clubArray);
-      setClubsId(clubArray.map((club) => club.id));
       const imageRef = await Promise.all(
         clubArray.map(async (obj) => {
           if (obj.is_bg) {

@@ -1,6 +1,6 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import style from "../style/PostNavbar.module.css";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import style from '../style/PostNavbar.module.css';
 
 /**
  * component: PostNavber
@@ -24,7 +24,7 @@ const PostNavbar = ({
   };
   const onWrite = (e) => {
     e.preventDefault();
-    navigate(`/club/${clubId}/write`);
+    navigate(`/club/${clubId}/write`, { state: { clubId, user } });
   };
   return (
     <>
@@ -32,27 +32,27 @@ const PostNavbar = ({
       <ul className={style.navUl}>
         <li
           className={`${style.navLi} ${
-            viewType === "announce" ? style.navSelect : ""
+            viewType === 'announce' ? style.navSelect : ''
           }`}
-          id={"announce"}
+          id={'announce'}
           onClick={onClick}
         >
           공지사항
         </li>
         <li
           className={`${style.navLi} ${
-            viewType === "all" ? style.navSelect : ""
+            viewType === 'all' ? style.navSelect : ''
           }`}
-          id={"all"}
+          id={'all'}
           onClick={onClick}
         >
           전체글
         </li>
         <li
           className={`${style.navLiLast} ${
-            viewType === "popular" ? style.navSelect : ""
+            viewType === 'popular' ? style.navSelect : ''
           }`}
-          id={"popular"}
+          id={'popular'}
           onClick={onClick}
         >
           개추 받은 글
