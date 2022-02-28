@@ -34,7 +34,6 @@ const ClubPage = () => {
   const [countPageLimit, setCountPageLimit] = useState(1);
   const pageLimit = 20;
   const { clubId } = useParams();
-
   useEffect(() => {
     const getPosts = async () => {
       // 예) selectPageIndex = 2, 1 ~ 21번째까지 불러오기

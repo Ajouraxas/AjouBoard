@@ -1,4 +1,9 @@
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+  HashRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom';
 import ClubListPage from './routes/ClubListPage';
 import ClubPage from './routes/ClubPage';
 import Home from './routes/Home';
@@ -17,6 +22,7 @@ function App() {
       <Router>
         <GlobalNavigationBar />
         <Routes>
+          <Route path={'*'} element={<Navigate replace to={'/'} />}></Route>
           <Route path={'/'} element={<Home />}></Route>
           <Route path={'/login'} element={<LoginPage />}></Route>
           <Route path={'/register'} element={<RegisterPage />}></Route>
