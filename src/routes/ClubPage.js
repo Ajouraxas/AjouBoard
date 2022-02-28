@@ -6,11 +6,12 @@ import {
   query,
   startAt,
   where,
-} from 'firebase/firestore';
-import { dbService } from '../lib/fbase';
-import React, { useEffect, useState } from 'react';
-import PostNavbar from '../components/PostNavbar';
-import Posts from '../components/Posts';
+} from "firebase/firestore";
+import { dbService } from "../lib/fbase";
+import React, { useEffect, useState } from "react";
+import PostNavbar from "../components/PostNavbar";
+import Posts from "../components/Posts";
+import { useParams } from "react-router-dom";
 
 /**
  * component: PostNavber
@@ -25,28 +26,28 @@ import Posts from '../components/Posts';
   const POPULAR = 'popular';
  */
 
-const ClubPage = () => {
+const ClubPage = ({ user }) => {
   // 공지사항 or 전체글 or 개추 받은 글
   const [posts, setPosts] = useState([]);
-  const [viewType, setViewType] = useState('all');
+  const [viewType, setViewType] = useState("all");
   const [selectPageIndex, setSelectPageIndex] = useState(1);
   const [countPageLimit, setCountPageLimit] = useState(1);
   const pageLimit = 20;
-
+  const { clubId } = useParams();
   useEffect(() => {
     const getPosts = async () => {
       // 예) selectPageIndex = 2, 1 ~ 21번째까지 불러오기
       const rawPostQ =
-        viewType !== 'all'
+        viewType !== "all"
           ? query(
-              collection(dbService, 'TEST'),
-              where('postType', '==', viewType),
-              orderBy('createAt', 'desc'),
+              collection(dbService, "TEST"),
+              where("postType", "==", viewType),
+              orderBy("createAt", "desc"),
               limit(pageLimit * (selectPageIndex - 1) + 1)
             )
           : query(
-              collection(dbService, 'TEST'),
-              orderBy('createAt', 'desc'),
+              collection(dbService, "TEST"),
+              orderBy("createAt", "desc"),
               limit(pageLimit * (selectPageIndex - 1) + 1)
             );
       const rawDocs = await getDocs(rawPostQ);
@@ -58,17 +59,17 @@ const ClubPage = () => {
       const lastVisible = rawDocs.docs[rawDocs.docs.length - 1];
       // 21번째 ~ 40번째 불러오기
       const postQ =
-        viewType !== 'all'
+        viewType !== "all"
           ? query(
-              collection(dbService, 'TEST'),
-              where('postType', '==', viewType),
-              orderBy('createAt', 'desc'),
+              collection(dbService, "TEST"),
+              where("postType", "==", viewType),
+              orderBy("createAt", "desc"),
               startAt(lastVisible),
               limit(pageLimit)
             )
           : query(
-              collection(dbService, 'TEST'),
-              orderBy('createAt', 'desc'),
+              collection(dbService, "TEST"),
+              orderBy("createAt", "desc"),
               startAt(lastVisible),
               limit(pageLimit)
             );
@@ -83,11 +84,11 @@ const ClubPage = () => {
     const getCountPageLimit = async () => {
       // pagination
       const countPageLimitQ =
-        viewType === 'all'
-          ? query(collection(dbService, 'TEST'))
+        viewType === "all"
+          ? query(collection(dbService, "TEST"))
           : query(
-              collection(dbService, 'TEST'),
-              where('postType', '==', viewType)
+              collection(dbService, "TEST"),
+              where("postType", "==", viewType)
             );
       const allDocs = await getDocs(countPageLimitQ);
       setCountPageLimit(parseInt(Math.ceil(allDocs.docs.length / pageLimit)));
@@ -105,6 +106,8 @@ const ClubPage = () => {
           viewType={viewType}
           setViewType={setViewType}
           setSelectPageIndex={setSelectPageIndex}
+          clubId={clubId}
+          user={user}
         />
       </div>
 

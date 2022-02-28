@@ -1,30 +1,61 @@
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  HashRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import ClubListPage from "./routes/ClubListPage";
 import ClubPage from "./routes/ClubPage";
 import Home from "./routes/Home";
 import LoginPage from "./routes/LoginPage";
 import RegisterPage from "./routes/RegisterPage";
 import GlobalNavigationBar from "./components/GlobalNavigationBar";
-import PostDetailPage from "./routes/PostDetailPage";
+import WriteBoard from "./routes/WriteBoard";
+import { useEffect, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { authService } from "./lib/fbase";
 /**
  * ClubPage 접속 : http://localhost:3000/#/club/123
  * Home 접속 : http://localhost:3000/#/
  */
 
 function App() {
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(authService, (user) => {
+      if (user) {
+        setUser({
+          displayName: user.displayName,
+          uid: user.uid,
+        });
+      } else {
+        setUser(null);
+      }
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
   return (
     <>
       <Router>
-        <GlobalNavigationBar />
+        <GlobalNavigationBar user={user} />
         <Routes>
+          <Route path={"*"} element={<Navigate replace to={"/"} />}></Route>
           <Route path={"/"} element={<Home />}></Route>
-          <Route path={"/login"} element={<LoginPage />}></Route>
+          <Route
+            path={"/login"}
+            element={<LoginPage setUser={setUser} />}
+          ></Route>
           <Route path={"/register"} element={<RegisterPage />}></Route>
           <Route path={"/clublist"} element={<ClubListPage />}></Route>
-          <Route path={"/club/:clubId"} element={<ClubPage />}></Route>
           <Route
-            path={"/club/:clubId/:postId"}
-            element={<PostDetailPage />}
+            path={"/club/:clubId"}
+            element={<ClubPage user={user} />}
+          ></Route>
+          <Route
+            path={"/club/:clubId/write"}
+            element={<WriteBoard user={user} />}
           ></Route>
         </Routes>
       </Router>

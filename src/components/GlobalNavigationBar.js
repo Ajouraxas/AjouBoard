@@ -2,32 +2,14 @@ import style from "../style/GlobalNavigationBar.module.css";
 import logo_ajouboard from "../asset/img/logo_ajouboard.jpg";
 import { Link } from "react-router-dom";
 import { authService } from "../lib/fbase";
-import { onAuthStateChanged, signOut } from "firebase/auth";
-import { useEffect, useState } from "react";
+import { signOut } from "firebase/auth";
 
 /**
  * component: GlobalNavigationBar
  * useFor: 상단 고정 네비게이션 바
  */
 
-const GlobalNavigationBar = () => {
-  const [user, setUser] = useState(null);
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(authService, (user) => {
-      if (user) {
-        setUser({
-          displayName: user.displayName,
-          uid: user.uid,
-        });
-      } else {
-        setUser(null);
-      }
-    });
-    return () => {
-      unsubscribe();
-    };
-  }, []);
-
+const GlobalNavigationBar = ({ user }) => {
   const onLogout = async () => {
     try {
       await signOut(authService);
