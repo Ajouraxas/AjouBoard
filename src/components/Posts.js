@@ -68,47 +68,56 @@ const Posts = ({
 
   return (
     <>
-      <div>
+      <div className={style.postsContainer}>
         <div>
-          <ul className={style.menuUl}>
-            <li className={style.menuDate}>날짜</li>
-            <li className={style.menuAuthor}>글쓴이</li>
-            <li className={style.menuTitle}>제목</li>
+          <div>
+            <ul className={style.menuUl}>
+              <li className={style.menuDate}>날짜</li>
+              <li className={style.menuAuthor}>글쓴이</li>
+              <li className={style.menuTitle}>제목</li>
+            </ul>
+          </div>
+          <ul className={style.postUl}>
+            {posts.map((post) => {
+              const date = new Date(post.createAt);
+              date.setHours(date.getHours() + 9);
+              return (
+                <li className={style.postList} key={post.createAt}>
+                  <span className={style.postDate}>{`${date
+                    .toISOString()
+                    .replace('T', ' ')
+                    .substring(0, 16)}`}</span>
+                  <span className={style.postAuthor}>{post.creatorName}</span>
+                  <span className={style.postTitle}>{post.title}</span>
+                </li>
+              );
+            })}
           </ul>
         </div>
-        <ul className={style.postUl}>
-          {posts.map((post) => (
-            <li className={style.postList} key={post.createAt}>
-              <span className={style.postDate}>{post.createAt}</span>
-              <span className={style.postAuthor}>{post.creatorName}</span>
-              <span className={style.postTitle}>{post.title}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div>
         <div>
-          <form className={style.searchForm}>
-            <input
-              className={style.searchInput}
-              type="text"
-              placeholder="검색어 입력"
-            />
-            <button onClick={onClickSearch} className={style.searchBtn}>
-              검색
+          <div>
+            <form className={style.searchForm}>
+              <input
+                className={style.searchInput}
+                type="text"
+                placeholder="검색어 입력"
+              />
+              <button onClick={onClickSearch} className={style.searchBtn}>
+                검색
+              </button>
+            </form>
+          </div>
+          <ul className={style.paginationUl}>
+            {' '}
+            <button className={style.paginationBtn} key={'previous'}>
+              이전
             </button>
-          </form>
+            {pagination()}
+            <button className={style.paginationBtn} key={'next'}>
+              다음
+            </button>
+          </ul>
         </div>
-        <ul className={style.paginationUl}>
-          {' '}
-          <button className={style.paginationBtn} key={'previous'}>
-            이전
-          </button>
-          {pagination()}
-          <button className={style.paginationBtn} key={'next'}>
-            다음
-          </button>
-        </ul>
       </div>
     </>
   );
