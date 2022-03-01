@@ -1,9 +1,9 @@
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
-import { getDownloadURL, getStorage, ref } from "firebase/storage";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { dbService } from "../lib/fbase";
-import style from "../style/ClubList.module.css";
+import { collection, getDocs, orderBy, query } from 'firebase/firestore';
+import { getDownloadURL, getStorage, ref } from 'firebase/storage';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { dbService } from '../lib/fbase';
+import style from '../style/ClubList.module.css';
 
 /**
  * component: ClubIcon, ClubContainer
@@ -13,11 +13,12 @@ const storage = getStorage();
 const ClubListPage = () => {
   const [clubsObj, setClubsObj] = useState([]);
   const [clubsBgUrl, setClubsBgUrl] = useState([]);
+
   useEffect(() => {
     const getClubsObj = async () => {
       const clubQ = query(
-        collection(dbService, "clubs"),
-        orderBy("index", "asc")
+        collection(dbService, 'clubs'),
+        orderBy('index', 'asc')
       );
       const docs = await getDocs(clubQ);
       const clubArray = docs.docs.map((doc) => ({
@@ -25,13 +26,12 @@ const ClubListPage = () => {
         ...doc.data(),
       }));
       setClubsObj(clubArray);
-
       const imageRef = await Promise.all(
         clubArray.map(async (obj) => {
           if (obj.is_bg) {
             try {
               const result = await getDownloadURL(
-                ref(storage, obj.id + "/bg_img")
+                ref(storage, obj.id + '/bg_img')
               );
               return result;
             } catch (e) {}
@@ -42,13 +42,14 @@ const ClubListPage = () => {
     };
     getClubsObj();
   }, []);
+
   const clubIcon = (clubObj, idx) => {
-    const id = clubObj["id"];
-    const name = clubObj["name"];
-    const location = clubObj["location"];
-    const tel = clubObj["tel"];
-    const isBg = clubObj["is_bg"];
-    let attachmentUrl = "";
+    const id = clubObj['id'];
+    const name = clubObj['name'];
+    const location = clubObj['location'];
+    const tel = clubObj['tel'];
+    const isBg = clubObj['is_bg'];
+    let attachmentUrl = '';
     if (isBg) {
       attachmentUrl = clubsBgUrl[idx];
     }

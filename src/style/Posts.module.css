@@ -21,14 +21,14 @@
 
 .menuDate {
   width: 100px;
-  padding-right: 10px;
+  margin-left: 10px;
   text-align: center;
 }
 
 .menuAuthor {
   width: 100px;
   padding-right: 10px;
-  padding-left: 10px;
+  margin-left: 15px;
   text-align: center;
 }
 
@@ -48,7 +48,7 @@
 }
 
 .postDate {
-  width: 100px;
+  width: 120px;
   text-align: center;
   padding-right: 10px;
   border-right: 1px solid #eeeeee;

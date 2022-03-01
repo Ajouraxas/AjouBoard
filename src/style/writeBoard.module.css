@@ -1,0 +1,77 @@
+.boardForm {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  width: 1000px;
+  justify-content: center;
+  align-items: center;
+  height: 1000px;
+  background-color: #fafafa;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10px;
+  border: #d3ddec 1px solid;
+}
+
+.boardBanner {
+  font-size: 24px;
+  width: 920px;
+  text-align: center;
+  border-bottom: #96b7e9 1px solid;
+  padding-bottom: 10px;
+}
+
+.boardTitle {
+  padding-top: 10px;
+  padding-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  vertical-align: middle;
+  border: #d3ddec 1px solid;
+  border-radius: 5px;
+  width: 920px;
+  height: 40px;
+  resize: none;
+  font-size: 14px;
+}
+
+.boardTitle::placeholder {
+  color: #d3ddec;
+}
+
+.boardTitle:focus {
+  outline: none;
+}
+
+.boardContent {
+  border: #d3ddec 1px solid;
+  padding-top: 10px;
+  padding-left: 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  width: 920px;
+  height: 700px;
+  resize: none;
+}
+
+.boardContent::placeholder {
+  color: #d3ddec;
+}
+
+.boardContent:focus {
+  outline: none;
+}
+
+.boardBtn {
+  border: none;
+  background-color: #3b4890;
+  color: #ffffff;
+  cursor: pointer;
+  width: 100px;
+  height: 30px;
+  font-size: 14px;
+  border-radius: 5px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
