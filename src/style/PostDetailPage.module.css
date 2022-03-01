@@ -1,0 +1,368 @@
+.wrapper {
+  width: 1040px;
+  margin: 0 auto;
+  margin-top: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* background-color: antiquewhite; */
+  padding-bottom: 50px;
+}
+
+.banner {
+  background-color: aqua;
+  width: 100%;
+  height: 140px;
+}
+
+.nav {
+  position: relative;
+  width: 100%;
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2px solid black;
+}
+.nav_list {
+  display: flex;
+}
+
+.nav_list li {
+  margin-left: 20px;
+  height: 20px;
+  padding-left: 20px;
+}
+
+.nav_list li + li {
+  border-left: 1px solid black;
+}
+
+.nav_write {
+  border: none;
+  outline: none;
+  background-color: white;
+  padding: 5px;
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+}
+
+.content {
+  width: 80%;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  height: 80px;
+}
+
+.header_title {
+  width: 100%;
+  height: 40px;
+  background-color: #fafafa;
+  display: flex;
+  align-items: center;
+}
+
+.header_title_text {
+  padding-left: 10px;
+  font-size: 14px;
+  line-height: 16px;
+  color: #3b4890;
+}
+
+.header_info {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  line-height: 12px;
+  border-top: 1px solid #b9c9e1;
+  border-bottom: 1px solid #b9c9e1;
+}
+
+.header_info_left {
+  display: flex;
+  padding: 0 10px;
+}
+
+.header_info_left_avatar {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: aqua;
+  margin-right: 5px;
+}
+
+.header_info_left_user {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 5px;
+  border-left: 1px solid #b9c9e1;
+}
+
+.header_info_left_user div:not(:last-child) {
+  margin-right: 8px;
+}
+
+.header_info_left_user_grade {
+  color: #3b4890;
+}
+
+.header_info_right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 10px;
+}
+
+.header_info_right div:not(:last-child) {
+  margin-right: 17px;
+}
+
+.body {
+  width: 100%;
+  height: 1000px;
+  position: relative;
+}
+
+.body_main {
+  width: 100%;
+  height: 910px;
+  padding: 45px 80px;
+}
+
+.updateBtn {
+  position: absolute;
+  width: 80px;
+  height: 20px;
+  top: 10px;
+  right: 10px;
+  background: #b9c9e1;
+  border: 1px solid #b9c9e1;
+  box-sizing: border-box;
+  border-radius: 3px;
+  text-align: center;
+  padding: 2px;
+  font-size: 12px;
+  line-height: 14px;
+  color: #fff;
+}
+
+.favBox {
+  position: absolute;
+  width: 200px;
+  height: 40px;
+  bottom: 10px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 25px;
+  border-top: 1px solid #b9c9e1;
+  border-bottom: 1px solid #b9c9e1;
+}
+
+.favBox_number {
+  font-size: 17px;
+  line-height: 12px;
+}
+
+.favBox_up {
+  background: none;
+  border: none;
+  outline: none;
+  width: 25px;
+  height: 25px;
+  background-color: aqua;
+  border-radius: 50%;
+}
+.favBox_down {
+  background: none;
+  border: none;
+  outline: none;
+  width: 25px;
+  height: 25px;
+  background-color: #3b4890;
+  border-radius: 50%;
+}
+
+.comment {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.comment_header {
+  width: 100%;
+  height: 35px;
+  background: #fafafa;
+  font-size: 14px;
+  line-height: 16px;
+  color: #3b4890;
+  padding: 10px;
+  border-bottom: 1.5px solid #b9c9e1;
+}
+
+.comment_body {
+  width: 100%;
+  border-bottom: 1.5px solid #b9c9e1;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  line-height: 12px;
+}
+
+.comment_body_info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+  width: 60px;
+  margin-right: 20px;
+}
+
+.comment_body_info_avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: aqua;
+}
+
+.comment_body_info_userInfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+}
+
+.comment_body_info_userInfo_grade {
+  color: #3b4890;
+}
+
+.comment_body_text {
+  flex: 1;
+  padding: 10px 10px;
+  padding-left: 20px;
+  border-left: 1px solid #b9c9e1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.comment_body_date {
+  width: 500px;
+  padding-left: 30px;
+}
+
+.comment_input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  width: 700px;
+  height: 90px;
+  font-size: 10px;
+  line-height: 12px;
+  background: #fafafa;
+  border: 1px solid #b9c9e1;
+  border-radius: 3px;
+}
+
+.comment_label {
+  width: 70px;
+  height: 100%;
+  border-right: 1px solid #b9c9e1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.comment_text {
+  border: none;
+  outline: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  resize: none;
+  overflow: auto;
+
+  flex: 1;
+  height: 100%;
+  background-color: white;
+  padding: 10px;
+}
+
+.comment_submit {
+  height: 45px;
+  width: 45px;
+  margin: 0 20px;
+  border-radius: 3px;
+  background: #3b4890;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.comment_pagination {
+  margin-top: 20px;
+  width: 50px;
+  height: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+}
+
+.comment_pagination_btn {
+  outline: none;
+  border: none;
+  background: none;
+}
+
+.comment_pagination_number + .comment_pagination_number {
+  margin-left: 3px;
+}
+
+.other {
+  width: 80%;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.other_title {
+  width: 100%;
+  height: 40px;
+  background: #fafafa;
+  padding: 10px;
+  font-size: 14px;
+  line-height: 16px;
+  color: #3b4890;
+}
+
+.other_body {
+  width: 100%;
+  height: 700px;
+  background-color: cornflowerblue;
+}

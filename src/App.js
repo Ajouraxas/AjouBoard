@@ -14,6 +14,7 @@ import WriteBoard from './routes/WriteBoard';
 import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { authService } from './lib/fbase';
+import PostDetailPage from './routes/PostDetailPage';
 /**
  * ClubPage 접속 : http://localhost:3000/#/club/123
  * Home 접속 : http://localhost:3000/#/
@@ -60,14 +61,12 @@ function App() {
             element={<ClubPage user={user} />}
           ></Route>
           <Route
+            path={'/club/:clubId/:postId'}
+            element={<PostDetailPage user={user} />}
+          ></Route>
+          <Route
             path={'/club/:clubId/write'}
-            element={
-              user ? (
-                <WriteBoard user={user} />
-              ) : (
-                <Navigate replace to={'/login'} />
-              )
-            }
+            element={<WriteBoard user={user} />}
           ></Route>
         </Routes>
       </Router>

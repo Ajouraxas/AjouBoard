@@ -169,7 +169,7 @@ const Posts = () => {
             </ul>
           </div>
           <ul className={style.postUl}>
-            {posts.map((post) => {
+            {posts?.map((post) => {
               const date = new Date(post.createAt);
               date.setHours(date.getHours() + 9);
               return (
