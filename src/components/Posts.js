@@ -8,7 +8,7 @@ import {
   where,
 } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { dbService } from '../lib/fbase';
 import style from '../style/Posts.module.css';
 
@@ -84,8 +84,6 @@ const Posts = () => {
       const viewTypeQ = search.split('=');
       if (viewTypeQ[0] === '?view') {
         return viewTypeQ[1];
-      } else {
-        navigate(`/club/${clubId}`);
       }
     };
     const viewType = getViewType();
@@ -179,7 +177,9 @@ const Posts = () => {
                     .replace('T', ' ')
                     .substring(0, 16)}`}</span>
                   <span className={style.postAuthor}>{post.creatorName}</span>
-                  <span className={style.postTitle}>{post.title}</span>
+                  <Link to={`./${post.id}`}>
+                    <span className={style.postTitle}>{post.title}</span>
+                  </Link>
                 </li>
               );
             })}

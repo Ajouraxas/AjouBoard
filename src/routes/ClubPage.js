@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import PostNavbar from '../components/PostNavbar';
 import Posts from '../components/Posts';
 import { useNavigate, useParams } from 'react-router-dom';
-
+import style from '../style/ClubPage.module.css';
 /**
  * component: PostNavber
  * useFor: 동아리 공지사항, 전체글, 개추 받은 글, 글쓰기
@@ -35,8 +35,10 @@ const ClubPage = ({ user }) => {
   return (
     // Navigation Bar (홈, 동아리 목록)
     <>
-      <PostNavbar user={user} />
-      <Posts />
+      <div className={style.clubPageWrapper}>
+        <PostNavbar user={user} />
+        <Posts />
+      </div>
     </>
   );
 };

@@ -31,7 +31,7 @@ const PostNavbar = ({ user }) => {
       target: { id },
     } = e;
     setViewType(id);
-    navigate(`.?view=${id}`);
+    navigate(`/club/${clubId}?view=${id}`);
   };
   const onWrite = (e) => {
     e.preventDefault();
