@@ -177,7 +177,7 @@ const Posts = () => {
                     .replace('T', ' ')
                     .substring(0, 16)}`}</span>
                   <span className={style.postAuthor}>{post.creatorName}</span>
-                  <Link to={`./${post.id}`}>
+                  <Link to={`/club/${clubId}/${post.id}`}>
                     <span className={style.postTitle}>{post.title}</span>
                   </Link>
                 </li>
