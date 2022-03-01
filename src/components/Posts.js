@@ -1,5 +1,5 @@
-import React from 'react';
-import style from '../style/Posts.module.css';
+import React from "react";
+import style from "../style/Posts.module.css";
 
 const Posts = ({
   posts,
@@ -77,7 +77,7 @@ const Posts = ({
           </ul>
         </div>
         <ul className={style.postUl}>
-          {posts.map((post) => (
+          {posts?.map((post) => (
             <li className={style.postList} key={post.createAt}>
               <span className={style.postDate}>{post.createAt}</span>
               <span className={style.postAuthor}>{post.creatorName}</span>
@@ -100,12 +100,12 @@ const Posts = ({
           </form>
         </div>
         <ul className={style.paginationUl}>
-          {' '}
-          <button className={style.paginationBtn} key={'previous'}>
+          {" "}
+          <button className={style.paginationBtn} key={"previous"}>
             이전
           </button>
           {pagination()}
-          <button className={style.paginationBtn} key={'next'}>
+          <button className={style.paginationBtn} key={"next"}>
             다음
           </button>
         </ul>
