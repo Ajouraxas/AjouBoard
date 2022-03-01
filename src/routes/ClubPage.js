@@ -1,5 +1,7 @@
 import {
   collection,
+  doc,
+  getDoc,
   getDocs,
   limit,
   orderBy,
@@ -11,7 +13,7 @@ import { dbService } from '../lib/fbase';
 import React, { useEffect, useState } from 'react';
 import PostNavbar from '../components/PostNavbar';
 import Posts from '../components/Posts';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 /**
  * component: PostNavber
@@ -26,7 +28,7 @@ import { useParams } from 'react-router-dom';
   const POPULAR = 'popular';
  */
 
-const ClubPage = () => {
+const ClubPage = ({ user }) => {
   // 공지사항 or 전체글 or 개추 받은 글
   const [posts, setPosts] = useState([]);
   const [viewType, setViewType] = useState('all');
@@ -34,19 +36,27 @@ const ClubPage = () => {
   const [countPageLimit, setCountPageLimit] = useState(1);
   const pageLimit = 20;
   const { clubId } = useParams();
+  const navigate = useNavigate();
+  const isCorrectAccess = async () => {
+    const isCorrectAccess = await getDoc(doc(dbService, 'clubs', clubId));
+    if (isCorrectAccess.data() === undefined) {
+      navigate('/clublist');
+    }
+  };
+  isCorrectAccess();
   useEffect(() => {
     const getPosts = async () => {
       // 예) selectPageIndex = 2, 1 ~ 21번째까지 불러오기
       const rawPostQ =
         viewType !== 'all'
           ? query(
-              collection(dbService, 'TEST'),
+              collection(dbService, `clubs/${clubId}/posts`),
               where('postType', '==', viewType),
               orderBy('createAt', 'desc'),
               limit(pageLimit * (selectPageIndex - 1) + 1)
             )
           : query(
-              collection(dbService, 'TEST'),
+              collection(dbService, `clubs/${clubId}/posts`),
               orderBy('createAt', 'desc'),
               limit(pageLimit * (selectPageIndex - 1) + 1)
             );
@@ -61,14 +71,14 @@ const ClubPage = () => {
       const postQ =
         viewType !== 'all'
           ? query(
-              collection(dbService, 'TEST'),
+              collection(dbService, `clubs/${clubId}/posts`),
               where('postType', '==', viewType),
               orderBy('createAt', 'desc'),
               startAt(lastVisible),
               limit(pageLimit)
             )
           : query(
-              collection(dbService, 'TEST'),
+              collection(dbService, `clubs/${clubId}/posts`),
               orderBy('createAt', 'desc'),
               startAt(lastVisible),
               limit(pageLimit)
@@ -85,18 +95,17 @@ const ClubPage = () => {
       // pagination
       const countPageLimitQ =
         viewType === 'all'
-          ? query(collection(dbService, 'TEST'))
+          ? query(collection(dbService, `clubs/${clubId}/posts`))
           : query(
-              collection(dbService, 'TEST'),
+              collection(dbService, `clubs/${clubId}/posts`),
               where('postType', '==', viewType)
             );
       const allDocs = await getDocs(countPageLimitQ);
       setCountPageLimit(parseInt(Math.ceil(allDocs.docs.length / pageLimit)));
     };
-
     getPosts();
     getCountPageLimit();
-  }, [viewType, selectPageIndex]);
+  }, [viewType, selectPageIndex, clubId]);
 
   return (
     // Navigation Bar (홈, 동아리 목록)
@@ -107,6 +116,7 @@ const ClubPage = () => {
           setViewType={setViewType}
           setSelectPageIndex={setSelectPageIndex}
           clubId={clubId}
+          user={user}
         />
       </div>
 
