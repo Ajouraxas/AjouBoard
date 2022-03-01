@@ -1,7 +1,9 @@
 .postsContainer {
   margin-left: auto;
   margin-right: auto;
-  width: 1150px;
+  width: 1200px;
+  font-size: 10px;
+  justify-content: center;
 }
 
 .menuUl {
@@ -13,43 +15,46 @@
   margin-top: 10px;
   padding-bottom: 10px;
   border-bottom: 1px solid black;
-  padding-left: 50px;
-  width: 1100px;
   font-size: medium;
   font-weight: bold;
+  width: 1100px;
 }
 
 .menuDate {
-  width: 100px;
+  width: 120px;
   margin-left: 10px;
   text-align: center;
 }
 
 .menuAuthor {
   width: 100px;
-  padding-right: 10px;
-  margin-left: 15px;
   text-align: center;
 }
 
 .menuTitle {
   flex: 1;
-  padding-left: 10px;
   text-align: center;
 }
 
 .postUl {
-  justify-content: left;
-  width: 1100px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 50px;
+  display: table;
+  margin: 0 auto;
+  justify-content: center;
   font-size: small;
+}
+
+.postList {
+  display: flex;
+  width: 1100px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eeeeee;
 }
 
 .postDate {
   width: 120px;
   text-align: center;
+  margin-left: 10px;
   padding-right: 10px;
   border-right: 1px solid #eeeeee;
 }
@@ -57,21 +62,12 @@
 .postAuthor {
   width: 100px;
   text-align: center;
-  padding-left: 10px;
-  padding-right: 10px;
   border-right: 1px solid #eeeeee;
 }
 
 .postTitle {
   flex: 1;
-  padding-left: 10px;
-}
-
-.postList {
-  display: flex;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid #eeeeee;
+  padding-left: 15px;
 }
 
 .searchForm {
