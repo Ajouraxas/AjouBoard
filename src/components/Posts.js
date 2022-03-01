@@ -1,5 +1,5 @@
-import React from 'react';
-import style from '../style/Posts.module.css';
+import React from "react";
+import style from "../style/Posts.module.css";
 
 const Posts = ({
   posts,
@@ -85,7 +85,7 @@ const Posts = ({
                 <li className={style.postList} key={post.createAt}>
                   <span className={style.postDate}>{`${date
                     .toISOString()
-                    .replace('T', ' ')
+                    .replace("T", " ")
                     .substring(0, 16)}`}</span>
                   <span className={style.postAuthor}>{post.creatorName}</span>
                   <span className={style.postTitle}>{post.title}</span>
@@ -108,12 +108,12 @@ const Posts = ({
             </form>
           </div>
           <ul className={style.paginationUl}>
-            {' '}
-            <button className={style.paginationBtn} key={'previous'}>
+            {" "}
+            <button className={style.paginationBtn} key={"previous"}>
               이전
             </button>
             {pagination()}
-            <button className={style.paginationBtn} key={'next'}>
+            <button className={style.paginationBtn} key={"next"}>
               다음
             </button>
           </ul>
