@@ -1,6 +1,6 @@
-import React from "react";
-import Posts from "../components/Posts";
-import styles from "../style/PostDetailPage.module.css";
+import React from 'react';
+import Posts from '../components/Posts';
+import styles from '../style/PostDetailPage.module.css';
 
 const PostDetailPage = () => {
   return (
@@ -8,9 +8,9 @@ const PostDetailPage = () => {
       <div className={styles.banner}>Banner</div>
       <div className={styles.nav}>
         <ul className={styles.nav_list}>
-          <li id={"announce"}>공지사항</li>
-          <li id={"all"}>전체글</li>
-          <li id={"popular"}>개추 받은 글</li>
+          <li id={'announce'}>공지사항</li>
+          <li id={'all'}>전체글</li>
+          <li id={'popular'}>개추 받은 글</li>
         </ul>
         <button type="button" className={styles.nav_write}>
           글쓰기

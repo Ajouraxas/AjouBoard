@@ -66,13 +66,7 @@ function App() {
           ></Route>
           <Route
             path={"/club/:clubId/write"}
-            element={
-              user ? (
-                <WriteBoard user={user} />
-              ) : (
-                <Navigate replace to={"/login"} />
-              )
-            }
+            element={<WriteBoard user={user} />}
           ></Route>
         </Routes>
       </Router>
