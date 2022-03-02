@@ -3,18 +3,18 @@ import {
   Routes,
   Route,
   Navigate,
-} from "react-router-dom";
-import ClubListPage from "./routes/ClubListPage";
-import ClubPage from "./routes/ClubPage";
-import Home from "./routes/Home";
-import LoginPage from "./routes/LoginPage";
-import RegisterPage from "./routes/RegisterPage";
-import GlobalNavigationBar from "./components/GlobalNavigationBar";
-import WriteBoard from "./routes/WriteBoard";
-import { useEffect, useState } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { authService } from "./lib/fbase";
-import PostDetailPage from "./routes/PostDetailPage";
+} from 'react-router-dom';
+import ClubListPage from './routes/ClubListPage';
+import ClubPage from './routes/ClubPage';
+import Home from './routes/Home';
+import LoginPage from './routes/LoginPage';
+import RegisterPage from './routes/RegisterPage';
+import GlobalNavigationBar from './components/GlobalNavigationBar';
+import { useEffect, useState } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { authService } from './lib/fbase';
+import PostDetailPage from './routes/PostDetailPage';
+import WritePage from './routes/WritePage';
 /**
  * ClubPage 접속 : http://localhost:3000/#/club/123
  * Home 접속 : http://localhost:3000/#/
@@ -42,31 +42,31 @@ function App() {
       <Router>
         <GlobalNavigationBar user={user} />
         <Routes>
-          <Route path={"*"} element={<Navigate replace to={"/"} />}></Route>
-          <Route path={"/"} element={<Home />}></Route>
+          <Route path={'*'} element={<Navigate replace to={'/'} />}></Route>
+          <Route path={'/'} element={<Home />}></Route>
           <Route
-            path={"/login"}
+            path={'/login'}
             element={
               user ? (
-                <Navigate replace to={"/"} />
+                <Navigate replace to={'/'} />
               ) : (
                 <LoginPage setUser={setUser} />
               )
             }
           ></Route>
-          <Route path={"/register"} element={<RegisterPage />}></Route>
-          <Route path={"/clublist"} element={<ClubListPage />}></Route>
+          <Route path={'/register'} element={<RegisterPage />}></Route>
+          <Route path={'/clublist'} element={<ClubListPage />}></Route>
           <Route
-            path={"/club/:clubId"}
+            path={'/club/:clubId'}
             element={<ClubPage user={user} />}
           ></Route>
           <Route
-            path={"/club/:clubId/:postId"}
+            path={'/club/:clubId/:postId'}
             element={<PostDetailPage user={user} />}
           ></Route>
           <Route
-            path={"/club/:clubId/write"}
-            element={<WriteBoard user={user} />}
+            path={'/club/:clubId/write'}
+            element={<WritePage user={user} />}
           ></Route>
         </Routes>
       </Router>
