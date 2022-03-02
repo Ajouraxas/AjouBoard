@@ -1,26 +1,35 @@
-import { doc, getDoc } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import Posts from "../components/Posts";
-import { dbService } from "../lib/fbase";
-import styles from "../style/PostDetailPage.module.css";
-
-const PostDetailPage = () => {
+import { convertFromRaw } from 'draft-js';
+import { EditorState } from 'draft-js';
+import { Editor } from 'draft-js';
+import { doc, getDoc } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import PostNavbar from '../components/PostNavbar';
+import Posts from '../components/Posts';
+import { dbService } from '../lib/fbase';
+import styles from '../style/PostDetailPage.module.css';
+const PostDetailPage = ({ user }) => {
   const params = useParams();
   const [data, setData] = useState();
+  const [editorContent, setEditorContent] = useState(EditorState.createEmpty());
+
   useEffect(() => {
     if (!params.clubId || !params.postId) return;
-    getDoc(doc(dbService, "clubs", params.clubId, "posts", params.postId))
+    getDoc(doc(dbService, 'clubs', params.clubId, 'posts', params.postId))
       .then((res) => {
-        if (!res.exists()) throw new Error("not-found");
+        if (!res.exists()) throw new Error('not-found');
         return res.data();
       })
       .then((res) => {
+        setEditorContent(
+          EditorState.createWithContent(convertFromRaw(JSON.parse(res.content)))
+        );
+
         const date = new Date(res.createAt);
         date.setHours(date.getHours() + 9);
         const stringDate = date
           .toISOString()
-          .replace("T", " ")
+          .replace('T', ' ')
           .substring(0, 16)
           .toString();
         return {
@@ -33,17 +42,7 @@ const PostDetailPage = () => {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.banner}>Banner</div>
-      <div className={styles.nav}>
-        <ul className={styles.nav_list}>
-          <li id={"announce"}>공지사항</li>
-          <li id={"all"}>전체글</li>
-          <li id={"popular"}>개추 받은 글</li>
-        </ul>
-        <button type="button" className={styles.nav_write}>
-          글쓰기
-        </button>
-      </div>
+      <PostNavbar user={user} />
       <div className={styles.content}>
         <div className={styles.header}>
           <div className={styles.header_title}>
@@ -63,15 +62,14 @@ const PostDetailPage = () => {
               </div>
             </div>
             <div className={styles.header_info_right}>
-              <div className={styles.header_info_right_date}>
-                {data?.createAt}
-              </div>
               <div className={styles.header_info_right_view}>조회수: 178</div>
             </div>
           </div>
         </div>
         <div className={styles.body}>
-          <div className={styles.body_main}>{data?.content}</div>
+          <div className={styles.body_main}>
+            {data && <Editor readOnly={true} editorState={editorContent} />}
+          </div>
           <div className={styles.updateBtn}>게시글 수정</div>
           <div className={styles.favBox}>
             <button type="button" className={styles.favBox_up}></button>
