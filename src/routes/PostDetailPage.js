@@ -3,14 +3,17 @@ import { EditorState } from 'draft-js';
 import { Editor } from 'draft-js';
 import {
   addDoc,
+  arrayUnion,
   collection,
   deleteDoc,
   doc,
   getDoc,
   getDocs,
+  increment,
   onSnapshot,
   orderBy,
   query,
+  updateDoc,
   where,
 } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
@@ -78,6 +81,15 @@ const PostDetailPage = ({ user }) => {
       }
     );
     setIsLoading(false);
+    const viewsUpdate = async () => {
+      updateDoc(
+        doc(dbService, `/clubs/${params.clubId}/posts`, params.postId),
+        {
+          views: increment(1),
+        }
+      );
+    };
+    viewsUpdate();
     return () => {
       unsubscribe();
     };
@@ -121,6 +133,47 @@ const PostDetailPage = ({ user }) => {
     );
     deleteDocs.docs.forEach(async (delDoc) => {
       await deleteDoc(delDoc.ref);
+    });
+  };
+  const onRecommendUp = async () => {
+    const checkDoc = await getDoc(
+      doc(dbService, `clubs/${params.clubId}/posts`, params.postId)
+    );
+    if (checkDoc.data().recommendUser.includes(user.uid)) {
+      return window.alert('이미 추천누르셨습니다.');
+    }
+    await updateDoc(
+      doc(dbService, `clubs/${params.clubId}/posts`, params.postId),
+      {
+        recommendCount: increment(1),
+        recommendUser: arrayUnion(user.uid),
+      }
+    );
+    setData((prev) => {
+      let copyOfObject = { ...prev };
+      copyOfObject.recommendCount = prev.recommendCount + 1;
+      return copyOfObject;
+    });
+  };
+
+  const onRecommendDown = async () => {
+    const checkDoc = await getDoc(
+      doc(dbService, `clubs/${params.clubId}/posts`, params.postId)
+    );
+    if (checkDoc.data().recommendUser.includes(user.uid)) {
+      return window.alert('이미 추천누르셨습니다.');
+    }
+    await updateDoc(
+      doc(dbService, `clubs/${params.clubId}/posts`, params.postId),
+      {
+        recommendCount: increment(-1),
+        recommendUser: arrayUnion(user.uid),
+      }
+    );
+    setData((prev) => {
+      let copyOfObject = { ...prev };
+      copyOfObject.recommendCount = prev.recommendCount - 1;
+      return copyOfObject;
     });
   };
   return (
@@ -174,9 +227,19 @@ const PostDetailPage = ({ user }) => {
               )}
 
               <div className={styles.favBox}>
-                <button type="button" className={styles.favBox_up}></button>
-                <span className={styles.favBox_number}>↑74 ↓1</span>
-                <button type="button" className={styles.favBox_down}></button>
+                <button
+                  type="button"
+                  className={styles.favBox_up}
+                  onClick={onRecommendUp}
+                ></button>
+                <span className={styles.favBox_number}>
+                  ↑{data?.recommendCount}↓
+                </span>
+                <button
+                  type="button"
+                  className={styles.favBox_down}
+                  onClick={onRecommendDown}
+                ></button>
               </div>
             </div>
           </div>
