@@ -65,8 +65,9 @@
 
 .navBtn {
   position: absolute;
-  margin-left: 70%;
   border: none;
+  right: 40px;
+  top: -7px;
   border-radius: 4px;
   text-align: center;
   background-color: black;

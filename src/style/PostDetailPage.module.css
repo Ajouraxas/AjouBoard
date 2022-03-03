@@ -261,14 +261,13 @@
   flex: 1;
   padding: 10px 10px;
   padding-left: 20px;
+  width: 625px;
   border-left: 1px solid #b9c9e1;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  word-break: break-all;
 }
 
 .comment_body_date {
-  width: 500px;
   padding-left: 30px;
 }
 
@@ -311,6 +310,10 @@
 }
 
 .comment_submit {
+  outline: none;
+  border: none;
+  background-color: none;
+  cursor: pointer;
   height: 45px;
   width: 45px;
   margin: 0 20px;
