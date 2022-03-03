@@ -7,6 +7,7 @@ import {
   deleteDoc,
   doc,
   getDoc,
+  getDocs,
   onSnapshot,
   orderBy,
   query,
@@ -105,10 +106,22 @@ const PostDetailPage = ({ user }) => {
   const onPostUpdate = () => {
     navigate(`/club/${params.clubId}/${params.postId}/update`);
   };
-  const onPostDelete = () => {
+  const onPostDelete = async () => {
     window.confirm('정말 게시글을 삭제하시겠습니까?') &&
       navigate(`/club/${params.clubId}`);
-    deleteDoc(doc(dbService, `clubs/${params.clubId}/posts`, params.postId));
+    await deleteDoc(
+      doc(dbService, `clubs/${params.clubId}/posts`, params.postId)
+    );
+
+    const deleteDocs = await getDocs(
+      query(
+        collection(dbService, 'comments'),
+        where('post', '==', params.postId)
+      )
+    );
+    deleteDocs.docs.forEach(async (delDoc) => {
+      await deleteDoc(delDoc.ref);
+    });
   };
   return (
     <div className={styles.wrapper}>
