@@ -48,6 +48,10 @@
   border-bottom: 1px solid #eeeeee;
 }
 
+.selectPost {
+  background-color: gold;
+}
+
 .postDate {
   width: 120px;
   text-align: center;

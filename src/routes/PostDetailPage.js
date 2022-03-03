@@ -130,7 +130,7 @@ const PostDetailPage = ({ user }) => {
       </div>
       <div className={styles.other}>
         <div className={styles.other_title}>다른 게시글 보기</div>
-        <Posts />
+        <Posts selectPostId={params.postId} />
       </div>
     </div>
   );
