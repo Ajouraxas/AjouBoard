@@ -4,6 +4,7 @@ import { Editor } from 'draft-js';
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   onSnapshot,
@@ -104,6 +105,11 @@ const PostDetailPage = ({ user }) => {
   const onPostUpdate = () => {
     navigate(`/club/${params.clubId}/${params.postId}/update`);
   };
+  const onPostDelete = () => {
+    window.confirm('정말 게시글을 삭제하시겠습니까?') &&
+      navigate(`/club/${params.clubId}`);
+    deleteDoc(doc(dbService, `clubs/${params.clubId}/posts`, params.postId));
+  };
   return (
     <div className={styles.wrapper}>
       <PostNavbar user={user} />
@@ -143,9 +149,17 @@ const PostDetailPage = ({ user }) => {
               <div className={styles.body_main}>
                 {data && <Editor readOnly={true} editorState={editorContent} />}
               </div>
-              <button className={styles.updateBtn} onClick={onPostUpdate}>
-                게시글 수정
-              </button>
+              {user?.uid === data?.uid && (
+                <>
+                  <button className={styles.updateBtn} onClick={onPostUpdate}>
+                    게시글 수정
+                  </button>
+                  <button className={styles.deleteBtn} onClick={onPostDelete}>
+                    삭제
+                  </button>
+                </>
+              )}
+
               <div className={styles.favBox}>
                 <button type="button" className={styles.favBox_up}></button>
                 <span className={styles.favBox_number}>↑74 ↓1</span>
