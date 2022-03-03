@@ -16,6 +16,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { authService } from './lib/fbase';
 import PostDetailPage from './routes/PostDetailPage';
 import WritePage from './routes/WritePage';
+import UpdatePage from './routes/UpdatePage';
 /**
  * ClubPage 접속 : http://localhost:3000/#/club/123
  * Home 접속 : http://localhost:3000/#/
@@ -76,7 +77,15 @@ function App() {
           ></Route>
           <Route
             path={'/club/:clubId/write'}
-            element={<WritePage user={user} />}
+            element={
+              user ? <WritePage user={user} /> : <Navigate to={'/login'} />
+            }
+          ></Route>
+          <Route
+            path={'/club/:clubId/:postId/update'}
+            element={
+              user ? <UpdatePage user={user} /> : <Navigate to={'/login'} />
+            }
           ></Route>
         </Routes>
       </Router>

@@ -12,13 +12,14 @@ import {
   where,
 } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import PostNavbar from '../components/PostNavbar';
 import Posts from '../components/Posts';
 import { dbService } from '../lib/fbase';
 import styles from '../style/PostDetailPage.module.css';
 const PostDetailPage = ({ user }) => {
   const params = useParams();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState();
   const [comments, setComments] = useState([]);
@@ -100,7 +101,9 @@ const PostDetailPage = ({ user }) => {
     })();
     setComment('');
   };
-
+  const onPostUpdate = () => {
+    navigate(`/club/${params.clubId}/${params.postId}/update`);
+  };
   return (
     <div className={styles.wrapper}>
       <PostNavbar user={user} />
@@ -140,7 +143,9 @@ const PostDetailPage = ({ user }) => {
               <div className={styles.body_main}>
                 {data && <Editor readOnly={true} editorState={editorContent} />}
               </div>
-              <div className={styles.updateBtn}>게시글 수정</div>
+              <button className={styles.updateBtn} onClick={onPostUpdate}>
+                게시글 수정
+              </button>
               <div className={styles.favBox}>
                 <button type="button" className={styles.favBox_up}></button>
                 <span className={styles.favBox_number}>↑74 ↓1</span>
