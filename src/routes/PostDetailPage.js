@@ -145,13 +145,13 @@ const PostDetailPage = ({ user }) => {
     await updateDoc(
       doc(dbService, `clubs/${params.clubId}/posts`, params.postId),
       {
-        recommendCount: increment(1),
+        plusRecommendCount: increment(1),
         recommendUser: arrayUnion(user.uid),
       }
     );
     setData((prev) => {
       let copyOfObject = { ...prev };
-      copyOfObject.recommendCount = prev.recommendCount + 1;
+      copyOfObject.plusRecommendCount = prev.plusRecommendCount + 1;
       return copyOfObject;
     });
   };
@@ -166,13 +166,13 @@ const PostDetailPage = ({ user }) => {
     await updateDoc(
       doc(dbService, `clubs/${params.clubId}/posts`, params.postId),
       {
-        recommendCount: increment(-1),
+        minusRecommendCount: increment(1),
         recommendUser: arrayUnion(user.uid),
       }
     );
     setData((prev) => {
       let copyOfObject = { ...prev };
-      copyOfObject.recommendCount = prev.recommendCount - 1;
+      copyOfObject.minusRecommendCount = prev.minusRecommendCount + 1;
       return copyOfObject;
     });
   };
@@ -233,7 +233,7 @@ const PostDetailPage = ({ user }) => {
                   onClick={onRecommendUp}
                 ></button>
                 <span className={styles.favBox_number}>
-                  ↑{data?.recommendCount}↓
+                  ↑{data?.plusRecommendCount} ↓{data?.minusRecommendCount}
                 </span>
                 <button
                   type="button"
@@ -290,7 +290,11 @@ const PostDetailPage = ({ user }) => {
           </div>
           <div className={styles.other}>
             <div className={styles.other_title}>다른 게시글 보기</div>
-            <Posts selectPostId={params.postId} />
+            <Posts
+              selectPostId={params.postId}
+              plusRecommendCount={data?.plusRecommendCount}
+              minusRecommendCount={data?.minusRecommendCount}
+            />
           </div>
         </>
       )}

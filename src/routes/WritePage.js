@@ -22,7 +22,8 @@ const WritePage = ({ user: { displayName, uid } }) => {
       creatorName: displayName,
       postType: 'all',
       title,
-      recommendCount: 0,
+      plusRecommendCount: 0,
+      minusRecommendCount: 0,
       recommendUser: [],
       views: 0,
     });

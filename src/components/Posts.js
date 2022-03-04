@@ -12,7 +12,7 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { dbService } from '../lib/fbase';
 import style from '../style/Posts.module.css';
 
-const Posts = ({ selectPostId }) => {
+const Posts = ({ selectPostId, plusRecommendCount, minusRecommendCount }) => {
   const [posts, setPosts] = useState([]);
   const [countPageLimit, setCountPageLimit] = useState(1);
   const [selectPageIndex, setSelectPageIndex] = useState(1);
@@ -192,7 +192,9 @@ const Posts = ({ selectPostId }) => {
                   </Link>
                   <span className={style.postViews}>{post.views}</span>
                   <span className={style.postRecommendCount}>
-                    {post.recommendCount}
+                    {selectPostId === post.id
+                      ? `↑${plusRecommendCount} ↓${minusRecommendCount}`
+                      : `↑${post.plusRecommendCount} ↓${post.minusRecommendCount}`}
                   </span>
                 </li>
               );
