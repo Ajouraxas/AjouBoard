@@ -12,7 +12,7 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { dbService } from '../lib/fbase';
 import style from '../style/Posts.module.css';
 
-const Posts = ({ selectPostId }) => {
+const Posts = ({ selectPostId, plusRecommendCount, minusRecommendCount }) => {
   const [posts, setPosts] = useState([]);
   const [countPageLimit, setCountPageLimit] = useState(1);
   const [selectPageIndex, setSelectPageIndex] = useState(1);
@@ -164,6 +164,8 @@ const Posts = ({ selectPostId }) => {
               <li className={style.menuDate}>날짜</li>
               <li className={style.menuAuthor}>글쓴이</li>
               <li className={style.menuTitle}>제목</li>
+              <li className={style.menuViews}>조회수</li>
+              <li className={style.menuRecommendCount}>개추수/비추수</li>
             </ul>
           </div>
           <ul className={style.postUl}>
@@ -182,9 +184,18 @@ const Posts = ({ selectPostId }) => {
                     .replace('T', ' ')
                     .substring(0, 16)}`}</span>
                   <span className={style.postAuthor}>{post.creatorName}</span>
-                  <Link to={`/club/${clubId}/${post.id}`}>
+                  <Link
+                    className={style.postTitle}
+                    to={`/club/${clubId}/${post.id}`}
+                  >
                     <span className={style.postTitle}>{post.title}</span>
                   </Link>
+                  <span className={style.postViews}>{post.views}</span>
+                  <span className={style.postRecommendCount}>
+                    {selectPostId === post.id
+                      ? `↑${plusRecommendCount} ↓${minusRecommendCount}`
+                      : `↑${post.plusRecommendCount} ↓${post.minusRecommendCount}`}
+                  </span>
                 </li>
               );
             })}
