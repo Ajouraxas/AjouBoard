@@ -23,7 +23,6 @@ a:active {
   width: 100%;
   margin: auto;
   position: relative;
-  background-color: #afc4e7;
   border-radius: 10px;
   z-index: -2;
 }
@@ -56,7 +55,9 @@ a:active {
   top: 50%;
   transform: translate(0, -50%);
 }
-
+.clubIconSubMenu span {
+  font-size: 23px;
+}
 .clubIconInfo {
   padding-top: 20px;
   width: 100%;
@@ -85,8 +86,7 @@ a:active {
 }
 .clubLink__span {
   display: inline-block;
-  background-color: black;
-  color: whitesmoke;
+  color: black;
   border-radius: 10px;
 }
 
