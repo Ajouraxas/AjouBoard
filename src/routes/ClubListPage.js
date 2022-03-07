@@ -13,6 +13,7 @@ const storage = getStorage();
 const ClubListPage = () => {
   const [clubsObj, setClubsObj] = useState([]);
   const [clubsBgUrl, setClubsBgUrl] = useState([]);
+  const [isInit, setIsInit] = useState(false);
 
   useEffect(() => {
     const getClubsObj = async () => {
@@ -39,6 +40,7 @@ const ClubListPage = () => {
         })
       );
       setClubsBgUrl(imageRef);
+      setIsInit(true);
     };
     getClubsObj();
   }, []);
@@ -84,7 +86,7 @@ const ClubListPage = () => {
       </Link>
     );
   };
-  return (
+  return isInit ? (
     <>
       <div className={style.clubIconContainer}>
         <div className={style.clubIconContainerTopMenu}>
@@ -94,6 +96,27 @@ const ClubListPage = () => {
           {clubsObj.map((clubObj, idx) => clubIcon(clubObj, idx))}
         </div>
       </div>
+    </>
+  ) : (
+    <>
+      <svg className={style.loadingSpinner} viewBox="0 0 50 50">
+        <circle
+          className={style.loadingSpinnerPath}
+          cx="25"
+          cy="25"
+          r="15"
+          fill="none"
+          stroke-width="5"
+        ></circle>
+        <circle
+          className={style.loadingSpinnerPath2}
+          cx="25"
+          cy="25"
+          r="20"
+          fill="none"
+          stroke-width="8"
+        ></circle>
+      </svg>
     </>
   );
 };
