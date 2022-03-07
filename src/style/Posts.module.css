@@ -31,9 +31,18 @@
   flex: 1;
   text-align: center;
 }
+.menuViews {
+  width: 100px;
+  text-align: center;
+}
+.menuRecommendCount {
+  width: 150px;
+  text-align: center;
+}
 
 .postUl {
   display: flex;
+  width: 100%;
   flex-direction: column;
   margin: 0 auto;
   justify-content: center;
@@ -42,10 +51,14 @@
 
 .postList {
   display: flex;
-  width: 100%;
+  flex-direction: row;
   padding-top: 15px;
   padding-bottom: 15px;
   border-bottom: 1px solid #eeeeee;
+}
+
+.selectPost {
+  background-color: gold;
 }
 
 .postDate {
@@ -63,10 +76,17 @@
 }
 
 .postTitle {
-  flex: 1;
   padding-left: 15px;
+  flex: 1;
 }
-
+.postViews {
+  width: 100px;
+  text-align: center;
+}
+.postRecommendCount {
+  width: 150px;
+  text-align: center;
+}
 .searchForm {
   display: flex;
   justify-content: center;

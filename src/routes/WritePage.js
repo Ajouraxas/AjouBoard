@@ -4,25 +4,28 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { dbService } from '../lib/fbase';
 import WriteBoard from '../components/WriteBoard';
 import style from '../style/WritePage.module.css';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 const WritePage = ({ user: { displayName, uid } }) => {
   const navigate = useNavigate();
   const {
     state: { clubId },
   } = useLocation();
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     const title = e.target[0].value;
     const content = e.target[1].value;
     const q = query(collection(dbService, `clubs/${clubId}/posts`));
-    addDoc(q, {
+    await addDoc(q, {
       uid,
       content,
       createAt: Date.now(),
       creatorName: displayName,
       postType: 'all',
       title,
+      plusRecommendCount: 0,
+      minusRecommendCount: 0,
+      recommendUser: [],
+      views: 0,
     });
     navigate(-1);
   };

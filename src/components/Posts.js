@@ -6,13 +6,13 @@ import {
   query,
   startAt,
   where,
-} from "firebase/firestore";
-import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import { dbService } from "../lib/fbase";
-import style from "../style/Posts.module.css";
+} from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { dbService } from '../lib/fbase';
+import style from '../style/Posts.module.css';
 
-const Posts = () => {
+const Posts = ({ selectPostId, plusRecommendCount, minusRecommendCount }) => {
   const [posts, setPosts] = useState([]);
   const [countPageLimit, setCountPageLimit] = useState(1);
   const [selectPageIndex, setSelectPageIndex] = useState(1);
@@ -24,17 +24,17 @@ const Posts = () => {
     const getPosts = async () => {
       // 예) selectPageIndex = 2, 1 ~ 21번째까지 불러오기
       const rawPostQ =
-        viewType === "all" || !viewType
+        viewType === 'all' || !viewType
           ? query(
               collection(dbService, `clubs/${clubId}/posts`),
-              orderBy("createAt", "desc"),
-              limit(pageLimit * (selectPageIndex - 1) + 1),
+              orderBy('createAt', 'desc'),
+              limit(pageLimit * (selectPageIndex - 1) + 1)
             )
           : query(
               collection(dbService, `clubs/${clubId}/posts`),
-              where("postType", "==", viewType),
-              orderBy("createAt", "desc"),
-              limit(pageLimit * (selectPageIndex - 1) + 1),
+              where('postType', '==', viewType),
+              orderBy('createAt', 'desc'),
+              limit(pageLimit * (selectPageIndex - 1) + 1)
             );
       const rawDocs = await getDocs(rawPostQ);
       if (!rawDocs.docs.length) {
@@ -45,19 +45,19 @@ const Posts = () => {
       const lastVisible = rawDocs.docs[rawDocs.docs.length - 1];
       // 21번째 ~ 40번째 불러오기
       const postQ =
-        viewType === "all" || !viewType
+        viewType === 'all' || !viewType
           ? query(
               collection(dbService, `clubs/${clubId}/posts`),
-              orderBy("createAt", "desc"),
+              orderBy('createAt', 'desc'),
               startAt(lastVisible),
-              limit(pageLimit),
+              limit(pageLimit)
             )
           : query(
               collection(dbService, `clubs/${clubId}/posts`),
-              where("postType", "==", viewType),
-              orderBy("createAt", "desc"),
+              where('postType', '==', viewType),
+              orderBy('createAt', 'desc'),
               startAt(lastVisible),
-              limit(pageLimit),
+              limit(pageLimit)
             );
       const docs = await getDocs(postQ);
       const postArray = docs.docs.map((doc) => ({
@@ -70,19 +70,19 @@ const Posts = () => {
     const getCountPageLimit = async () => {
       // pagination
       const countPageLimitQ =
-        viewType === "all" || !viewType
+        viewType === 'all' || !viewType
           ? query(collection(dbService, `clubs/${clubId}/posts`))
           : query(
               collection(dbService, `clubs/${clubId}/posts`),
-              where("postType", "==", viewType),
+              where('postType', '==', viewType)
             );
       const allDocs = await getDocs(countPageLimitQ);
       setCountPageLimit(parseInt(Math.ceil(allDocs.docs.length / pageLimit)));
     };
 
     const getViewType = () => {
-      const viewTypeQ = search.split("=");
-      if (viewTypeQ[0] === "?view") {
+      const viewTypeQ = search.split('=');
+      if (viewTypeQ[0] === '?view') {
         return viewTypeQ[1];
       }
     };
@@ -164,6 +164,8 @@ const Posts = () => {
               <li className={style.menuDate}>날짜</li>
               <li className={style.menuAuthor}>글쓴이</li>
               <li className={style.menuTitle}>제목</li>
+              <li className={style.menuViews}>조회수</li>
+              <li className={style.menuRecommendCount}>개추수/비추수</li>
             </ul>
           </div>
           <ul className={style.postUl}>
@@ -171,15 +173,29 @@ const Posts = () => {
               const date = new Date(post.createAt);
               date.setHours(date.getHours() + 9);
               return (
-                <li className={style.postList} key={post.createAt}>
+                <li
+                  className={`${style.postList} ${
+                    selectPostId === post.id && style.selectPost
+                  }`}
+                  key={post.createAt}
+                >
                   <span className={style.postDate}>{`${date
                     .toISOString()
-                    .replace("T", " ")
+                    .replace('T', ' ')
                     .substring(0, 16)}`}</span>
                   <span className={style.postAuthor}>{post.creatorName}</span>
-                  <Link to={`/club/${clubId}/${post.id}`}>
+                  <Link
+                    className={style.postTitle}
+                    to={`/club/${clubId}/${post.id}`}
+                  >
                     <span className={style.postTitle}>{post.title}</span>
                   </Link>
+                  <span className={style.postViews}>{post.views}</span>
+                  <span className={style.postRecommendCount}>
+                    {selectPostId === post.id
+                      ? `↑${plusRecommendCount} ↓${minusRecommendCount}`
+                      : `↑${post.plusRecommendCount} ↓${post.minusRecommendCount}`}
+                  </span>
                 </li>
               );
             })}
@@ -199,12 +215,12 @@ const Posts = () => {
             </form>
           </div>
           <ul className={style.paginationUl}>
-            {" "}
+            {' '}
             {selectPageIndex - 9 > 0 && (
               <button
                 onClick={onClickPrevious}
                 className={style.paginationBtn}
-                key={"previous"}
+                key={'previous'}
               >
                 이전
               </button>
@@ -214,7 +230,7 @@ const Posts = () => {
               <button
                 onClick={onClickNext}
                 className={style.paginationBtn}
-                key={"next"}
+                key={'next'}
               >
                 다음
               </button>

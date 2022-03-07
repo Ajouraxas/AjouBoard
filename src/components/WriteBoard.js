@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import style from '../style/WriteBoard.module.css';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { convertFromRaw } from 'draft-js';
 
-const WriteBoard = () => {
+const WriteBoard = ({ prevTitle, prevContent }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState(EditorState.createEmpty());
+  const { pathname } = useLocation();
+  const banner = pathname.split('/');
   const navigate = useNavigate();
   const onEditorStateChange = (state) => {
     setContent(state);
@@ -22,9 +25,24 @@ const WriteBoard = () => {
     } = e;
     setTitle(value);
   };
+  useEffect(() => {
+    const settingPost = () => {
+      if (prevTitle && prevContent) {
+        setTitle(prevTitle);
+        setContent(
+          EditorState.createWithContent(convertFromRaw(JSON.parse(prevContent)))
+        );
+      }
+    };
+    settingPost();
+  }, [prevTitle, prevContent]);
   return (
     <>
-      <span className={style.boardBanner}>새로운 게시물 작성</span>
+      <span className={style.boardBanner}>
+        {banner[3] === 'write'
+          ? '새로운 게시글 작성'
+          : banner[4] === 'update' && '게시글 수정하기'}
+      </span>
       <textarea
         className={style.boardTitle}
         onChange={onChangeTitle}

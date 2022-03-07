@@ -1,49 +1,53 @@
-import { convertFromRaw } from "draft-js";
-import { EditorState } from "draft-js";
-import { Editor } from "draft-js";
+import { convertFromRaw } from 'draft-js';
+import { EditorState } from 'draft-js';
+import { Editor } from 'draft-js';
 import {
   addDoc,
+  arrayUnion,
   collection,
+  deleteDoc,
   doc,
   getDoc,
+  getDocs,
+  increment,
   onSnapshot,
   orderBy,
   query,
+  updateDoc,
   where,
-} from "firebase/firestore";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import PostNavbar from "../components/PostNavbar";
-import Posts from "../components/Posts";
-import { dbService } from "../lib/fbase";
-import styles from "../style/PostDetailPage.module.css";
+} from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import PostNavbar from '../components/PostNavbar';
+import Posts from '../components/Posts';
+import { dbService } from '../lib/fbase';
+import styles from '../style/PostDetailPage.module.css';
 const PostDetailPage = ({ user }) => {
   const params = useParams();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState();
   const [comments, setComments] = useState([]);
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState('');
   const [editorContent, setEditorContent] = useState(EditorState.createEmpty());
 
   useEffect(() => {
     if (!params.clubId || !params.postId) return;
     setIsLoading(true);
-    getDoc(doc(dbService, "clubs", params.clubId, "posts", params.postId))
+    getDoc(doc(dbService, 'clubs', params.clubId, 'posts', params.postId))
       .then((res) => {
-        if (!res.exists()) throw new Error("not-found");
+        if (!res.exists()) throw new Error('not-found');
         return res.data();
       })
       .then((res) => {
         setEditorContent(
-          EditorState.createWithContent(
-            convertFromRaw(JSON.parse(res.content)),
-          ),
+          EditorState.createWithContent(convertFromRaw(JSON.parse(res.content)))
         );
         const date = new Date(res.createAt);
         date.setHours(date.getHours() + 9);
         const stringDate = date
           .toISOString()
-          .replace("T", " ")
+          .replace('T', ' ')
           .substring(0, 16)
           .toString();
         return {
@@ -54,9 +58,9 @@ const PostDetailPage = ({ user }) => {
       .then((res) => setData(res));
     const unsubscribe = onSnapshot(
       query(
-        collection(dbService, "comments"),
-        orderBy("createAt", "asc"),
-        where("post", "==", params.postId),
+        collection(dbService, 'comments'),
+        orderBy('createAt', 'asc'),
+        where('post', '==', params.postId)
       ),
       (querySnapshot) => {
         const update = querySnapshot.docs.map((doc) => {
@@ -64,7 +68,7 @@ const PostDetailPage = ({ user }) => {
           date.setHours(date.getHours() + 9);
           const stringDate = date
             .toISOString()
-            .replace("T", " ")
+            .replace('T', ' ')
             .substring(0, 16)
             .toString();
           return {
@@ -74,9 +78,18 @@ const PostDetailPage = ({ user }) => {
           };
         });
         setComments(update);
-      },
+      }
     );
     setIsLoading(false);
+    const viewsUpdate = async () => {
+      updateDoc(
+        doc(dbService, `/clubs/${params.clubId}/posts`, params.postId),
+        {
+          views: increment(1),
+        }
+      );
+    };
+    viewsUpdate();
     return () => {
       unsubscribe();
     };
@@ -92,7 +105,7 @@ const PostDetailPage = ({ user }) => {
   const onSubmit = (event) => {
     event.preventDefault();
     (async () => {
-      await addDoc(collection(dbService, "comments"), {
+      await addDoc(collection(dbService, 'comments'), {
         author: user.displayName,
         uid: user.uid,
         comment,
@@ -100,17 +113,77 @@ const PostDetailPage = ({ user }) => {
         post: params.postId,
       });
     })();
-    setComment("");
+    setComment('');
+  };
+  const onPostUpdate = () => {
+    navigate(`/club/${params.clubId}/${params.postId}/update`);
+  };
+  const onPostDelete = async () => {
+    window.confirm('정말 게시글을 삭제하시겠습니까?') &&
+      navigate(`/club/${params.clubId}`);
+    await deleteDoc(
+      doc(dbService, `clubs/${params.clubId}/posts`, params.postId)
+    );
+
+    const deleteDocs = await getDocs(
+      query(
+        collection(dbService, 'comments'),
+        where('post', '==', params.postId)
+      )
+    );
+    deleteDocs.docs.forEach(async (delDoc) => {
+      await deleteDoc(delDoc.ref);
+    });
+  };
+  const onRecommendUp = async () => {
+    const checkDoc = await getDoc(
+      doc(dbService, `clubs/${params.clubId}/posts`, params.postId)
+    );
+    if (checkDoc.data().recommendUser.includes(user.uid)) {
+      return window.alert('이미 추천누르셨습니다.');
+    }
+    await updateDoc(
+      doc(dbService, `clubs/${params.clubId}/posts`, params.postId),
+      {
+        plusRecommendCount: increment(1),
+        recommendUser: arrayUnion(user.uid),
+      }
+    );
+    setData((prev) => {
+      let copyOfObject = { ...prev };
+      copyOfObject.plusRecommendCount = prev.plusRecommendCount + 1;
+      return copyOfObject;
+    });
   };
 
+  const onRecommendDown = async () => {
+    const checkDoc = await getDoc(
+      doc(dbService, `clubs/${params.clubId}/posts`, params.postId)
+    );
+    if (checkDoc.data().recommendUser.includes(user.uid)) {
+      return window.alert('이미 추천누르셨습니다.');
+    }
+    await updateDoc(
+      doc(dbService, `clubs/${params.clubId}/posts`, params.postId),
+      {
+        minusRecommendCount: increment(1),
+        recommendUser: arrayUnion(user.uid),
+      }
+    );
+    setData((prev) => {
+      let copyOfObject = { ...prev };
+      copyOfObject.minusRecommendCount = prev.minusRecommendCount + 1;
+      return copyOfObject;
+    });
+  };
   return (
     <div className={styles.wrapper}>
       <PostNavbar user={user} />
       {isLoading ? (
-        "Loading..."
+        'Loading...'
       ) : (
         <>
-          {" "}
+          {' '}
           <div className={styles.content}>
             <div className={styles.header}>
               <div className={styles.header_title}>
@@ -142,11 +215,31 @@ const PostDetailPage = ({ user }) => {
               <div className={styles.body_main}>
                 {data && <Editor readOnly={true} editorState={editorContent} />}
               </div>
-              <div className={styles.updateBtn}>게시글 수정</div>
+              {user?.uid === data?.uid && (
+                <>
+                  <button className={styles.updateBtn} onClick={onPostUpdate}>
+                    게시글 수정
+                  </button>
+                  <button className={styles.deleteBtn} onClick={onPostDelete}>
+                    삭제
+                  </button>
+                </>
+              )}
+
               <div className={styles.favBox}>
-                <button type="button" className={styles.favBox_up}></button>
-                <span className={styles.favBox_number}>↑74 ↓1</span>
-                <button type="button" className={styles.favBox_down}></button>
+                <button
+                  type="button"
+                  className={styles.favBox_up}
+                  onClick={onRecommendUp}
+                ></button>
+                <span className={styles.favBox_number}>
+                  ↑{data?.plusRecommendCount} ↓{data?.minusRecommendCount}
+                </span>
+                <button
+                  type="button"
+                  className={styles.favBox_down}
+                  onClick={onRecommendDown}
+                ></button>
               </div>
             </div>
           </div>
@@ -197,7 +290,11 @@ const PostDetailPage = ({ user }) => {
           </div>
           <div className={styles.other}>
             <div className={styles.other_title}>다른 게시글 보기</div>
-            <Posts />
+            <Posts
+              selectPostId={params.postId}
+              plusRecommendCount={data?.plusRecommendCount}
+              minusRecommendCount={data?.minusRecommendCount}
+            />
           </div>
         </>
       )}
