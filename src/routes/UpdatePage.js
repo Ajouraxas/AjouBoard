@@ -35,7 +35,7 @@ const UpdatePage = ({ user }) => {
   return (
     <>
       <form className={style.boardWrapper} onSubmit={onSubmit}>
-        <WriteBoard prevTitle={title} prevContent={content} />
+        <WriteBoard prevTitle={title} prevContent={content} uid={user.uid} />
       </form>
     </>
   );

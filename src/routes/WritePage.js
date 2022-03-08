@@ -32,7 +32,7 @@ const WritePage = ({ user: { displayName, uid } }) => {
   return (
     <>
       <form className={style.boardWrapper} onSubmit={onSubmit}>
-        <WriteBoard />
+        <WriteBoard uid={uid} />
       </form>
     </>
   );
