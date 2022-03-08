@@ -1,9 +1,9 @@
-import { collection, getDocs, orderBy, query } from 'firebase/firestore';
-import { getDownloadURL, getStorage, ref } from 'firebase/storage';
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { dbService } from '../lib/fbase';
-import style from '../style/ClubList.module.css';
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { getDownloadURL, getStorage, ref } from "firebase/storage";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { dbService } from "../lib/fbase";
+import style from "../style/ClubList.module.css";
 
 /**
  * component: ClubIcon, ClubContainer
@@ -13,12 +13,13 @@ const storage = getStorage();
 const ClubListPage = () => {
   const [clubsObj, setClubsObj] = useState([]);
   const [clubsBgUrl, setClubsBgUrl] = useState([]);
+  const [isInit, setIsInit] = useState(false);
 
   useEffect(() => {
     const getClubsObj = async () => {
       const clubQ = query(
-        collection(dbService, 'clubs'),
-        orderBy('index', 'asc')
+        collection(dbService, "clubs"),
+        orderBy("index", "asc")
       );
       const docs = await getDocs(clubQ);
       const clubArray = docs.docs.map((doc) => ({
@@ -31,7 +32,7 @@ const ClubListPage = () => {
           if (obj.is_bg) {
             try {
               const result = await getDownloadURL(
-                ref(storage, obj.id + '/bg_img')
+                ref(storage, obj.id + "/bg_img")
               );
               return result;
             } catch (e) {}
@@ -39,17 +40,18 @@ const ClubListPage = () => {
         })
       );
       setClubsBgUrl(imageRef);
+      setIsInit(true);
     };
     getClubsObj();
   }, []);
 
   const clubIcon = (clubObj, idx) => {
-    const id = clubObj['id'];
-    const name = clubObj['name'];
-    const location = clubObj['location'];
-    const tel = clubObj['tel'];
-    const isBg = clubObj['is_bg'];
-    let attachmentUrl = '';
+    const id = clubObj["id"];
+    const name = clubObj["name"];
+    const location = clubObj["location"];
+    const tel = clubObj["tel"];
+    const isBg = clubObj["is_bg"];
+    let attachmentUrl = "";
     if (isBg) {
       attachmentUrl = clubsBgUrl[idx];
     }
@@ -58,22 +60,23 @@ const ClubListPage = () => {
         <div className={style.clubIcon}>
           <div className={style.clubIconName}>
             {isBg ? (
-              <img className={style.bg} src={attachmentUrl} alt="bg" />
-            ) : null}
-            <div
-              className={`${style.clubIconSubMenuContainer} ${style.clubIconHover}`}
-            >
-              <div className={style.clubIconSubMenu}>
-                <span className={style.rightCss}>동아리 공지사항</span>
-                <span className={style.rightCss}>전체글</span>
-                <span>인기글</span>
+              <>
+                <img className={style.bg} src={attachmentUrl} alt="bg" />
+                <div
+                  className={`${style.clubIconSubMenuContainer} ${style.clubIconHover}`}
+                >
+                  <div className={style.clubIconSubMenu}>
+                    <span>{`${name}`}</span>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className={style.clubLink}>
+                <span
+                  className={style.clubLink__span}
+                >{`\u00A0${name}\u00A0`}</span>
               </div>
-            </div>
-            <div className={style.clubLink}>
-              <span
-                className={style.clubLink__span}
-              >{`\u00A0${name}\u00A0`}</span>
-            </div>
+            )}
           </div>
           <div className={style.clubIconInfo}>
             <span>동아리방 위치: {location}</span>
@@ -83,7 +86,7 @@ const ClubListPage = () => {
       </Link>
     );
   };
-  return (
+  return isInit ? (
     <>
       <div className={style.clubIconContainer}>
         <div className={style.clubIconContainerTopMenu}>
@@ -93,6 +96,27 @@ const ClubListPage = () => {
           {clubsObj.map((clubObj, idx) => clubIcon(clubObj, idx))}
         </div>
       </div>
+    </>
+  ) : (
+    <>
+      <svg className={style.loadingSpinner} viewBox="0 0 50 50">
+        <circle
+          className={style.loadingSpinnerPath}
+          cx="25"
+          cy="25"
+          r="15"
+          fill="none"
+          stroke-width="5"
+        ></circle>
+        <circle
+          className={style.loadingSpinnerPath2}
+          cx="25"
+          cy="25"
+          r="20"
+          fill="none"
+          stroke-width="8"
+        ></circle>
+      </svg>
     </>
   );
 };

@@ -1,23 +1,46 @@
 .topBanner {
+  position: relative;
+  width: 100%;
+  height: 160px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 60px;
-  width: 1200px;
-  height: 160px;
-  background-color: gray;
+  margin-top: 120px;
+}
+
+.clubName {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 40px;
+  color: #072e5d;
+}
+
+.bannerImg {
+  opacity: 0.4;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.boardLogo {
+  margin-top: 10px;
+  margin-left: 10px;
+  font-size: 24px;
+  font-weight: bolder;
+  font-style: italic;
+  position: absolute;
 }
 
 .navUl {
   list-style: none;
   display: flex;
+  position: relative;
   justify-content: center;
   margin-top: 30px;
   padding-bottom: 30px;
-  padding-left: 0px;
   border-bottom: 2px solid;
-  width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
   font-size: large;
   font-weight: bolder;
 }
@@ -42,8 +65,9 @@
 
 .navBtn {
   position: absolute;
-  margin-left: 1000px;
   border: none;
+  right: 40px;
+  top: -7px;
   border-radius: 4px;
   text-align: center;
   background-color: black;

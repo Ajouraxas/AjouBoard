@@ -3,6 +3,7 @@ import {
   Routes,
   Route,
   Navigate,
+  useLocation,
 } from "react-router-dom";
 import ClubListPage from "./routes/ClubListPage";
 import ClubPage from "./routes/ClubPage";
@@ -10,15 +11,25 @@ import Home from "./routes/Home";
 import LoginPage from "./routes/LoginPage";
 import RegisterPage from "./routes/RegisterPage";
 import GlobalNavigationBar from "./components/GlobalNavigationBar";
-import WriteBoard from "./routes/WriteBoard";
 import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { authService } from "./lib/fbase";
 import PostDetailPage from "./routes/PostDetailPage";
+import WritePage from "./routes/WritePage";
+import UpdatePage from "./routes/UpdatePage";
+import ResetPasswordPage from "./routes/ResetPasswordPage";
 /**
  * ClubPage 접속 : http://localhost:3000/#/club/123
  * Home 접속 : http://localhost:3000/#/
  */
+
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+};
 
 function App() {
   const [user, setUser] = useState(null);
@@ -40,6 +51,7 @@ function App() {
   return (
     <>
       <Router>
+        <ScrollToTop />
         <GlobalNavigationBar user={user} />
         <Routes>
           <Route path={"*"} element={<Navigate replace to={"/"} />}></Route>
@@ -55,6 +67,10 @@ function App() {
             }
           ></Route>
           <Route path={"/register"} element={<RegisterPage />}></Route>
+          <Route
+            path={"/resetpassword"}
+            element={<ResetPasswordPage />}
+          ></Route>
           <Route path={"/clublist"} element={<ClubListPage />}></Route>
           <Route
             path={"/club/:clubId"}
@@ -67,11 +83,13 @@ function App() {
           <Route
             path={"/club/:clubId/write"}
             element={
-              user ? (
-                <WriteBoard user={user} />
-              ) : (
-                <Navigate replace to={"/login"} />
-              )
+              user ? <WritePage user={user} /> : <Navigate to={"/login"} />
+            }
+          ></Route>
+          <Route
+            path={"/club/:clubId/:postId/update"}
+            element={
+              user ? <UpdatePage user={user} /> : <Navigate to={"/login"} />
             }
           ></Route>
         </Routes>

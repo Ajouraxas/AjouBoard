@@ -1,21 +1,6 @@
-.boardForm {
-  margin-top: 100px;
-  display: flex;
-  flex-direction: column;
-  width: 1000px;
-  justify-content: center;
-  align-items: center;
-  height: 1000px;
-  background-color: #fafafa;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 10px;
-  border: #d3ddec 1px solid;
-}
-
 .boardBanner {
   font-size: 24px;
-  width: 920px;
+  width: 92%;
   text-align: center;
   border-bottom: #96b7e9 1px solid;
   padding-bottom: 10px;
@@ -29,7 +14,7 @@
   vertical-align: middle;
   border: #d3ddec 1px solid;
   border-radius: 5px;
-  width: 920px;
+  width: 92%;
   height: 40px;
   resize: none;
   font-size: 14px;
@@ -43,26 +28,24 @@
   outline: none;
 }
 
-.boardContent {
+.editorWrapper {
+  width: 92%;
+}
+
+.toolbar {
+  background-color: #fafafa;
   border: #d3ddec 1px solid;
-  padding-top: 10px;
-  padding-left: 10px;
-  font-size: 14px;
-  border-radius: 5px;
-  margin-bottom: 15px;
-  width: 920px;
+}
+
+.editor {
   height: 700px;
-  resize: none;
+  border: #d3ddec 1px solid;
+  border-radius: 5px;
+  overflow: auto;
+  background-color: white;
+  margin-bottom: 30px;
+  padding-left: 10px;
 }
-
-.boardContent::placeholder {
-  color: #d3ddec;
-}
-
-.boardContent:focus {
-  outline: none;
-}
-
 .boardBtn {
   border: none;
   background-color: #3b4890;

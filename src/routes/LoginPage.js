@@ -55,6 +55,9 @@ const LoginPage = (setUser) => {
       }
     }
   };
+  const onPasswordResetClick = () => {
+    navigate("/resetpassword");
+  };
 
   const onClick = () => {
     navigate("/register");
@@ -129,7 +132,9 @@ const LoginPage = (setUser) => {
           Login with Google Account
         </button>
         <form>
-          <span className={styles.findEmail}>이메일 기억안나누 ㅋㅋ</span>
+          <span onClick={onPasswordResetClick} className={styles.findEmail}>
+            비번 기억안나누 ㅋㅋ
+          </span>
           <span onClick={onClick} className={styles.register}>
             회원가입
           </span>

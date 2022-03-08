@@ -1,115 +1,303 @@
-import React from "react";
-import Posts from "../components/Posts";
-import styles from "../style/PostDetailPage.module.css";
+import { convertFromRaw } from 'draft-js';
+import { EditorState } from 'draft-js';
+import { Editor } from 'draft-js';
+import {
+  addDoc,
+  arrayUnion,
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  increment,
+  onSnapshot,
+  orderBy,
+  query,
+  updateDoc,
+  where,
+} from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import PostNavbar from '../components/PostNavbar';
+import Posts from '../components/Posts';
+import { dbService } from '../lib/fbase';
+import styles from '../style/PostDetailPage.module.css';
+const PostDetailPage = ({ user }) => {
+  const params = useParams();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState();
+  const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState('');
+  const [editorContent, setEditorContent] = useState(EditorState.createEmpty());
 
-const PostDetailPage = () => {
+  useEffect(() => {
+    if (!params.clubId || !params.postId) return;
+    setIsLoading(true);
+    getDoc(doc(dbService, 'clubs', params.clubId, 'posts', params.postId))
+      .then((res) => {
+        if (!res.exists()) throw new Error('not-found');
+        return res.data();
+      })
+      .then((res) => {
+        setEditorContent(
+          EditorState.createWithContent(convertFromRaw(JSON.parse(res.content)))
+        );
+        const date = new Date(res.createAt);
+        date.setHours(date.getHours() + 9);
+        const stringDate = date
+          .toISOString()
+          .replace('T', ' ')
+          .substring(0, 16)
+          .toString();
+        return {
+          ...res,
+          createAt: stringDate,
+        };
+      })
+      .then((res) => setData(res));
+    const unsubscribe = onSnapshot(
+      query(
+        collection(dbService, 'comments'),
+        orderBy('createAt', 'asc'),
+        where('post', '==', params.postId)
+      ),
+      (querySnapshot) => {
+        const update = querySnapshot.docs.map((doc) => {
+          const date = new Date(doc.data().createAt);
+          date.setHours(date.getHours() + 9);
+          const stringDate = date
+            .toISOString()
+            .replace('T', ' ')
+            .substring(0, 16)
+            .toString();
+          return {
+            id: doc.id,
+            ...doc.data(),
+            createAt: stringDate,
+          };
+        });
+        setComments(update);
+      }
+    );
+    setIsLoading(false);
+    const viewsUpdate = async () => {
+      updateDoc(
+        doc(dbService, `/clubs/${params.clubId}/posts`, params.postId),
+        {
+          views: increment(1),
+        }
+      );
+    };
+    viewsUpdate();
+    return () => {
+      unsubscribe();
+    };
+  }, [params]);
+
+  const onChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setComment(value);
+  };
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    (async () => {
+      await addDoc(collection(dbService, 'comments'), {
+        author: user.displayName,
+        uid: user.uid,
+        comment,
+        createAt: Date.now(),
+        post: params.postId,
+      });
+    })();
+    setComment('');
+  };
+  const onPostUpdate = () => {
+    navigate(`/club/${params.clubId}/${params.postId}/update`);
+  };
+  const onPostDelete = async () => {
+    window.confirm('정말 게시글을 삭제하시겠습니까?') &&
+      navigate(`/club/${params.clubId}`);
+    await deleteDoc(
+      doc(dbService, `clubs/${params.clubId}/posts`, params.postId)
+    );
+
+    const deleteDocs = await getDocs(
+      query(
+        collection(dbService, 'comments'),
+        where('post', '==', params.postId)
+      )
+    );
+    deleteDocs.docs.forEach(async (delDoc) => {
+      await deleteDoc(delDoc.ref);
+    });
+  };
+  const onRecommendUp = async () => {
+    const checkDoc = await getDoc(
+      doc(dbService, `clubs/${params.clubId}/posts`, params.postId)
+    );
+    if (checkDoc.data().recommendUser.includes(user.uid)) {
+      return window.alert('이미 추천누르셨습니다.');
+    }
+    await updateDoc(
+      doc(dbService, `clubs/${params.clubId}/posts`, params.postId),
+      {
+        plusRecommendCount: increment(1),
+        recommendUser: arrayUnion(user.uid),
+      }
+    );
+    setData((prev) => {
+      let copyOfObject = { ...prev };
+      copyOfObject.plusRecommendCount = prev.plusRecommendCount + 1;
+      return copyOfObject;
+    });
+  };
+
+  const onRecommendDown = async () => {
+    const checkDoc = await getDoc(
+      doc(dbService, `clubs/${params.clubId}/posts`, params.postId)
+    );
+    if (checkDoc.data().recommendUser.includes(user.uid)) {
+      return window.alert('이미 추천누르셨습니다.');
+    }
+    await updateDoc(
+      doc(dbService, `clubs/${params.clubId}/posts`, params.postId),
+      {
+        minusRecommendCount: increment(1),
+        recommendUser: arrayUnion(user.uid),
+      }
+    );
+    setData((prev) => {
+      let copyOfObject = { ...prev };
+      copyOfObject.minusRecommendCount = prev.minusRecommendCount + 1;
+      return copyOfObject;
+    });
+  };
   return (
     <div className={styles.wrapper}>
-      <div className={styles.banner}>Banner</div>
-      <div className={styles.nav}>
-        <ul className={styles.nav_list}>
-          <li id={"announce"}>공지사항</li>
-          <li id={"all"}>전체글</li>
-          <li id={"popular"}>개추 받은 글</li>
-        </ul>
-        <button type="button" className={styles.nav_write}>
-          글쓰기
-        </button>
-      </div>
-      <div className={styles.content}>
-        <div className={styles.header}>
-          <div className={styles.header_title}>
-            <div className={styles.header_title_text}>
-              [공지사항] 18학번 이웅희 레프트 훅으로 김형건 술집에서 사람 재운거
-              실화냐?
-            </div>
-          </div>
-          <div className={styles.header_info}>
-            <div className={styles.header_info_left}>
-              <div className={styles.header_info_left_avatar} />
-              <div className={styles.header_info_left_user}>
-                <div className={styles.header_info_left_user_name}>
-                  Hack-sick
+      <PostNavbar user={user} />
+      {isLoading ? (
+        'Loading...'
+      ) : (
+        <>
+          {' '}
+          <div className={styles.content}>
+            <div className={styles.header}>
+              <div className={styles.header_title}>
+                <div className={styles.header_title_text}>{data?.title}</div>
+              </div>
+              <div className={styles.header_info}>
+                <div className={styles.header_info_left}>
+                  <div className={styles.header_info_left_avatar} />
+                  <div className={styles.header_info_left_user}>
+                    <div className={styles.header_info_left_user_name}>
+                      {data?.creatorName}
+                    </div>
+                    <div className={styles.header_info_left_user_club}>
+                      호완
+                    </div>
+                    <div className={styles.header_info_left_user_grade}>
+                      동아리원
+                    </div>
+                  </div>
                 </div>
-                <div className={styles.header_info_left_user_club}>호완</div>
-                <div className={styles.header_info_left_user_grade}>
-                  동아리원
+                <div className={styles.header_info_right}>
+                  <div className={styles.header_info_right_view}>
+                    조회수: 178
+                  </div>
                 </div>
               </div>
             </div>
-            <div className={styles.header_info_right}>
-              <div className={styles.header_info_right_date}>
-                2022-02-20 16:20
+            <div className={styles.body}>
+              <div className={styles.body_main}>
+                {data && <Editor readOnly={true} editorState={editorContent} />}
               </div>
-              <div className={styles.header_info_right_view}>조회수: 178</div>
-            </div>
-          </div>
-        </div>
-        <div className={styles.body}>
-          <div className={styles.body_main}>Body</div>
-          <div className={styles.updateBtn}>게시글 수정</div>
-          <div className={styles.favBox}>
-            <button type="button" className={styles.favBox_up}></button>
-            <span className={styles.favBox_number}>↑74 ↓1</span>
-            <button type="button" className={styles.favBox_down}></button>
-          </div>
-        </div>
-      </div>
-      <div className={styles.comment}>
-        <div className={styles.comment_header}>댓글</div>
-        {[1, 2, 3, 4, 5, 6].map((_, i) => (
-          <div key={i} className={styles.comment_body}>
-            <div className={styles.comment_body_info}>
-              <div className={styles.comment_body_info_avatar} />
-              <div className={styles.comment_body_info_name}>올블루 탐험가</div>
-              <div className={styles.comment_body_info_userInfo}>
-                <div className={styles.comment_body_info_userInfo_club}>
-                  호완
-                </div>
-                <div className={styles.comment_body_info_userInfo_grade}>
-                  동아리원
-                </div>
+              {user?.uid === data?.uid && (
+                <>
+                  <button className={styles.updateBtn} onClick={onPostUpdate}>
+                    게시글 수정
+                  </button>
+                  <button className={styles.deleteBtn} onClick={onPostDelete}>
+                    삭제
+                  </button>
+                </>
+              )}
+
+              <div className={styles.favBox}>
+                <button
+                  type="button"
+                  className={styles.favBox_up}
+                  onClick={onRecommendUp}
+                ></button>
+                <span className={styles.favBox_number}>
+                  ↑{data?.plusRecommendCount} ↓{data?.minusRecommendCount}
+                </span>
+                <button
+                  type="button"
+                  className={styles.favBox_down}
+                  onClick={onRecommendDown}
+                ></button>
               </div>
             </div>
-            <div className={styles.comment_body_text}>
-              이 상자의 가로는 700(피그마에서는 707), 높이는 60입니다. 이 상자의
-              가로는 700(피그마에서는 707), 높이는 60입니다. 이 상자의 가로는
-              700(피그마에서는 707), 높이는 60입니다. 이 상자의 가로는
-              700(피그마에서는 707), 높이는 60입니다. 이 상자의 가로는
-              700(피그마에서는 707), 높이는 60입니다. 이 상자의 가로는
-              700(피그마에서는 707), 높이는 60입니다. 이 상자의 가로는
-              700(피그마에서는 707), 높이는 60입니다. 이 상자의 가로는
-              700(피그마에서는 707), 높이는 60입니다. 이 상자의 가로는
-              700(피그마에서는 707), 높이는 60입니다. 이 상자의 가로는
-              700(피그마에서는 707), 높이는 60입니다. 이 상자의 가로는
-              700(피그마에서는 707), 높이는 60입니다. 이 상자의 가로는
-              700(피그마에서는 707), 높이는 60입니다. 이 상자의 가로는
-              700(피그마에서는 707), 높이는 60입니다. 이 상자의 가로는
-              700(피그마에서는 707), 높이는 60입니다.
-              <div className={styles.comment_body_date}>2022-02-20 16:20</div>
+          </div>
+          <div className={styles.comment}>
+            <div className={styles.comment_header}>댓글</div>
+            {comments?.map((comment) => (
+              <div key={comment.id} className={styles.comment_body}>
+                <div className={styles.comment_body_info}>
+                  <div className={styles.comment_body_info_avatar} />
+                  <div className={styles.comment_body_info_name}>
+                    {comment.author}
+                  </div>
+                  <div className={styles.comment_body_info_userInfo}>
+                    <div className={styles.comment_body_info_userInfo_club}>
+                      호완
+                    </div>
+                    <div className={styles.comment_body_info_userInfo_grade}>
+                      동아리원
+                    </div>
+                  </div>
+                </div>
+                <div className={styles.comment_body_text}>
+                  {comment.comment}
+                </div>
+                <div className={styles.comment_body_date}>
+                  {comment.createAt}
+                </div>
+              </div>
+            ))}
+            <form onSubmit={onSubmit} className={styles.comment_input}>
+              <div className={styles.comment_label}>댓글 쓰기</div>
+              <textarea
+                onChange={onChange}
+                value={comment}
+                className={styles.comment_text}
+              />
+              <button className={styles.comment_submit}>등록</button>
+            </form>
+            <div className={styles.comment_pagination}>
+              <button className={styles.comment_pagination_btn}>◁</button>
+              {[1, 2, 3].map((_, i) => (
+                <span key={i} className={styles.comment_pagination_number}>
+                  {_}
+                </span>
+              ))}
+              <button className={styles.comment_pagination_btn}>▷</button>
             </div>
           </div>
-        ))}
-        <div className={styles.comment_input}>
-          <div className={styles.comment_label}>댓글 쓰기</div>
-          <textarea className={styles.comment_text} />
-          <div className={styles.comment_submit}>등록</div>
-        </div>
-        <div className={styles.comment_pagination}>
-          <button className={styles.comment_pagination_btn}>◁</button>
-          {[1, 2, 3].map((_, i) => (
-            <span key={i} className={styles.comment_pagination_number}>
-              {_}
-            </span>
-          ))}
-          <button className={styles.comment_pagination_btn}>▷</button>
-        </div>
-      </div>
-      <div className={styles.other}>
-        <div className={styles.other_title}>다른 게시글 보기</div>
-        <Posts />
-        {/* <div className={styles.other_body}>Body</div> */}
-      </div>
+          <div className={styles.other}>
+            <div className={styles.other_title}>다른 게시글 보기</div>
+            <Posts
+              selectPostId={params.postId}
+              plusRecommendCount={data?.plusRecommendCount}
+              minusRecommendCount={data?.minusRecommendCount}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 };
