@@ -23,7 +23,6 @@ a:active {
   width: 100%;
   margin: auto;
   position: relative;
-  background-color: #afc4e7;
   border-radius: 10px;
   z-index: -2;
 }
@@ -56,7 +55,9 @@ a:active {
   top: 50%;
   transform: translate(0, -50%);
 }
-
+.clubIconSubMenu span {
+  font-size: 23px;
+}
 .clubIconInfo {
   padding-top: 20px;
   width: 100%;
@@ -85,16 +86,8 @@ a:active {
 }
 .clubLink__span {
   display: inline-block;
-  background-color: black;
-  color: whitesmoke;
+  color: black;
   border-radius: 10px;
-}
-
-.rightCss {
-  margin-right: 8px;
-  padding-right: 8px;
-  border-right: solid;
-  border-width: 1px;
 }
 
 .clubIconContainer {
@@ -126,4 +119,85 @@ a:active {
   width: 1500px;
   align-items: center;
   justify-items: center;
+}
+
+.loadingSpinner {
+  -webkit-animation: rotate 2s linear infinite;
+  animation: rotate 2s linear infinite;
+
+  z-index: 999;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -25px 0 0 -25px;
+  width: 50px;
+  height: 50px;
+}
+
+.loadingSpinner .loadingSpinnerPath {
+  stroke: #96b7e9;
+  stroke-linecap: round;
+  -webkit-animation: dash 1.5s ease-in-out infinite;
+  animation: dash 1.5s ease-in-out infinite;
+}
+
+.loadingSpinner .loadingSpinnerPath2 {
+  stroke: #3b4890;
+  stroke-linecap: round;
+  -webkit-animation: dash 1.7s ease-in-out infinite;
+  animation: dash 1.7s ease-in-out infinite;
+}
+
+/* rotate circle */
+@-webkit-keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+/* make line with dashoffset(staring point each percent) */
+@-webkit-keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  33% {
+    stroke-dasharray: 90, 200;
+    stroke-dashoffset: -35;
+  }
+  66% {
+    stroke-dasharray: 90, 200;
+    stroke-dashoffset: -78;
+  }
+  100% {
+    stroke-dasharray: 90, 200;
+    stroke-dashoffset: -124;
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  33% {
+    stroke-dasharray: 90, 200;
+    stroke-dashoffset: -35;
+  }
+  66% {
+    stroke-dasharray: 90, 200;
+    stroke-dashoffset: -78;
+  }
+  100% {
+    stroke-dasharray: 90, 200;
+    stroke-dashoffset: -124;
+  }
 }
