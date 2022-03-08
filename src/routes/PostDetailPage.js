@@ -51,7 +51,6 @@ const PostDetailPage = ({ user }) => {
           return res.data();
         })
         .then((res) => {
-          console.log(JSON.parse(res.content));
           setEditorContent(
             EditorState.createWithContent(
               convertFromRaw(JSON.parse(res.content))
@@ -149,7 +148,7 @@ const PostDetailPage = ({ user }) => {
       target: { value: commentId },
     } = event;
     (async () => {
-      await deleteDoc(doc(dbService, "comments", commentId));
+      await deleteDoc(doc(dbService, 'comments', commentId));
     })();
   };
 
