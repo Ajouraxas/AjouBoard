@@ -142,6 +142,16 @@ const PostDetailPage = ({ user }) => {
       await deleteDoc(delDoc.ref);
     });
   };
+
+  const onCommentDelete = async (event) => {
+    const {
+      target: { value: commentId },
+    } = event;
+    (async () => {
+      await deleteDoc(doc(dbService, "comments", commentId));
+    })();
+  };
+
   const onRecommendUp = async () => {
     const checkDoc = await getDoc(
       doc(dbService, `clubs/${params.clubId}/posts`, params.postId),
@@ -272,6 +282,13 @@ const PostDetailPage = ({ user }) => {
                 </div>
                 <div className={styles.comment_body_date}>
                   {comment.createAt}
+                  <button
+                    value={comment.id}
+                    onClick={onCommentDelete}
+                    type="button"
+                  >
+                    X
+                  </button>
                 </div>
               </div>
             ))}

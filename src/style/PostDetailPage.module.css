@@ -287,6 +287,26 @@
 
 .comment_body_date {
   padding-left: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.comment_body_date button {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 7px;
+  border: none;
+  outline: none;
+  background: none;
+  width: 15px;
+  height: 15px;
+  background-color: gray;
+  border-radius: 50%;
+  color: white;
+  text-align: center;
 }
 
 .comment_input {
