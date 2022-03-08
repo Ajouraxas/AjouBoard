@@ -19,7 +19,7 @@ const ClubListPage = () => {
     const getClubsObj = async () => {
       const clubQ = query(
         collection(dbService, "clubs"),
-        orderBy("index", "asc")
+        orderBy("index", "asc"),
       );
       const docs = await getDocs(clubQ);
       const clubArray = docs.docs.map((doc) => ({
@@ -32,12 +32,12 @@ const ClubListPage = () => {
           if (obj.is_bg) {
             try {
               const result = await getDownloadURL(
-                ref(storage, obj.id + "/bg_img")
+                ref(storage, obj.id + "/bg_img"),
               );
               return result;
             } catch (e) {}
           }
-        })
+        }),
       );
       setClubsBgUrl(imageRef);
       setIsInit(true);
@@ -62,9 +62,7 @@ const ClubListPage = () => {
             {isBg ? (
               <>
                 <img className={style.bg} src={attachmentUrl} alt="bg" />
-                <div
-                  className={`${style.clubIconSubMenuContainer} ${style.clubIconHover}`}
-                >
+                <div className={`${style.clubIconSubMenuContainer}`}>
                   <div className={style.clubIconSubMenu}>
                     <span>{`${name}`}</span>
                   </div>
