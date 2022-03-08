@@ -2,6 +2,7 @@ import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Spinner from "../components/Spinner";
 import { dbService } from "../lib/fbase";
 import style from "../style/ClubList.module.css";
 
@@ -96,26 +97,7 @@ const ClubListPage = () => {
       </div>
     </>
   ) : (
-    <>
-      <svg className={style.loadingSpinner} viewBox="0 0 50 50">
-        <circle
-          className={style.loadingSpinnerPath}
-          cx="25"
-          cy="25"
-          r="15"
-          fill="none"
-          stroke-width="5"
-        ></circle>
-        <circle
-          className={style.loadingSpinnerPath2}
-          cx="25"
-          cy="25"
-          r="20"
-          fill="none"
-          stroke-width="8"
-        ></circle>
-      </svg>
-    </>
+    <Spinner />
   );
 };
 
