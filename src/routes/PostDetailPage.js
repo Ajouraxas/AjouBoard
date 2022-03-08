@@ -284,15 +284,6 @@ const PostDetailPage = ({ user }) => {
               />
               <button className={styles.comment_submit}>등록</button>
             </form>
-            <div className={styles.comment_pagination}>
-              <button className={styles.comment_pagination_btn}>◁</button>
-              {[1, 2, 3].map((_, i) => (
-                <span key={i} className={styles.comment_pagination_number}>
-                  {_}
-                </span>
-              ))}
-              <button className={styles.comment_pagination_btn}>▷</button>
-            </div>
           </div>
           <div className={styles.other}>
             <div className={styles.other_title}>다른 게시글 보기</div>

@@ -343,26 +343,6 @@
   align-items: center;
 }
 
-.comment_pagination {
-  margin-top: 20px;
-  width: 50px;
-  height: 12px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 10px;
-}
-
-.comment_pagination_btn {
-  outline: none;
-  border: none;
-  background: none;
-}
-
-.comment_pagination_number + .comment_pagination_number {
-  margin-left: 3px;
-}
-
 .other {
   width: 80%;
   margin-top: 50px;
