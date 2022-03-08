@@ -39,7 +39,7 @@
   justify-content: center;
   margin-top: 30px;
   padding-bottom: 30px;
-  border-bottom: 2px solid;
+  border-bottom: 2px solid black;
   width: 100%;
   font-size: large;
   font-weight: bolder;
@@ -49,7 +49,7 @@
   text-align: center;
   padding-left: 25px;
   padding-right: 25px;
-  border-right: 2px solid;
+  border-right: 2px solid black;
   cursor: pointer;
 }
 .navLiLast {

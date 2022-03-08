@@ -27,12 +27,12 @@ const WritePage = ({ user: { displayName, uid } }) => {
       recommendUser: [],
       views: 0,
     });
-    navigate(-1);
+    navigate(`/club/${clubId}`);
   };
   return (
     <>
       <form className={style.boardWrapper} onSubmit={onSubmit}>
-        <WriteBoard />
+        <WriteBoard uid={uid} />
       </form>
     </>
   );
