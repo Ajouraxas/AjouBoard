@@ -2,6 +2,7 @@ import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Spinner from "../components/Spinner";
 import { dbService } from "../lib/fbase";
 import style from "../style/ClubList.module.css";
 
@@ -19,7 +20,7 @@ const ClubListPage = () => {
     const getClubsObj = async () => {
       const clubQ = query(
         collection(dbService, "clubs"),
-        orderBy("index", "asc")
+        orderBy("index", "asc"),
       );
       const docs = await getDocs(clubQ);
       const clubArray = docs.docs.map((doc) => ({
@@ -32,12 +33,12 @@ const ClubListPage = () => {
           if (obj.is_bg) {
             try {
               const result = await getDownloadURL(
-                ref(storage, obj.id + "/bg_img")
+                ref(storage, obj.id + "/bg_img"),
               );
               return result;
             } catch (e) {}
           }
-        })
+        }),
       );
       setClubsBgUrl(imageRef);
       setIsInit(true);
@@ -62,9 +63,7 @@ const ClubListPage = () => {
             {isBg ? (
               <>
                 <img className={style.bg} src={attachmentUrl} alt="bg" />
-                <div
-                  className={`${style.clubIconSubMenuContainer} ${style.clubIconHover}`}
-                >
+                <div className={`${style.clubIconSubMenuContainer}`}>
                   <div className={style.clubIconSubMenu}>
                     <span>{`${name}`}</span>
                   </div>
@@ -98,26 +97,7 @@ const ClubListPage = () => {
       </div>
     </>
   ) : (
-    <>
-      <svg className={style.loadingSpinner} viewBox="0 0 50 50">
-        <circle
-          className={style.loadingSpinnerPath}
-          cx="25"
-          cy="25"
-          r="15"
-          fill="none"
-          stroke-width="5"
-        ></circle>
-        <circle
-          className={style.loadingSpinnerPath2}
-          cx="25"
-          cy="25"
-          r="20"
-          fill="none"
-          stroke-width="8"
-        ></circle>
-      </svg>
-    </>
+    <Spinner />
   );
 };
 
