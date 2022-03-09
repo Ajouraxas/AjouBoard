@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/AjouBoard/static/css/main.ff955c27.css",
-    "main.js": "/AjouBoard/static/js/main.eb52fc17.js",
+    "main.js": "/AjouBoard/static/js/main.ca3cbbf4.js",
     "static/media/anc2.jpg": "/AjouBoard/static/media/anc2.5cf893ee84fd1de467a9.jpg",
     "static/media/anc1.jpg": "/AjouBoard/static/media/anc1.e54875121956e8cf39a9.jpg",
     "static/media/symbol_ajou.jpg": "/AjouBoard/static/media/symbol_ajou.4d6671f3fb9c7059e166.jpg",
@@ -13,10 +13,10 @@
     "static/media/logo_ajou_1.png": "/AjouBoard/static/media/logo_ajou_1.01d7014d38d0075f56df.png",
     "index.html": "/AjouBoard/index.html",
     "main.ff955c27.css.map": "/AjouBoard/static/css/main.ff955c27.css.map",
-    "main.eb52fc17.js.map": "/AjouBoard/static/js/main.eb52fc17.js.map"
+    "main.ca3cbbf4.js.map": "/AjouBoard/static/js/main.ca3cbbf4.js.map"
   },
   "entrypoints": [
     "static/css/main.ff955c27.css",
-    "static/js/main.eb52fc17.js"
+    "static/js/main.ca3cbbf4.js"
   ]
 }
