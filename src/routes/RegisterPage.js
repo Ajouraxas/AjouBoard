@@ -158,7 +158,7 @@ const RegisterPage = () => {
         password,
       );
       await updateProfile(user, {
-        displayName: nickName,
+        displayName: name,
       });
       await setDoc(doc(dbService, "users", email), {
         id: user.uid,
