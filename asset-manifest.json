@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/static/css/main.b86c99dd.css",
-    "main.js": "/static/js/main.1f5e8bd8.js",
-    "static/media/anc2.jpg": "/static/media/anc2.5cf893ee84fd1de467a9.jpg",
-    "static/media/anc1.jpg": "/static/media/anc1.e54875121956e8cf39a9.jpg",
-    "static/media/symbol_ajou.jpg": "/static/media/symbol_ajou.4d6671f3fb9c7059e166.jpg",
-    "static/media/logo_ajou_2.png": "/static/media/logo_ajou_2.8f3ed587a94474cb6654.png",
-    "static/media/logo_friends.png": "/static/media/logo_friends.c2fccbc1c7878dd0ba97.png",
-    "static/media/Roboto-Regular.ttf": "/static/media/Roboto-Regular.a8d6ac03c7b96b7acb62.ttf",
-    "static/media/Roboto-Bold.ttf": "/static/media/Roboto-Bold.75371f53f06181df75f1.ttf",
-    "static/media/Roboto-Light.ttf": "/static/media/Roboto-Light.8be2d1487420548b3b8d.ttf",
-    "static/media/logo_ajou_1.png": "/static/media/logo_ajou_1.01d7014d38d0075f56df.png",
-    "index.html": "/index.html",
-    "main.b86c99dd.css.map": "/static/css/main.b86c99dd.css.map",
-    "main.1f5e8bd8.js.map": "/static/js/main.1f5e8bd8.js.map"
+    "main.css": "/AjouBoard/static/css/main.ff955c27.css",
+    "main.js": "/AjouBoard/static/js/main.eb52fc17.js",
+    "static/media/anc2.jpg": "/AjouBoard/static/media/anc2.5cf893ee84fd1de467a9.jpg",
+    "static/media/anc1.jpg": "/AjouBoard/static/media/anc1.e54875121956e8cf39a9.jpg",
+    "static/media/symbol_ajou.jpg": "/AjouBoard/static/media/symbol_ajou.4d6671f3fb9c7059e166.jpg",
+    "static/media/logo_ajou_2.png": "/AjouBoard/static/media/logo_ajou_2.8f3ed587a94474cb6654.png",
+    "static/media/logo_friends.png": "/AjouBoard/static/media/logo_friends.c2fccbc1c7878dd0ba97.png",
+    "static/media/Roboto-Regular.ttf": "/AjouBoard/static/media/Roboto-Regular.a8d6ac03c7b96b7acb62.ttf",
+    "static/media/Roboto-Bold.ttf": "/AjouBoard/static/media/Roboto-Bold.75371f53f06181df75f1.ttf",
+    "static/media/Roboto-Light.ttf": "/AjouBoard/static/media/Roboto-Light.8be2d1487420548b3b8d.ttf",
+    "static/media/logo_ajou_1.png": "/AjouBoard/static/media/logo_ajou_1.01d7014d38d0075f56df.png",
+    "index.html": "/AjouBoard/index.html",
+    "main.ff955c27.css.map": "/AjouBoard/static/css/main.ff955c27.css.map",
+    "main.eb52fc17.js.map": "/AjouBoard/static/js/main.eb52fc17.js.map"
   },
   "entrypoints": [
-    "static/css/main.b86c99dd.css",
-    "static/js/main.1f5e8bd8.js"
+    "static/css/main.ff955c27.css",
+    "static/js/main.eb52fc17.js"
   ]
 }
