@@ -36,7 +36,6 @@ const PostDetailPage = ({ user }) => {
   const [comment, setComment] = useState('');
   const [editorContent, setEditorContent] = useState(EditorState.createEmpty());
   const [postOwnerCheck, setPostOwnerCheck] = useState('');
-  const [userTitle, setUserTitle] = useState();
 
   useEffect(() => {
     setIsLoading(true);
@@ -131,15 +130,29 @@ const PostDetailPage = ({ user }) => {
   };
   const onSubmit = (event) => {
     event.preventDefault();
-    (async () => {
-      await addDoc(collection(dbService, 'comments'), {
-        author: user.displayName,
-        uid: user.uid,
-        comment,
-        createAt: Date.now(),
-        post: params.postId,
+    getDocs(query(collection(dbService, 'users'), where('id', '==', user.uid)))
+      .then((res) => {
+        const clubPosition = res.docs[0].data().clubPosition;
+        if (clubPosition[0] === params.clubId) {
+          if (clubPosition[1] === 'admin') {
+            return '관리자';
+          } else {
+            return '동아리원';
+          }
+        } else {
+          return '귀요미';
+        }
+      })
+      .then((res) => {
+        addDoc(collection(dbService, 'comments'), {
+          author: user.displayName,
+          uid: user.uid,
+          comment,
+          createAt: Date.now(),
+          post: params.postId,
+          userTitle: res,
+        });
       });
-    })();
     setComment('');
   };
   const onPostUpdate = () => {
@@ -240,21 +253,7 @@ const PostDetailPage = ({ user }) => {
       return copyOfObject;
     });
   };
-  const getUserTitle = async (uid) => {
-    const userData = await getDocs(
-      query(collection(dbService, 'users'), where('id', '==', uid))
-    );
-    const clubPosition = userData.docs[0].data().clubPosition;
-    if (clubPosition[0] === params.clubId) {
-      if (clubPosition[1] === 'admin') {
-        setUserTitle('관리자');
-      } else {
-        setUserTitle('동아리원');
-      }
-    } else {
-      setUserTitle('귀요미');
-    }
-  };
+
   return (
     <>
       {!data || isLoading ? (
@@ -339,43 +338,40 @@ const PostDetailPage = ({ user }) => {
           </div>
           <div className={styles.comment}>
             <div className={styles.comment_header}>댓글</div>
-            {comments?.map((comment) => {
-              getUserTitle(comment.uid);
-              return (
-                <div key={comment.id} className={styles.comment_body}>
-                  <div className={styles.comment_body_info}>
-                    <img
-                      className={styles.comment_body_info_avatar}
-                      src={logo_ajou_1}
-                      alt={'logo_ajou'}
-                    />
-                    <div className={styles.comment_body_info_name}>
-                      {comment.author}
-                    </div>
-                    <div className={styles.comment_body_info_userInfo}>
-                      <div className={styles.comment_body_info_userInfo_grade}>
-                        {userTitle}
-                      </div>
-                    </div>
+            {comments?.map((comment) => (
+              <div key={comment.id} className={styles.comment_body}>
+                <div className={styles.comment_body_info}>
+                  <img
+                    className={styles.comment_body_info_avatar}
+                    src={logo_ajou_1}
+                    alt={'logo_ajou'}
+                  />
+                  <div className={styles.comment_body_info_name}>
+                    {comment.author}
                   </div>
-                  <div className={styles.comment_body_text}>
-                    {comment.comment}
-                  </div>
-                  <div className={styles.comment_body_date}>
-                    {comment.createAt}
-                    {user?.uid === data.uid ? (
-                      <button
-                        value={comment.id}
-                        onClick={onCommentDelete}
-                        type="button"
-                      >
-                        X
-                      </button>
-                    ) : null}
+                  <div className={styles.comment_body_info_userInfo}>
+                    <div className={styles.comment_body_info_userInfo_grade}>
+                      {comment.userTitle}
+                    </div>
                   </div>
                 </div>
-              );
-            })}
+                <div className={styles.comment_body_text}>
+                  {comment.comment}
+                </div>
+                <div className={styles.comment_body_date}>
+                  {comment.createAt}
+                  {user?.uid === data.uid ? (
+                    <button
+                      value={comment.id}
+                      onClick={onCommentDelete}
+                      type="button"
+                    >
+                      X
+                    </button>
+                  ) : null}
+                </div>
+              </div>
+            ))}
 
             <form onSubmit={onSubmit} className={styles.comment_input}>
               <div className={styles.comment_label}>댓글 쓰기</div>
