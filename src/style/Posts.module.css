@@ -60,7 +60,8 @@
 }
 
 .selectPost {
-  background-color: gold;
+  background-color: #eeeeee;
+  border-radius: 10px;
 }
 
 .postDate {

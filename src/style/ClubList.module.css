@@ -69,15 +69,16 @@ a:active {
   color: white;
 }
 .clubIconInfo {
+  color: #3b4890;
+  font-size: 15px;
+  font-weight: bold;
   padding-top: 20px;
   width: 100%;
   padding-bottom: 15px;
-  border-bottom: solid;
-  border-bottom-width: 1.5px;
+  border-bottom: solid 2px #3b4890;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
 }
 
 .clubLink {
@@ -87,7 +88,8 @@ a:active {
 }
 .clubLink__span {
   display: inline-block;
-  color: black;
+  color: #3b4890;
+  font-weight: bold;
   border-radius: 10px;
 }
 
@@ -98,8 +100,7 @@ a:active {
 .clubIconContainerTopMenu {
   margin-left: auto;
   margin-right: auto;
-  border-bottom: solid;
-  border-width: 1.5px;
+  border-bottom: solid 2px #3b4890;
   padding-bottom: 50px;
   margin-bottom: 20px;
   width: 1600px;
@@ -109,6 +110,8 @@ a:active {
 
 .clubContainerName {
   font-size: 30px;
+  font-weight: bolder;
+  color: #3b4890;
 }
 
 .clubIconList {

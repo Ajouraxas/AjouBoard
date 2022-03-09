@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import style from '../style/PostNavbar.module.css';
-import logo_고슴도치 from '../asset/img/logo_고슴도치.jpg';
 import { doc, getDoc } from 'firebase/firestore';
 import { dbService } from '../lib/fbase';
+import symbol_ajou from '../asset/img/symbol_ajou.jpg';
 /**
  * component: PostNavber
  * useFor: 동아리 공지사항, 전체글, 개추 받은 글, 글쓰기
@@ -42,11 +42,7 @@ const PostNavbar = ({ user }) => {
       <div className={style.topBanner}>
         <span className={style.boardLogo}>AJOUBOARD</span>
         <span className={style.clubName}>{clubName}</span>
-        <img
-          className={style.bannerImg}
-          src={logo_고슴도치}
-          alt="clubImg"
-        ></img>
+        <img className={style.bannerImg} src={symbol_ajou} alt="clubImg"></img>
       </div>
       <ul className={style.navUl}>
         <li

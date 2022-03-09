@@ -165,6 +165,9 @@ const PostDetailPage = ({ user }) => {
   };
 
   const onRecommendUp = async () => {
+    if (!user) {
+      return navigate(`/login`);
+    }
     const checkDoc = await getDoc(
       doc(dbService, `clubs/${params.clubId}/posts`, params.postId)
     );
@@ -195,6 +198,9 @@ const PostDetailPage = ({ user }) => {
   };
 
   const onRecommendDown = async () => {
+    if (!user) {
+      return navigate(`/login`);
+    }
     const checkDoc = await getDoc(
       doc(dbService, `clubs/${params.clubId}/posts`, params.postId)
     );

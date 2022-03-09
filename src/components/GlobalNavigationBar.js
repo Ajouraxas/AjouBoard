@@ -13,7 +13,6 @@ const GlobalNavigationBar = ({ user }) => {
   const onLogout = async () => {
     try {
       await signOut(authService);
-      console.log('로그아웃');
     } catch (error) {
       console.log(error);
     }
