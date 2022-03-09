@@ -1,5 +1,5 @@
-import { convertFromRaw } from 'draft-js';
-import { EditorState } from 'draft-js';
+import { convertFromRaw } from "draft-js";
+import { EditorState } from "draft-js";
 import {
   addDoc,
   arrayUnion,
@@ -14,18 +14,18 @@ import {
   query,
   updateDoc,
   where,
-} from 'firebase/firestore';
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import PostNavbar from '../components/PostNavbar';
-import Posts from '../components/Posts';
-import ShowEditor from '../components/ShowEditor';
-import Spinner from '../components/Spinner';
-import { dbService, storageService } from '../lib/fbase';
-import styles from '../style/PostDetailPage.module.css';
-import logo_ajou_1 from '../asset/img/logo_ajou_1.png';
-import logo_ajou_2 from '../asset/img/logo_ajou_2.png';
-import { deleteObject, ref } from 'firebase/storage';
+} from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import PostNavbar from "../components/PostNavbar";
+import Posts from "../components/Posts";
+import ShowEditor from "../components/ShowEditor";
+import Spinner from "../components/Spinner";
+import { dbService, storageService } from "../lib/fbase";
+import styles from "../style/PostDetailPage.module.css";
+import logo_ajou_1 from "../asset/img/logo_ajou_1.png";
+import logo_ajou_2 from "../asset/img/logo_ajou_2.png";
+import { deleteObject, ref } from "firebase/storage";
 
 const PostDetailPage = ({ user }) => {
   const params = useParams();
@@ -33,9 +33,9 @@ const PostDetailPage = ({ user }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState();
   const [comments, setComments] = useState([]);
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState("");
   const [editorContent, setEditorContent] = useState(EditorState.createEmpty());
-  const [postOwnerCheck, setPostOwnerCheck] = useState('');
+  const [postOwnerCheck, setPostOwnerCheck] = useState("");
 
   useEffect(() => {
     setIsLoading(true);
@@ -47,24 +47,24 @@ const PostDetailPage = ({ user }) => {
         doc(dbService, `/clubs/${params.clubId}/posts`, params.postId),
         {
           views: increment(1),
-        }
+        },
       );
-      getDoc(doc(dbService, 'clubs', params.clubId, 'posts', params.postId))
+      getDoc(doc(dbService, "clubs", params.clubId, "posts", params.postId))
         .then((res) => {
-          if (!res.exists()) throw new Error('not-found');
+          if (!res.exists()) throw new Error("not-found");
           return res.data();
         })
         .then((res) => {
           setEditorContent(
             EditorState.createWithContent(
-              convertFromRaw(JSON.parse(res.content))
-            )
+              convertFromRaw(JSON.parse(res.content)),
+            ),
           );
           const date = new Date(res.createAt);
           date.setHours(date.getHours() + 9);
           const stringDate = date
             .toISOString()
-            .replace('T', ' ')
+            .replace("T", " ")
             .substring(0, 16)
             .toString();
           return {
@@ -75,28 +75,28 @@ const PostDetailPage = ({ user }) => {
         .then((res) => {
           setData(res);
           return getDocs(
-            query(collection(dbService, 'users'), where('id', '==', res.uid))
+            query(collection(dbService, "users"), where("id", "==", res.uid)),
           );
         })
         .then((res) => {
           const clubPosition = res.docs[0].data().clubPosition;
           if (clubPosition[0] === params.clubId) {
-            if (clubPosition[1] === 'admin') {
-              setPostOwnerCheck('관리자');
+            if (clubPosition[1] === "admin") {
+              setPostOwnerCheck("관리자");
             } else {
-              setPostOwnerCheck('동아리원');
+              setPostOwnerCheck("동아리원");
             }
           } else {
-            setPostOwnerCheck('귀요미');
+            setPostOwnerCheck("귀요미");
           }
         });
     })();
 
     const unsubscribe = onSnapshot(
       query(
-        collection(dbService, 'comments'),
-        orderBy('createAt', 'asc'),
-        where('post', '==', params.postId)
+        collection(dbService, "comments"),
+        orderBy("createAt", "asc"),
+        where("post", "==", params.postId),
       ),
       (querySnapshot) => {
         const update = querySnapshot.docs.map((doc) => {
@@ -104,7 +104,7 @@ const PostDetailPage = ({ user }) => {
           date.setHours(date.getHours() + 9);
           const stringDate = date
             .toISOString()
-            .replace('T', ' ')
+            .replace("T", " ")
             .substring(0, 16)
             .toString();
           return {
@@ -114,7 +114,7 @@ const PostDetailPage = ({ user }) => {
           };
         });
         setComments(update);
-      }
+      },
     );
 
     setIsLoading(false);
@@ -130,21 +130,21 @@ const PostDetailPage = ({ user }) => {
   };
   const onSubmit = (event) => {
     event.preventDefault();
-    getDocs(query(collection(dbService, 'users'), where('id', '==', user.uid)))
+    getDocs(query(collection(dbService, "users"), where("id", "==", user.uid)))
       .then((res) => {
         const clubPosition = res.docs[0].data().clubPosition;
         if (clubPosition[0] === params.clubId) {
-          if (clubPosition[1] === 'admin') {
-            return '관리자';
+          if (clubPosition[1] === "admin") {
+            return "관리자";
           } else {
-            return '동아리원';
+            return "동아리원";
           }
         } else {
-          return '귀요미';
+          return "귀요미";
         }
       })
       .then((res) => {
-        addDoc(collection(dbService, 'comments'), {
+        addDoc(collection(dbService, "comments"), {
           author: user.displayName,
           uid: user.uid,
           comment,
@@ -153,33 +153,33 @@ const PostDetailPage = ({ user }) => {
           userTitle: res,
         });
       });
-    setComment('');
+    setComment("");
   };
   const onPostUpdate = () => {
     navigate(`/club/${params.clubId}/${params.postId}/update`);
   };
   const onPostDelete = async () => {
-    if (window.confirm('정말 게시글을 삭제하시겠습니까?')) {
+    if (window.confirm("정말 게시글을 삭제하시겠습니까?")) {
       const docData = await getDoc(
-        doc(dbService, `clubs/${params.clubId}/posts`, params.postId)
+        doc(dbService, `clubs/${params.clubId}/posts`, params.postId),
       );
       if (docData.data().imageId) {
-        const imageIds = docData.data().imageId.split([',']);
+        const imageIds = docData.data().imageId.split([","]);
         imageIds.forEach(async (imageId) => {
           await deleteObject(
-            ref(storageService, `user/${user.uid}/imgs/${imageId}`)
+            ref(storageService, `user/${user.uid}/imgs/${imageId}`),
           );
         });
       }
 
       await deleteDoc(
-        doc(dbService, `clubs/${params.clubId}/posts`, params.postId)
+        doc(dbService, `clubs/${params.clubId}/posts`, params.postId),
       );
       const deleteDocs = await getDocs(
         query(
-          collection(dbService, 'comments'),
-          where('post', '==', params.postId)
-        )
+          collection(dbService, "comments"),
+          where("post", "==", params.postId),
+        ),
       );
       deleteDocs.docs.forEach(async (delDoc) => {
         await deleteDoc(delDoc.ref);
@@ -193,7 +193,7 @@ const PostDetailPage = ({ user }) => {
       target: { value: commentId },
     } = event;
     (async () => {
-      await deleteDoc(doc(dbService, 'comments', commentId));
+      await deleteDoc(doc(dbService, "comments", commentId));
     })();
   };
 
@@ -202,18 +202,18 @@ const PostDetailPage = ({ user }) => {
       return navigate(`/login`);
     }
     const checkDoc = await getDoc(
-      doc(dbService, `clubs/${params.clubId}/posts`, params.postId)
+      doc(dbService, `clubs/${params.clubId}/posts`, params.postId),
     );
     if (checkDoc.data().recommendUser.includes(user.uid)) {
-      return window.alert('이미 추천을 누르셨습니다.');
+      return window.alert("이미 추천을 누르셨습니다.");
     }
-    let postType = 'all';
+    let postType = "all";
     if (
       checkDoc.data().plusRecommendCount -
         checkDoc.data().minusRecommendCount >=
       4
     ) {
-      postType = 'popular';
+      postType = "popular";
     }
     await updateDoc(
       doc(dbService, `clubs/${params.clubId}/posts`, params.postId),
@@ -221,7 +221,7 @@ const PostDetailPage = ({ user }) => {
         plusRecommendCount: increment(1),
         recommendUser: arrayUnion(user.uid),
         postType,
-      }
+      },
     );
     setData((prev) => {
       let copyOfObject = { ...prev };
@@ -235,17 +235,17 @@ const PostDetailPage = ({ user }) => {
       return navigate(`/login`);
     }
     const checkDoc = await getDoc(
-      doc(dbService, `clubs/${params.clubId}/posts`, params.postId)
+      doc(dbService, `clubs/${params.clubId}/posts`, params.postId),
     );
     if (checkDoc.data().recommendUser.includes(user.uid)) {
-      return window.alert('이미 추천누르셨습니다.');
+      return window.alert("이미 추천누르셨습니다.");
     }
     await updateDoc(
       doc(dbService, `clubs/${params.clubId}/posts`, params.postId),
       {
         minusRecommendCount: increment(1),
         recommendUser: arrayUnion(user.uid),
-      }
+      },
     );
     setData((prev) => {
       let copyOfObject = { ...prev };
@@ -260,7 +260,7 @@ const PostDetailPage = ({ user }) => {
         <Spinner />
       ) : (
         <div className={styles.wrapper}>
-          <PostNavbar user={user} />{' '}
+          <PostNavbar user={user} />{" "}
           <div className={styles.content}>
             <div className={styles.header}>
               <div className={styles.header_title}>
@@ -271,7 +271,7 @@ const PostDetailPage = ({ user }) => {
                   <img
                     className={styles.header_info_left_avatar}
                     src={logo_ajou_1}
-                    alt={'logo_ajou'}
+                    alt={"logo_ajou"}
                   />
 
                   <div className={styles.header_info_left_user}>
@@ -344,7 +344,7 @@ const PostDetailPage = ({ user }) => {
                   <img
                     className={styles.comment_body_info_avatar}
                     src={logo_ajou_1}
-                    alt={'logo_ajou'}
+                    alt={"logo_ajou"}
                   />
                   <div className={styles.comment_body_info_name}>
                     {comment.author}
@@ -360,7 +360,7 @@ const PostDetailPage = ({ user }) => {
                 </div>
                 <div className={styles.comment_body_date}>
                   {comment.createAt}
-                  {user?.uid === data.uid ? (
+                  {user?.uid === comment.uid ? (
                     <button
                       value={comment.id}
                       onClick={onCommentDelete}
