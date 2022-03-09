@@ -65,7 +65,7 @@ const PostNavbar = ({ user }) => {
           id={'all'}
           onClick={onClick}
         >
-          전체글
+          전체 글
         </li>
         <li
           className={`${style.navLiLast} ${
@@ -74,7 +74,7 @@ const PostNavbar = ({ user }) => {
           id={'popular'}
           onClick={onClick}
         >
-          개추 받은 글
+          인기 글
         </li>
         {user === null ? null : (
           <button className={style.navBtn} onClick={onWrite}>

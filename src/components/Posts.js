@@ -165,7 +165,7 @@ const Posts = ({ selectPostId, plusRecommendCount, minusRecommendCount }) => {
               <li className={style.menuAuthor}>글쓴이</li>
               <li className={style.menuTitle}>제목</li>
               <li className={style.menuViews}>조회수</li>
-              <li className={style.menuRecommendCount}>개추수/비추수</li>
+              <li className={style.menuRecommendCount}>UP/DOWN</li>
             </ul>
           </div>
           <ul className={style.postUl}>

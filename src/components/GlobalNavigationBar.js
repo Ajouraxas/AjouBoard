@@ -35,12 +35,12 @@ const GlobalNavigationBar = ({ user }) => {
               </li>
               <li>
                 <Link to={{ pathname: `/` }}>
-                  <span className={style.gnbLink}>HOME</span>
+                  <span className={style.gnbLink}>홈</span>
                 </Link>
               </li>
               <li>
                 <Link to={{ pathname: `/clublist` }}>
-                  <span className={style.gnbLink}>CLUB LIST</span>
+                  <span className={style.gnbLink}>동아리 목록</span>
                 </Link>
               </li>
             </div>

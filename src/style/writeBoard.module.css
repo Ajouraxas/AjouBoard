@@ -12,6 +12,8 @@
 }
 
 .boardBanner {
+  color: #96b7e9;
+  font-weight: bolder;
   margin-top: 50px;
   font-size: 24px;
   width: 100%;
@@ -37,7 +39,8 @@
   width: 100%;
 }
 .boardTitle::placeholder {
-  color: #d3ddec;
+  font-size: large;
+  color: #b0b4bd;
 }
 
 .boardTitle:focus {

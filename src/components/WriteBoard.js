@@ -2,16 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import style from '../style/WriteBoard.module.css';
+import style from '../style/writeBoard.module.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { convertFromRaw } from 'draft-js';
 import { storageService } from '../lib/fbase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import uuid from 'draft-js/lib/uuid';
 
-const WriteBoard = ({ prevTitle, prevContent, uid }) => {
+const WriteBoard = ({ prevImagesId, prevTitle, prevContent, uid }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState(EditorState.createEmpty());
+  const [imageId, setImageId] = useState([]);
   const { pathname } = useLocation();
   const banner = pathname.split('/');
   const navigate = useNavigate();
@@ -30,9 +31,11 @@ const WriteBoard = ({ prevTitle, prevContent, uid }) => {
   };
 
   const uploadCallback = async (file) => {
-    const imageRef = ref(storageService, `user/${uid}/imgs/${uuid()}`);
+    const imageUuid = uuid();
+    const imageRef = ref(storageService, `user/${uid}/imgs/${imageUuid}`);
     await uploadBytes(imageRef, file);
     const imageUrl = await getDownloadURL(imageRef);
+    setImageId((prev) => [...prev, imageUuid]);
     return new Promise((resolve) => {
       resolve({
         data: {
@@ -45,21 +48,22 @@ const WriteBoard = ({ prevTitle, prevContent, uid }) => {
     const settingPost = () => {
       if (prevTitle && prevContent) {
         setTitle(prevTitle);
-
-        console.log(JSON.parse(prevContent));
+        if (prevImagesId) {
+          setImageId(prevImagesId);
+        }
         setContent(
           EditorState.createWithContent(convertFromRaw(JSON.parse(prevContent)))
         );
       }
     };
     settingPost();
-  }, [prevTitle, prevContent]);
+  }, [prevTitle, prevContent, prevImagesId]);
   return (
     <>
       <div className={style.contentSize}>
         <span className={style.boardBanner}>
           {banner[3] === 'write'
-            ? '새로운 게시글 작성'
+            ? '게시글 작성'
             : banner[4] === 'update' && '게시글 수정하기'}
         </span>
         <textarea
@@ -71,7 +75,7 @@ const WriteBoard = ({ prevTitle, prevContent, uid }) => {
           value={title}
         ></textarea>
         <Editor
-          placeholder="ㅎㅇ"
+          placeholder="내용"
           wrapperClassName={style.editorWrapper}
           toolbarClassName={style.toolbar}
           editorClassName={style.editor}
@@ -149,9 +153,10 @@ const WriteBoard = ({ prevTitle, prevContent, uid }) => {
             content && JSON.stringify(convertToRaw(content.getCurrentContent()))
           }
         />
+        <input type={'hidden'} value={imageId} />
         <div>
           <button className={style.boardBtn} type="submit">
-            게시글 올리기
+            작성
           </button>
           <button
             className={style.boardBtn}

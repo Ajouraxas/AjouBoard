@@ -14,6 +14,7 @@ const WritePage = ({ user: { displayName, uid } }) => {
     e.preventDefault();
     const title = e.target[0].value;
     const content = e.target[1].value;
+    const imageId = e.target[2].value;
     const q = query(collection(dbService, `clubs/${clubId}/posts`));
     await addDoc(q, {
       uid,
@@ -26,6 +27,7 @@ const WritePage = ({ user: { displayName, uid } }) => {
       minusRecommendCount: 0,
       recommendUser: [],
       views: 0,
+      imageId,
     });
     navigate(`/club/${clubId}`);
   };

@@ -8,6 +8,8 @@ import style from '../style/UpdatePage.module.css';
 const UpdatePage = ({ user }) => {
   const [title, setTitle] = useState();
   const [content, setContent] = useState();
+  const [imagesId, setImagesId] = useState();
+
   const navigate = useNavigate();
   const { clubId, postId } = useParams();
   useEffect(() => {
@@ -21,6 +23,7 @@ const UpdatePage = ({ user }) => {
       }
       setTitle(data.title);
       setContent(data.content);
+      setImagesId(data.imageId.split([',']));
     };
     getData();
   }, [navigate, postId, clubId, user]);
@@ -29,13 +32,19 @@ const UpdatePage = ({ user }) => {
     await updateDoc(doc(dbService, `clubs/${clubId}/posts`, postId), {
       title: e.target[0].value,
       content: e.target[1].value,
+      imageId: e.target[2].value,
     });
     navigate(-1);
   };
   return (
     <>
       <form className={style.boardWrapper} onSubmit={onSubmit}>
-        <WriteBoard prevTitle={title} prevContent={content} uid={user.uid} />
+        <WriteBoard
+          prevImagesId={imagesId}
+          prevTitle={title}
+          prevContent={content}
+          uid={user.uid}
+        />
       </form>
     </>
   );

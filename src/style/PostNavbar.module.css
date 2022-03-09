@@ -34,13 +34,14 @@
 }
 
 .navUl {
+  color: #3b4890;
   list-style: none;
   display: flex;
   position: relative;
   justify-content: center;
   margin-top: 30px;
   padding-bottom: 30px;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid #3b4890;
   width: 100%;
   font-size: large;
   font-weight: bolder;
@@ -50,7 +51,7 @@
   text-align: center;
   padding-left: 25px;
   padding-right: 25px;
-  border-right: 2px solid black;
+  border-right: 2px solid #3b4890;
   cursor: pointer;
 }
 .navLiLast {
@@ -62,7 +63,7 @@
 
 .navSelect {
   color: red;
-  border-color: black;
+  border-color: #3b4890;
 }
 
 .navBtn {
@@ -72,7 +73,7 @@
   top: -7px;
   border-radius: 4px;
   text-align: center;
-  background-color: black;
+  background-color: #3b4890;
   height: 30px;
   width: 60px;
   font-weight: bold;
