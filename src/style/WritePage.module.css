@@ -2,13 +2,10 @@
   margin-top: 100px;
   display: flex;
   flex-direction: column;
-  width: 1000px;
+  width: 70vw;
   height: 1000px;
   justify-content: center;
   align-items: center;
-  background-color: #fafafa;
   margin-left: auto;
   margin-right: auto;
-  border-radius: 10px;
-  border: #d3ddec 1px solid;
 }
