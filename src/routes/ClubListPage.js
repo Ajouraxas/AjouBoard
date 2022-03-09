@@ -50,7 +50,7 @@ const ClubListPage = () => {
     const id = clubObj["id"];
     const name = clubObj["name"];
     const location = clubObj["location"];
-    const tel = clubObj["tel"];
+    // const tel = clubObj["tel"];
     const isBg = clubObj["is_bg"];
     let attachmentUrl = "";
     if (isBg) {
@@ -79,7 +79,7 @@ const ClubListPage = () => {
           </div>
           <div className={style.clubIconInfo}>
             <span>동아리방 위치: {location}</span>
-            <span>연락처: {tel}</span>
+            <span>연락처: 010-0000-0000</span>
           </div>
         </div>
       </Link>
