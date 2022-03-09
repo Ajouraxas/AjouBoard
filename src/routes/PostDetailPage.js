@@ -132,25 +132,30 @@ const PostDetailPage = ({ user }) => {
     event.preventDefault();
     getDocs(query(collection(dbService, "users"), where("id", "==", user.uid)))
       .then((res) => {
+        let position;
         const clubPosition = res.docs[0].data().clubPosition;
         if (clubPosition[0] === params.clubId) {
           if (clubPosition[1] === "admin") {
-            return "관리자";
+            position = "관리자";
           } else {
-            return "동아리원";
+            position = "동아리원";
           }
         } else {
-          return "귀요미";
+          position = "귀요미";
         }
+        return {
+          position,
+          nickName: res.docs[0].data().nickName,
+        };
       })
-      .then((res) => {
+      .then(({ position, nickName }) => {
         addDoc(collection(dbService, "comments"), {
-          author: user.displayName,
+          author: nickName,
           uid: user.uid,
           comment,
           createAt: Date.now(),
           post: params.postId,
-          userTitle: res,
+          userTitle: position,
         });
       });
     setComment("");
