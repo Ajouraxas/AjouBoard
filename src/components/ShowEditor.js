@@ -1,7 +1,3 @@
-/* import { EditorState } from 'draft-js';
-import { Editor } from 'draft-js';
-import React, { useEffect, useState } from 'react';
- */
 import React, { useEffect, useState } from "react";
 import { EditorState } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
