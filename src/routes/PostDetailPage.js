@@ -129,30 +129,33 @@ const PostDetailPage = ({ user }) => {
     navigate(`/club/${params.clubId}/${params.postId}/update`);
   };
   const onPostDelete = async () => {
-    window.confirm('정말 게시글을 삭제하시겠습니까?') &&
-      navigate(`/club/${params.clubId}`);
-    const docData = await getDoc(
-      doc(dbService, `clubs/${params.clubId}/posts`, params.postId)
-    );
-    const imageIds = docData.data().imageId.split([',']);
-    imageIds.forEach(async (imageId) => {
-      await deleteObject(
-        ref(storageService, `user/${user.uid}/imgs/${imageId}`)
+    if (window.confirm('정말 게시글을 삭제하시겠습니까?')) {
+      const docData = await getDoc(
+        doc(dbService, `clubs/${params.clubId}/posts`, params.postId)
       );
-    });
+      if (docData.data().imageId) {
+        const imageIds = docData.data().imageId.split([',']);
+        imageIds.forEach(async (imageId) => {
+          await deleteObject(
+            ref(storageService, `user/${user.uid}/imgs/${imageId}`)
+          );
+        });
+      }
 
-    await deleteDoc(
-      doc(dbService, `clubs/${params.clubId}/posts`, params.postId)
-    );
-    const deleteDocs = await getDocs(
-      query(
-        collection(dbService, 'comments'),
-        where('post', '==', params.postId)
-      )
-    );
-    deleteDocs.docs.forEach(async (delDoc) => {
-      await deleteDoc(delDoc.ref);
-    });
+      await deleteDoc(
+        doc(dbService, `clubs/${params.clubId}/posts`, params.postId)
+      );
+      const deleteDocs = await getDocs(
+        query(
+          collection(dbService, 'comments'),
+          where('post', '==', params.postId)
+        )
+      );
+      deleteDocs.docs.forEach(async (delDoc) => {
+        await deleteDoc(delDoc.ref);
+      });
+      navigate(`/club/${params.clubId}`);
+    }
   };
 
   const onCommentDelete = async (event) => {
@@ -234,7 +237,12 @@ const PostDetailPage = ({ user }) => {
               </div>
               <div className={styles.header_info}>
                 <div className={styles.header_info_left}>
-                  <div className={styles.header_info_left_avatar} />
+                  <img
+                    className={styles.header_info_left_avatar}
+                    src={logo_ajou_1}
+                    alt={'logo_ajou'}
+                  />
+
                   <div className={styles.header_info_left_user}>
                     <div className={styles.header_info_left_user_name}>
                       {data.creatorName}
@@ -305,7 +313,11 @@ const PostDetailPage = ({ user }) => {
             {comments?.map((comment) => (
               <div key={comment.id} className={styles.comment_body}>
                 <div className={styles.comment_body_info}>
-                  <div className={styles.comment_body_info_avatar} />
+                  <img
+                    className={styles.comment_body_info_avatar}
+                    src={logo_ajou_1}
+                    alt={'logo_ajou'}
+                  />
                   <div className={styles.comment_body_info_name}>
                     {comment.author}
                   </div>

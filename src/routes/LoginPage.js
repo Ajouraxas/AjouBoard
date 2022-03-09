@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authService, dbService } from '../lib/fbase';
 import styles from '../style/loginPage.module.css';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 
 const LoginPage = (setUser) => {
   const [email, setEmail] = useState('');
@@ -67,7 +67,6 @@ const LoginPage = (setUser) => {
     try {
       const googleProvider = new GoogleAuthProvider();
       const { user } = await signInWithPopup(authService, googleProvider);
-      const docSnap = await getDoc(doc(dbService, 'users', user.email));
       await setDoc(doc(dbService, 'users', user.email), {
         id: user.uid,
         name: user.displayName,
