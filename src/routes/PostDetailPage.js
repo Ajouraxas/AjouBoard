@@ -307,13 +307,15 @@ const PostDetailPage = ({ user }) => {
                 </div>
                 <div className={styles.comment_body_date}>
                   {comment.createAt}
-                  <button
-                    value={comment.id}
-                    onClick={onCommentDelete}
-                    type="button"
-                  >
-                    X
-                  </button>
+                  {user?.uid === data.uid ? (
+                    <button
+                      value={comment.id}
+                      onClick={onCommentDelete}
+                      type="button"
+                    >
+                      X
+                    </button>
+                  ) : null}
                 </div>
               </div>
             ))}
