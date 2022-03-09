@@ -2,17 +2,17 @@ import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
-} from "firebase/auth";
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { authService, dbService } from "../lib/fbase";
-import styles from "../style/loginPage.module.css";
-import { doc, setDoc } from "firebase/firestore";
-import { Helmet } from "react-helmet-async";
+} from 'firebase/auth';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { authService, dbService } from '../lib/fbase';
+import styles from '../style/loginPage.module.css';
+import { doc, setDoc } from 'firebase/firestore';
+import { Helmet } from 'react-helmet-async';
 
 const LoginPage = (setUser) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const LoginPage = (setUser) => {
     const {
       target: { value, name },
     } = event;
-    if (name === "email") {
+    if (name === 'email') {
       setEmail(value);
     } else {
       setPassword(value);
@@ -29,52 +29,53 @@ const LoginPage = (setUser) => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    if (email === "" || !email.includes("@")) {
-      setEmail("");
-      setPassword("");
+    if (email === '' || !email.includes('@')) {
+      setEmail('');
+      setPassword('');
       setEmailError(true);
       return;
     }
-    if (password === "" || password.length < 8) {
-      setPassword("");
+    if (password === '' || password.length < 8) {
+      setPassword('');
       setEmailError(false);
       setPasswordError(true);
       return;
     }
     try {
       setUser(await signInWithEmailAndPassword(authService, email, password));
-      navigate("/");
+      navigate('/');
     } catch ({ message }) {
-      setPassword("");
-      if (message === "Firebase: Error (auth/user-not-found).") {
-        setEmail("");
+      setPassword('');
+      if (message === 'Firebase: Error (auth/user-not-found).') {
+        setEmail('');
         setEmailError(true);
       }
-      if (message === "Firebase: Error (auth/wrong-password).") {
+      if (message === 'Firebase: Error (auth/wrong-password).') {
         setEmailError(false);
         setPasswordError(true);
       }
     }
   };
   const onPasswordResetClick = () => {
-    navigate("/resetpassword");
+    navigate('/resetpassword');
   };
 
   const onClick = () => {
-    navigate("/register");
+    navigate('/register');
   };
 
   const onAuthWithGoogle = async () => {
     try {
       const googleProvider = new GoogleAuthProvider();
       const { user } = await signInWithPopup(authService, googleProvider);
-      await setDoc(doc(dbService, "users", user.email), {
+      await setDoc(doc(dbService, 'users', user.email), {
         id: user.uid,
         name: user.displayName,
         email: user.email,
-        nickName: user.email.split("@")[0],
+        nickName: user.email.split('@')[0],
+        clubPosition: ['', ''],
       });
-      navigate("/");
+      navigate('/');
     } catch (error) {
       console.log(error);
     }
@@ -94,7 +95,7 @@ const LoginPage = (setUser) => {
           <form onSubmit={onSubmit} className={styles.form}>
             <label className={styles.label}>
               <span
-                className={`${styles.email} ${emailError ? styles.error : ""}`}
+                className={`${styles.email} ${emailError ? styles.error : ''}`}
               >
                 이메일
               </span>
@@ -104,7 +105,7 @@ const LoginPage = (setUser) => {
                 onChange={onChange}
                 value={email}
                 className={`${styles.input} ${
-                  emailError ? styles.errorInput : ""
+                  emailError ? styles.errorInput : ''
                 }`}
                 placeholder="이메일을 입력해주세요."
                 required
@@ -113,7 +114,7 @@ const LoginPage = (setUser) => {
             <label className={styles.label}>
               <span
                 className={`${styles.password} ${
-                  passwordError ? styles.error : ""
+                  passwordError ? styles.error : ''
                 }`}
               >
                 패스워드
@@ -125,7 +126,7 @@ const LoginPage = (setUser) => {
                 onChange={onChange}
                 value={password}
                 className={`${styles.input} ${
-                  passwordError ? styles.errorInput : ""
+                  passwordError ? styles.errorInput : ''
                 }`}
                 required
               />
