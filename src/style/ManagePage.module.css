@@ -1,0 +1,44 @@
+.wrapper {
+  margin-top: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.searchForm {
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: small;
+}
+
+.addMemberText {
+  font-size: larger;
+  font-weight: bolder;
+  color: #3b4890;
+  margin-bottom: 20px;
+}
+
+.searchInput {
+  width: 175px;
+  height: 30px;
+  text-align: left;
+  border: #3b4890 solid;
+  outline: none;
+  font-weight: bolder;
+}
+
+.searchBtn {
+  cursor: pointer;
+  width: 50px;
+  height: 30px;
+  font-weight: bolder;
+  text-align: center;
+  border: #3b4890 solid;
+  background-color: #3b4890;
+  color: #ffffff;
+}

@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import style from "../style/PostNavbar.module.css";
-import { doc, getDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import { dbService } from "../lib/fbase";
 import symbol_ajou from "../asset/img/symbol_ajou.jpg";
 import { Helmet } from "react-helmet-async";
@@ -12,6 +19,7 @@ import { Helmet } from "react-helmet-async";
 const PostNavbar = ({ user }) => {
   const [clubName, setClubName] = useState("");
   const [viewType, setViewType] = useState("all");
+  const [isAdmin, setIsAdmin] = useState(false);
   const { clubId } = useParams();
   const { search } = useLocation();
   const navigate = useNavigate();
@@ -26,7 +34,19 @@ const PostNavbar = ({ user }) => {
     if (viewTypeQ[0] === "?view") {
       setViewType(viewTypeQ[1]);
     }
-  }, [viewType, clubId, search]);
+    const getUser = async () => {
+      const userData = await getDocs(
+        query(collection(dbService, "users"), where("id", "==", user.uid)),
+      );
+      const clubPosition = userData.docs[0].data().clubPosition;
+      if (clubPosition[0] === clubId && clubPosition[1] === "admin") {
+        setIsAdmin(true);
+      }
+    };
+    if (user) {
+      getUser();
+    }
+  }, [viewType, clubId, search, user]);
   const onClick = (e) => {
     const {
       target: { id },
@@ -37,6 +57,9 @@ const PostNavbar = ({ user }) => {
   const onWrite = (e) => {
     e.preventDefault();
     navigate(`/club/${clubId}/write`, { state: { clubId, user } });
+  };
+  const onSetting = () => {
+    navigate(`/club/${clubId}/management`);
   };
   return (
     <>
@@ -76,6 +99,11 @@ const PostNavbar = ({ user }) => {
         >
           인기 글
         </li>
+        {isAdmin && (
+          <button className={style.manageBtn} onClick={onSetting}>
+            관리
+          </button>
+        )}
         {user === null ? null : (
           <button className={style.navBtn} onClick={onWrite}>
             글쓰기
