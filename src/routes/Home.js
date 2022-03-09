@@ -1,10 +1,14 @@
 import style from "../style/HomeContent.module.css";
 import anc1 from "../asset/img/anc1.jpg";
 import anc2 from "../asset/img/anc2.jpg";
+import { Helmet } from "react-helmet-async";
 
 const Home = () => {
   return (
     <>
+      <Helmet>
+        <title>AJOUBOARD</title>
+      </Helmet>
       <div className={style.container}>
         <div className={style.content}>
           <div className={style.contentText}>HOME</div>

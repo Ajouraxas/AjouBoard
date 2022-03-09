@@ -1,5 +1,6 @@
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import React, { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import styles from "../style/ResetPasswordPage.module.css";
 
@@ -41,36 +42,41 @@ const ResetPasswordPage = () => {
   };
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.container}>
-        <div className={styles.header}>
-          <div className={styles.img} />
-          <div className={styles.title}>AJOURA 비밀번호 찾기</div>
-        </div>
-        <div className={styles.mainContent}>
-          <form onSubmit={onSubmit} className={styles.mainForm}>
-            <div className={styles.requiredContent}>
-              <label
-                className={`${styles.requiredLabel} ${
-                  emailError ? styles.inputError : ""
-                }`}
-              >
-                <input
-                  className={styles.input}
-                  type="email"
-                  name="email"
-                  value={email}
-                  onChange={onChange}
-                  placeholder="이메일"
-                  required
-                />
-                <button className={styles.resetButton}>비밀번호 찾기</button>
-              </label>
-            </div>
-          </form>
+    <>
+      <Helmet>
+        <title>비밀번호 찾기</title>
+      </Helmet>
+      <div className={styles.wrapper}>
+        <div className={styles.container}>
+          <div className={styles.header}>
+            <div className={styles.img} />
+            <div className={styles.title}>AJOURA 비밀번호 찾기</div>
+          </div>
+          <div className={styles.mainContent}>
+            <form onSubmit={onSubmit} className={styles.mainForm}>
+              <div className={styles.requiredContent}>
+                <label
+                  className={`${styles.requiredLabel} ${
+                    emailError ? styles.inputError : ""
+                  }`}
+                >
+                  <input
+                    className={styles.input}
+                    type="email"
+                    name="email"
+                    value={email}
+                    onChange={onChange}
+                    placeholder="이메일"
+                    required
+                  />
+                  <button className={styles.resetButton}>비밀번호 찾기</button>
+                </label>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

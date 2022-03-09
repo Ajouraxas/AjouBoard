@@ -1,9 +1,10 @@
-import { addDoc, collection, query } from 'firebase/firestore';
-import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { dbService } from '../lib/fbase';
-import WriteBoard from '../components/WriteBoard';
-import style from '../style/WritePage.module.css';
+import { addDoc, collection, query } from "firebase/firestore";
+import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { dbService } from "../lib/fbase";
+import WriteBoard from "../components/WriteBoard";
+import style from "../style/WritePage.module.css";
+import { Helmet } from "react-helmet-async";
 
 const WritePage = ({ user: { displayName, uid } }) => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const WritePage = ({ user: { displayName, uid } }) => {
       content,
       createAt: Date.now(),
       creatorName: displayName,
-      postType: 'all',
+      postType: "all",
       title,
       plusRecommendCount: 0,
       minusRecommendCount: 0,
@@ -33,6 +34,9 @@ const WritePage = ({ user: { displayName, uid } }) => {
   };
   return (
     <>
+      <Helmet>
+        <title>글쓰기</title>
+      </Helmet>
       <form className={style.boardWrapper} onSubmit={onSubmit}>
         <WriteBoard uid={uid} />
       </form>

@@ -1,6 +1,7 @@
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import { dbService } from "../lib/fbase";
@@ -85,19 +86,24 @@ const ClubListPage = () => {
       </Link>
     );
   };
-  return isInit ? (
+  return (
     <>
-      <div className={style.clubIconContainer}>
-        <div className={style.clubIconContainerTopMenu}>
-          <span className={style.clubContainerName}>동아리 목록</span>
+      <Helmet>
+        <title>AJOUBOARD</title>
+      </Helmet>
+      {isInit ? (
+        <div className={style.clubIconContainer}>
+          <div className={style.clubIconContainerTopMenu}>
+            <span className={style.clubContainerName}>동아리 목록</span>
+          </div>
+          <div className={style.clubIconList}>
+            {clubsObj.map((clubObj, idx) => clubIcon(clubObj, idx))}
+          </div>
         </div>
-        <div className={style.clubIconList}>
-          {clubsObj.map((clubObj, idx) => clubIcon(clubObj, idx))}
-        </div>
-      </div>
+      ) : (
+        <Spinner />
+      )}
     </>
-  ) : (
-    <Spinner />
   );
 };
 

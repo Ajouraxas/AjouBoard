@@ -1,28 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import style from '../style/PostNavbar.module.css';
-import { doc, getDoc } from 'firebase/firestore';
-import { dbService } from '../lib/fbase';
-import symbol_ajou from '../asset/img/symbol_ajou.jpg';
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import style from "../style/PostNavbar.module.css";
+import { doc, getDoc } from "firebase/firestore";
+import { dbService } from "../lib/fbase";
+import symbol_ajou from "../asset/img/symbol_ajou.jpg";
+import { Helmet } from "react-helmet-async";
 /**
  * component: PostNavber
  * useFor: 동아리 공지사항, 전체글, 개추 받은 글, 글쓰기
  */
 const PostNavbar = ({ user }) => {
-  const [clubName, setClubName] = useState('');
-  const [viewType, setViewType] = useState('all');
+  const [clubName, setClubName] = useState("");
+  const [viewType, setViewType] = useState("all");
   const { clubId } = useParams();
   const { search } = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
     const getClubName = async () => {
-      const clubData = await getDoc(doc(dbService, 'clubs', clubId));
+      const clubData = await getDoc(doc(dbService, "clubs", clubId));
       setClubName(clubData.data().name);
     };
     getClubName();
-    const viewTypeQ = search.split('=');
-    if (viewTypeQ[0] === '?view') {
+    const viewTypeQ = search.split("=");
+    if (viewTypeQ[0] === "?view") {
       setViewType(viewTypeQ[1]);
     }
   }, [viewType, clubId, search]);
@@ -39,6 +40,9 @@ const PostNavbar = ({ user }) => {
   };
   return (
     <>
+      <Helmet>
+        <title>{clubName}</title>
+      </Helmet>
       <div className={style.topBanner}>
         <span className={style.boardLogo}>AJOUBOARD</span>
         <span className={style.clubName}>{clubName}</span>
@@ -47,27 +51,27 @@ const PostNavbar = ({ user }) => {
       <ul className={style.navUl}>
         <li
           className={`${style.navLi} ${
-            viewType === 'announce' ? style.navSelect : ''
+            viewType === "announce" ? style.navSelect : ""
           }`}
-          id={'announce'}
+          id={"announce"}
           onClick={onClick}
         >
           공지사항
         </li>
         <li
           className={`${style.navLi} ${
-            viewType === 'all' ? style.navSelect : ''
+            viewType === "all" ? style.navSelect : ""
           }`}
-          id={'all'}
+          id={"all"}
           onClick={onClick}
         >
           전체 글
         </li>
         <li
           className={`${style.navLiLast} ${
-            viewType === 'popular' ? style.navSelect : ''
+            viewType === "popular" ? style.navSelect : ""
           }`}
-          id={'popular'}
+          id={"popular"}
           onClick={onClick}
         >
           인기 글
