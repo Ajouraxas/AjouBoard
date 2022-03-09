@@ -82,3 +82,18 @@
   color: #ffffff;
   cursor: pointer;
 }
+
+.manageBtn {
+  position: absolute;
+  border: none;
+  right: 150px;
+  top: -7px;
+  border-radius: 4px;
+  text-align: center;
+  background-color: #3b4890;
+  height: 30px;
+  width: 60px;
+  font-weight: bold;
+  color: #ffffff;
+  cursor: pointer;
+}

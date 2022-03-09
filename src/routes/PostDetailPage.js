@@ -98,7 +98,6 @@ const PostDetailPage = ({ user }) => {
         setComments(update);
       }
     );
-
     setIsLoading(false);
 
     return () => {
@@ -175,7 +174,7 @@ const PostDetailPage = ({ user }) => {
       doc(dbService, `clubs/${params.clubId}/posts`, params.postId)
     );
     if (checkDoc.data().recommendUser.includes(user.uid)) {
-      return window.alert('이미 추천누르셨습니다.');
+      return window.alert('이미 추천을 누르셨습니다.');
     }
     let postType = 'all';
     if (
@@ -247,11 +246,8 @@ const PostDetailPage = ({ user }) => {
                     <div className={styles.header_info_left_user_name}>
                       {data.creatorName}
                     </div>
-                    <div className={styles.header_info_left_user_club}>
-                      호완
-                    </div>
                     <div className={styles.header_info_left_user_grade}>
-                      동아리원
+                      뉴비
                     </div>
                   </div>
                 </div>
@@ -322,11 +318,8 @@ const PostDetailPage = ({ user }) => {
                     {comment.author}
                   </div>
                   <div className={styles.comment_body_info_userInfo}>
-                    <div className={styles.comment_body_info_userInfo_club}>
-                      호완
-                    </div>
                     <div className={styles.comment_body_info_userInfo_grade}>
-                      동아리원
+                      뉴비
                     </div>
                   </div>
                 </div>
