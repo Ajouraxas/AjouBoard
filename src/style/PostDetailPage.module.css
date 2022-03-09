@@ -211,7 +211,6 @@
   outline: none;
   width: 25px;
   height: 25px;
-  background-color: aqua;
   border-radius: 50%;
 }
 .favBox_down {
@@ -221,7 +220,6 @@
   outline: none;
   width: 25px;
   height: 25px;
-  background-color: #3b4890;
   border-radius: 50%;
 }
 
