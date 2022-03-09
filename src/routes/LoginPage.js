@@ -68,7 +68,7 @@ const LoginPage = (setUser) => {
     try {
       const googleProvider = new GoogleAuthProvider();
       const { user } = await signInWithPopup(authService, googleProvider);
-      if ((await getDoc(doc(dbService, "users", user.email))).exists) {
+      if ((await getDoc(doc(dbService, "users", user.email))).exists()) {
         navigate("/");
         return;
       }
