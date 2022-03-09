@@ -13,11 +13,12 @@
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 40px;
-  color: #072e5d;
+  color: #ffffff;
+  font-weight: bolder;
 }
 
 .bannerImg {
-  opacity: 0.4;
+  opacity: 1;
   display: flex;
   width: 100%;
   height: 100%;

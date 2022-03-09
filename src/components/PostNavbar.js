@@ -40,7 +40,7 @@ const PostNavbar = ({ user }) => {
   return (
     <>
       <div className={style.topBanner}>
-        <span className={style.boardLogo}>AJOUINSIDE</span>
+        <span className={style.boardLogo}>AJOUBOARD</span>
         <span className={style.clubName}>{clubName}</span>
         <img
           className={style.bannerImg}

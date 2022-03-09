@@ -1,5 +1,5 @@
 .wrapper {
-  width: 1040px;
+  width: 70vw;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -211,7 +211,6 @@
   outline: none;
   width: 25px;
   height: 25px;
-  background-color: aqua;
   border-radius: 50%;
 }
 .favBox_down {
@@ -221,7 +220,6 @@
   outline: none;
   width: 25px;
   height: 25px;
-  background-color: #3b4890;
   border-radius: 50%;
 }
 

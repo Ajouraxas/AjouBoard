@@ -1,8 +1,8 @@
-import style from "../style/GlobalNavigationBar.module.css";
-import logo_ajouboard from "../asset/img/logo_ajouboard.jpg";
-import { Link } from "react-router-dom";
-import { authService } from "../lib/fbase";
-import { signOut } from "firebase/auth";
+import style from '../style/GlobalNavigationBar.module.css';
+import { Link } from 'react-router-dom';
+import { authService } from '../lib/fbase';
+import { signOut } from 'firebase/auth';
+import logo_ajou_1 from '../asset/img/logo_ajou_1.png';
 
 /**
  * component: GlobalNavigationBar
@@ -13,7 +13,7 @@ const GlobalNavigationBar = ({ user }) => {
   const onLogout = async () => {
     try {
       await signOut(authService);
-      console.log("로그아웃");
+      console.log('로그아웃');
     } catch (error) {
       console.log(error);
     }
@@ -26,11 +26,7 @@ const GlobalNavigationBar = ({ user }) => {
           <ul className={style.gnbList}>
             <div className={style.nav}>
               <li>
-                <img
-                  className={style.gnbLogo}
-                  src={logo_ajouboard}
-                  alt="logo"
-                />
+                <img className={style.gnbLogo} src={logo_ajou_1} alt="logo" />
               </li>
               <li>
                 <span className={`${style.gnbLink} ${style.gnbTitle}`}>
