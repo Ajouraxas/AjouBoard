@@ -13,7 +13,7 @@ const Home = () => {
         <div className={style.content}>
           <div className={style.contentText}>HOME</div>
           <div className={style.contentText}>
-            <div className={style.contentImg} src={anc1}>
+            <div className={style.contentImg}>
               <span>Look into Random Club</span>
             </div>
           </div>
