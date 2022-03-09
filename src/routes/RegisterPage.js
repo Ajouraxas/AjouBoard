@@ -3,25 +3,25 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   updateProfile,
-} from 'firebase/auth';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
-import React, { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
-import { useNavigate } from 'react-router-dom';
-import { authService, dbService } from '../lib/fbase';
-import styles from '../style/registerPage.module.css';
+} from "firebase/auth";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import React, { useState } from "react";
+import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router-dom";
+import { authService, dbService } from "../lib/fbase";
+import styles from "../style/registerPage.module.css";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState(''); // 이메일
-  const [password, setPassword] = useState(''); // 비밀번호
-  const [confirmPassword, setConfirmPassword] = useState(''); // 비밀번호 확인
-  const [nickName, setNickName] = useState(''); // 닉네임
-  const [name, setName] = useState(''); // 이름
-  const [department, setDepartment] = useState(''); // 학과
-  const [studentNumber, setStudentNumber] = useState(''); // 학번
-  const [gender, setGender] = useState(''); // 성별
-  const [univEmail, setUnivEmail] = useState(''); // 학교 이메일
+  const [email, setEmail] = useState(""); // 이메일
+  const [password, setPassword] = useState(""); // 비밀번호
+  const [confirmPassword, setConfirmPassword] = useState(""); // 비밀번호 확인
+  const [nickName, setNickName] = useState(""); // 닉네임
+  const [name, setName] = useState(""); // 이름
+  const [department, setDepartment] = useState(""); // 학과
+  const [studentNumber, setStudentNumber] = useState(""); // 학번
+  const [gender, setGender] = useState(""); // 성별
+  const [univEmail, setUnivEmail] = useState(""); // 학교 이메일
   const [isChecked, setIsChecked] = useState(false); // 이메일 중복 검사 여부
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
@@ -35,10 +35,10 @@ const RegisterPage = () => {
       target: { name, value },
     } = event;
     switch (name) {
-      case 'email':
+      case "email":
         setEmail(value);
         break;
-      case 'password':
+      case "password":
         setPassword(value);
         if (value !== confirmPassword) {
           setPasswordConfirmError(true);
@@ -47,27 +47,27 @@ const RegisterPage = () => {
           setPasswordConfirmError(false);
         }
         break;
-      case 'confirmPassword':
+      case "confirmPassword":
         setPasswordConfirmError(true);
         setConfirmPassword(value);
         if (password === value) {
           setPasswordConfirmError(false);
         }
         break;
-      case 'nickName':
+      case "nickName":
         setNickName(value);
         break;
-      case 'name':
+      case "name":
         setName(value);
         break;
-      case 'department':
+      case "department":
         setDepartment(value);
         break;
-      case 'studentNumber':
+      case "studentNumber":
         if (isNaN(+value)) return;
         setStudentNumber(value);
         break;
-      case 'univEmail':
+      case "univEmail":
         setUnivEmail(value);
         break;
       default:
@@ -85,12 +85,12 @@ const RegisterPage = () => {
 
   const isOverlap = async (event) => {
     event.preventDefault();
-    if (email === '' || !email.includes('@')) {
+    if (email === "" || !email.includes("@")) {
       setEmailError(true);
       return;
     }
     try {
-      const docRef = doc(dbService, 'users', email);
+      const docRef = doc(dbService, "users", email);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         setEmailError(true);
@@ -108,15 +108,18 @@ const RegisterPage = () => {
     try {
       const googleProvider = new GoogleAuthProvider();
       const { user } = await signInWithPopup(authService, googleProvider);
-      const docSnap = await getDoc(doc(dbService, 'users', user.email));
-      console.log(docSnap);
-      await setDoc(doc(dbService, 'users', user.email), {
+      if ((await getDoc(doc(dbService, "users", user.email))).exists) {
+        navigate("/");
+        return;
+      }
+      await setDoc(doc(dbService, "users", user.email), {
         id: user.uid,
         name: user.displayName,
         email: user.email,
-        nickName: user.email.split('@')[0],
+        nickName: user.email.split("@")[0],
+        clubPosition: ["", ""],
       });
-      navigate('/');
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
@@ -128,23 +131,23 @@ const RegisterPage = () => {
       setEmailError(true);
       return;
     }
-    if (email === '' || !email.includes('@')) {
+    if (email === "" || !email.includes("@")) {
       setEmailError(true);
       return;
     }
-    if (password === '' || password.length < 8) {
+    if (password === "" || password.length < 8) {
       setPasswordError(true);
       return;
     }
-    if (name === '') {
+    if (name === "") {
       setNameError(true);
       return;
     }
-    if (nickName === '') {
+    if (nickName === "") {
       setNickNameError(true);
       return;
     }
-    if (univEmail && !univEmail.includes('@ajou.ac.kr')) {
+    if (univEmail && !univEmail.includes("@ajou.ac.kr")) {
       setUnivEmailError(true);
       return;
     }
@@ -152,12 +155,12 @@ const RegisterPage = () => {
       const { user } = await createUserWithEmailAndPassword(
         authService,
         email,
-        password
+        password,
       );
       await updateProfile(user, {
         displayName: nickName,
       });
-      await setDoc(doc(dbService, 'users', email), {
+      await setDoc(doc(dbService, "users", email), {
         id: user.uid,
         name,
         email,
@@ -166,9 +169,9 @@ const RegisterPage = () => {
         studentNumber,
         gender,
         univEmail,
-        clubPosition: ['', ''],
+        clubPosition: ["", ""],
       });
-      navigate('/login');
+      navigate("/login");
     } catch (error) {
       console.log(error);
     }
@@ -191,7 +194,7 @@ const RegisterPage = () => {
                 <span className={styles.requiredContent_title}>필수사항</span>
                 <label
                   className={`${styles.requiredLabel} ${
-                    nameError ? styles.inputError : ''
+                    nameError ? styles.inputError : ""
                   }`}
                 >
                   <span>이름</span>
@@ -207,8 +210,8 @@ const RegisterPage = () => {
                 </label>
                 <label
                   className={`${styles.requiredLabel} ${
-                    isChecked ? styles.inputActivity : ''
-                  } ${emailError ? styles.inputError : ''}`}
+                    isChecked ? styles.inputActivity : ""
+                  } ${emailError ? styles.inputError : ""}`}
                 >
                   <span>이메일</span>
                   <input
@@ -230,7 +233,7 @@ const RegisterPage = () => {
                 </label>
                 <label
                   className={`${styles.requiredLabel} ${
-                    passwordError ? styles.inputError : ''
+                    passwordError ? styles.inputError : ""
                   }`}
                 >
                   <span>비밀번호</span>
@@ -246,7 +249,7 @@ const RegisterPage = () => {
                 </label>
                 <label
                   className={`${styles.requiredLabel} ${
-                    passwordConfirmError ? styles.inputError : ''
+                    passwordConfirmError ? styles.inputError : ""
                   }`}
                 >
                   <span>비밀번호 확인</span>
@@ -262,7 +265,7 @@ const RegisterPage = () => {
                 </label>
                 <label
                   className={`${styles.requiredLabel} ${
-                    nickNameError ? styles.inputError : ''
+                    nickNameError ? styles.inputError : ""
                   }`}
                 >
                   <span>닉네임</span>
@@ -315,7 +318,7 @@ const RegisterPage = () => {
                       type="button"
                       value="male"
                       className={`${styles.genderButton} ${
-                        gender === 'male' ? styles.genderActivity : ''
+                        gender === "male" ? styles.genderActivity : ""
                       }`}
                       onClick={onSelectGender}
                     >
@@ -325,7 +328,7 @@ const RegisterPage = () => {
                       type="button"
                       value="female"
                       className={`${styles.genderButton} ${
-                        gender === 'female' ? styles.genderActivity : ''
+                        gender === "female" ? styles.genderActivity : ""
                       }`}
                       onClick={onSelectGender}
                     >
@@ -335,7 +338,7 @@ const RegisterPage = () => {
                       type="button"
                       value="guitar"
                       className={`${styles.genderButton} ${
-                        gender === 'guitar' ? styles.genderActivity : ''
+                        gender === "guitar" ? styles.genderActivity : ""
                       }`}
                       onClick={onSelectGender}
                     >
@@ -345,7 +348,7 @@ const RegisterPage = () => {
                 </div>
                 <label
                   className={`${styles.requiredLabel} ${
-                    univEmailError ? styles.inputError : ''
+                    univEmailError ? styles.inputError : ""
                   }`}
                 >
                   <span>아주대학교 이메일</span>
